@@ -1,7 +1,7 @@
 package ch.fhnw.cpib.project.km.token.keywords;
 
 import ch.fhnw.cpib.project.km.token.Base;
-import ch.fhnw.cpib.project.km.token.Literal;
+import ch.fhnw.cpib.project.km.token.various.Literal;
 
 public class BoolLiteral extends Literal {
 	
