@@ -1,15 +1,15 @@
 package ch.fhnw.cpib.project.km.token.symbols;
 
-import ch.fhnw.cpib.project.km.token.Base;
+import ch.fhnw.cpib.project.km.token.BaseToken;
 
-public class Becomes extends Base {
+public class Becomes extends BaseToken {
 
 	public Becomes() {
 		super("\\:\\=");
 	}
 
 	@Override
-	protected Base internalCreateToken(String s) {
+	protected BaseToken internalCreateToken(String s) {
 		return new Becomes();
 	}
 }

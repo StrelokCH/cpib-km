@@ -1,8 +1,8 @@
 package ch.fhnw.cpib.project.km.token.symbols;
 
-import ch.fhnw.cpib.project.km.token.Base;
+import ch.fhnw.cpib.project.km.token.BaseToken;
 
-public abstract class BooleanOperator extends Base {
+public abstract class BooleanOperator extends BaseToken {
 
 	public BooleanOperator(String regex) {
 		super(regex);

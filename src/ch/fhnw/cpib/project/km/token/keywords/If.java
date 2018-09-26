@@ -1,15 +1,15 @@
 package ch.fhnw.cpib.project.km.token.keywords;
 
-import ch.fhnw.cpib.project.km.token.Base;
+import ch.fhnw.cpib.project.km.token.BaseToken;
 
-public class If extends Base {
+public class If extends BaseToken {
 
 	public If() {
 		super("if");
 	}
 
 	@Override
-	protected Base internalCreateToken(String s) {
+	protected BaseToken internalCreateToken(String s) {
 		return new If();
 	}
 }

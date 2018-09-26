@@ -1,8 +1,8 @@
 package ch.fhnw.cpib.project.km.token.keywords;
 
-import ch.fhnw.cpib.project.km.token.Base;
+import ch.fhnw.cpib.project.km.token.BaseToken;
 
-public abstract class Flowmode extends Base {
+public abstract class Flowmode extends BaseToken {
 
 	public Flowmode(String regex) {
 		super(regex);		

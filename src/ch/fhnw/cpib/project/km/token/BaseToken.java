@@ -3,14 +3,14 @@ package ch.fhnw.cpib.project.km.token;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public abstract class Base {
+public abstract class BaseToken {
 
 	/**
 	 * Pattern (Regex) that this token matches
 	 */
 	private final Pattern pattern;
 	
-	public Base(String regex) {
+	public BaseToken(String regex) {
 		super();
 		this.pattern = Pattern.compile(regex);
 	}
@@ -34,7 +34,7 @@ public abstract class Base {
 	 * @param s
 	 * @return if no instance is resulting from s then null is returned
 	 */
-	public Base createToken(CharSequence s) {
+	public BaseToken createToken(CharSequence s) {
 		int length = match(s);
 		if (length <= 0) {
 			throw new IllegalArgumentException("Token can't be created from the given Argument.");
@@ -48,5 +48,5 @@ public abstract class Base {
 	 * @param s
 	 * @return 
 	 */
-	protected abstract Base internalCreateToken(String s);
+	protected abstract BaseToken internalCreateToken(String s);
 }

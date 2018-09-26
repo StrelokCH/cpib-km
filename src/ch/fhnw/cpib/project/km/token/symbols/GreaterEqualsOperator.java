@@ -1,6 +1,6 @@
 package ch.fhnw.cpib.project.km.token.symbols;
 
-import ch.fhnw.cpib.project.km.token.Base;
+import ch.fhnw.cpib.project.km.token.BaseToken;
 
 public class GreaterEqualsOperator extends RelationalOperator {
 
@@ -9,7 +9,7 @@ public class GreaterEqualsOperator extends RelationalOperator {
 	}
 
 	@Override
-	protected Base internalCreateToken(String s) {
+	protected BaseToken internalCreateToken(String s) {
 		return new GreaterEqualsOperator();
 	}
 

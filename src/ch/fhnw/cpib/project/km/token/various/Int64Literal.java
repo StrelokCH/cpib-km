@@ -1,6 +1,6 @@
 package ch.fhnw.cpib.project.km.token.various;
 
-import ch.fhnw.cpib.project.km.token.Base;
+import ch.fhnw.cpib.project.km.token.BaseToken;
 
 public class Int64Literal extends Literal {
 
@@ -22,7 +22,7 @@ public class Int64Literal extends Literal {
 	}
 
 	@Override
-	protected Base internalCreateToken(String s) {
+	protected BaseToken internalCreateToken(String s) {
 		// TODO check if singed/unsigned
 		return new Int64Literal(Long.parseLong(s));
 	}

@@ -1,6 +1,6 @@
 package ch.fhnw.cpib.project.km.token.symbols;
 
-import ch.fhnw.cpib.project.km.token.Base;
+import ch.fhnw.cpib.project.km.token.BaseToken;
 
 public class MinusOperator extends AddOperator {
 
@@ -14,7 +14,7 @@ public class MinusOperator extends AddOperator {
 	}
 
 	@Override
-	protected Base internalCreateToken(String s) {
+	protected BaseToken internalCreateToken(String s) {
 		return new MinusOperator();
 	}
 }

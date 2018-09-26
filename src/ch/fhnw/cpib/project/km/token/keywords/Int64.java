@@ -1,6 +1,6 @@
 package ch.fhnw.cpib.project.km.token.keywords;
 
-import ch.fhnw.cpib.project.km.token.Base;
+import ch.fhnw.cpib.project.km.token.BaseToken;
 
 public class Int64 extends Type {
 
@@ -9,7 +9,7 @@ public class Int64 extends Type {
 	}
 
 	@Override
-	protected Base internalCreateToken(String s) {
+	protected BaseToken internalCreateToken(String s) {
 		return new Int64();
 	}
 }

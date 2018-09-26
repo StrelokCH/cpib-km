@@ -1,8 +1,8 @@
 package ch.fhnw.cpib.project.km.token.various;
 
-import ch.fhnw.cpib.project.km.token.Base;
+import ch.fhnw.cpib.project.km.token.BaseToken;
 
-public class Identifier extends Base {
+public class Identifier extends BaseToken {
 
 	private final String identifier;
 	
@@ -21,7 +21,7 @@ public class Identifier extends Base {
 	}
 
 	@Override
-	protected Base internalCreateToken(String s) {
+	protected BaseToken internalCreateToken(String s) {
 		return new Identifier(s);
 	}
 }

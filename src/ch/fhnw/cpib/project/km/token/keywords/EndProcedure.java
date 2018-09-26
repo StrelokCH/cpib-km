@@ -1,15 +1,15 @@
 package ch.fhnw.cpib.project.km.token.keywords;
 
-import ch.fhnw.cpib.project.km.token.Base;
+import ch.fhnw.cpib.project.km.token.BaseToken;
 
-public class EndProcedure extends Base {
+public class EndProcedure extends BaseToken {
 
 	public EndProcedure() {
 		super("endproc");
 	}
 
 	@Override
-	protected Base internalCreateToken(String s) {
+	protected BaseToken internalCreateToken(String s) {
 		return new EndProcedure();
 	}
 }

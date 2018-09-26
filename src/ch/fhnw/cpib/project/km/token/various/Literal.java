@@ -1,8 +1,8 @@
 package ch.fhnw.cpib.project.km.token.various;
 
-import ch.fhnw.cpib.project.km.token.Base;
+import ch.fhnw.cpib.project.km.token.BaseToken;
 
-public abstract class Literal extends Base {
+public abstract class Literal extends BaseToken {
 
 	public Literal(String regex) {
 		super(regex);

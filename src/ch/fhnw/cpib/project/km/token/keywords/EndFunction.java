@@ -1,15 +1,15 @@
 package ch.fhnw.cpib.project.km.token.keywords;
 
-import ch.fhnw.cpib.project.km.token.Base;
+import ch.fhnw.cpib.project.km.token.BaseToken;
 
-public class EndFunction extends Base {
+public class EndFunction extends BaseToken {
 
 	public EndFunction() {
 		super("endfun");
 	}
 
 	@Override
-	protected Base internalCreateToken(String s) {
+	protected BaseToken internalCreateToken(String s) {
 		return new EndFunction();
 	}
 }
