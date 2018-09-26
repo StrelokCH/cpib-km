@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 class MainTest {
 
 	@Test
-	void test() {
+	void testFoo() {
 		assertEquals(42, Main.foo());
 	}
 
