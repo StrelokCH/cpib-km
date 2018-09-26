@@ -5,7 +5,7 @@ public class Identifier extends Base {
 	private final String identifier;
 	
 	public Identifier(String identifier) {
-		super();
+		super("[a-zA-Z]([\\w'])*");
 		this.identifier = identifier;
 	}
 
@@ -16,5 +16,10 @@ public class Identifier extends Base {
 	@Override
 	public String toString() {
 		return "(" + super.toString() + "\"" + identifier + "\"), ";
+	}
+
+	@Override
+	protected Base internalCreateToken(String s) {
+		return new Identifier(s);
 	}
 }
