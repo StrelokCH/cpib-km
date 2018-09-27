@@ -5,7 +5,7 @@ import ch.fhnw.cpib.project.km.token.BaseToken;
 public class EndProgram extends BaseToken {
 
 	public EndProgram() {
-		super("endproc");
+		super("endprogram");
 	}
 
 	@Override

@@ -5,7 +5,7 @@ import ch.fhnw.cpib.project.km.token.BaseToken;
 public class Ignore extends BaseToken {
 
 	public Ignore() {
-		super("[\\n\\s]+");
+		super("[\\n\\r\\x20]+");
 	}
 
 	@Override

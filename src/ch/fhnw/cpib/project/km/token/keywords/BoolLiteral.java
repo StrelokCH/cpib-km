@@ -5,7 +5,7 @@ import ch.fhnw.cpib.project.km.token.various.Literal;
 
 public class BoolLiteral extends Literal {
 	
-	final boolean value;
+	private final boolean value;
 	
 	public BoolLiteral(boolean value) {
 		super("(true)|(false)");
@@ -19,6 +19,11 @@ public class BoolLiteral extends Literal {
 	@Override
 	public String toString() {
 		return "(" + super.toString() + "BoolVal " + value + "), ";
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj) && ((BoolLiteral)obj).value == this.value;
 	}
 
 	@Override

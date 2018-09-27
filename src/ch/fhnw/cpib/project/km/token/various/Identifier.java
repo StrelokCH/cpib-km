@@ -21,6 +21,11 @@ public class Identifier extends BaseToken {
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj) && ((Identifier)obj).identifier.equals(this.identifier);
+	}
+
+	@Override
 	protected BaseToken internalCreateToken(String s) {
 		return new Identifier(s);
 	}
