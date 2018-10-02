@@ -10,8 +10,8 @@ public class Int64Literal extends Literal {
 	private final long value;
 	
 	public Int64Literal(long value) {
-		// TODO is Int64 really unsigned?
-		super("");
+		// unsigned
+		super("\\\\d('*\\\\d+)*");
 		this.value = value;
 	}
 

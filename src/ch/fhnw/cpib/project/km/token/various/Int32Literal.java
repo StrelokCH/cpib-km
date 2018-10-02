@@ -9,7 +9,7 @@ public class Int32Literal extends Literal {
 	private final int value;
 
 	public Int32Literal(int value) {
-		// TODO is Int32 really unsigned?
+		// unsigned
 		super("\\d('*\\d+)*");
 		this.value = value;
 	}
