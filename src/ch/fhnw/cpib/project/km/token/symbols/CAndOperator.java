@@ -2,6 +2,11 @@ package ch.fhnw.cpib.project.km.token.symbols;
 
 import ch.fhnw.cpib.project.km.token.BaseToken;
 
+/**
+ * Conditional And
+ * @author Janik
+ *
+ */
 public class CAndOperator extends BooleanOperator {
 
 	public CAndOperator() {
