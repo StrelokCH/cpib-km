@@ -1,0 +1,101 @@
+// Out given Grammar from IML Slides with the following changes:
+// remove repetitions, options, grouping
+// remove left recursion
+// remove same leftmost symbol
+
+
+// Program
+program ::= PROGRAM IDENT progParamList program' DO cpsCmd ENDPROGRAM
+program' ::= GLOBAL cpsDecl
+program' ::= e
+
+// Declarations
+decl ::= stoDecl
+decl ::= funDecl
+decl ::= procDecl
+stoDecl ::= CHANGEMODE typedIdent
+stoDecl ::= typedIdent
+funDecl ::= FUN IDENT paramList RETURNS stoDecl globalGlobImps localCpsStoDecl DO cpsCmd ENDFUN
+globalGlobImps ::= GLOBAL globImps
+globalGlobImps ::= e
+localCpsStoDecl ::= LOCAL cpsStoDecl
+localCpsStoDecl ::= e
+procDecl ::= PROC IDENT paramList globalGlobImps localCpsStoDecl DO cpsCmd ENDPROC
+globImps ::= globImp globImps'
+globImps' ::= COMMA globImp globImps'
+globImps' ::= e
+globImp ::= optFlowmode optChangemode IDENT
+optFlowmode ::= FLOWMODE
+optFlowmode ::= e
+optChangemode ::= CHANGEMODE
+optChangemode ::= e
+optMechmode ::= MECHMODE
+optMechmode ::= e
+cpsDecl ::= decl cpsDecl'
+cpsDecl' ::= SEMICOLON cpsDecl
+cpsDecl' ::= e
+cpsStoDecl ::= stoDecl cpsStoDecl'
+cpsStoDecl' ::= SEMICOLON cpsStoDecl
+cpsStoDecl' ::= e
+
+// Parameter Lists
+progParamList ::= LPAREN optProgParams RPAREN
+optProgParams ::= optProgParams'
+optProgParams ::= e
+optProgParams' ::= progParam optProgParams''
+optProgParams'' ::= COMMA optProgParams
+optProgParams'' ::= e
+progParam ::= optFlowmode optChangemode typedIdent
+paramList ::= LPAREN paramList' RPAREN
+paramList' ::= param paramList''
+paramList' ::= e
+paramList'' ::= COMMA paramList'
+paramList'' ::= e
+param ::= optFlowmode optMechmode optChangemode typedIdent
+typedIdent ::= IDENT COLON ATOMTYPE
+
+// Commands
+cmd ::= SKIP
+cmd ::= expr BECOMES expr
+cmd ::= IF expr THEN cpsCmd ELSE cpsCmd ENDIF
+cmd ::= WHILE expr DO cpsCmd ENDWHILE
+cmd ::= CALL IDENT exprList optGlobInits
+optGlobInits ::= globInits
+optGlobInits ::= e
+cmd ::= DEBUGIN expr
+cmd ::= DEBUGOUT expr
+cpsCmd ::= cmd cpsCmd'
+cpsCmd' ::= SEMICOLON cpsCmd
+cpsCmd' ::= e
+globInits ::= INIT idents
+idents ::= IDENT idents'
+idents' ::= COMMA idents
+idents' ::= e
+
+// Expressions
+expr ::= term1 expr'
+expr' ::= BOOLOPR term1 expr'
+expr' ::= e
+term1 ::= term2 term1'
+term1' ::= RELOPR term2
+term1' ::= e
+term2 ::= term3 term2'
+term2' ::= ADDOPR term3 term2'
+term2' ::= e
+term3 ::= factor term3'
+term3' ::= MULTOPR factor term3'
+term3' ::= e
+factor ::= LITERAL
+factor ::= IDENT ident'
+factor ::= monadicOpr factor
+factor ::= LPAREN expr RPAREN
+ident' ::= INIT
+ident' ::= exprList
+ident' ::= e
+monadicOpr ::= NOT
+monadicOpr ::= ADDOPR
+exprList ::= LPAREN exprList' RPAREN
+exprList' ::= expr exprList''
+exprList' ::= e
+exprList'' ::= COMMA exprList'
+exprList'' ::= e
