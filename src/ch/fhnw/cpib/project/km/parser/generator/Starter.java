@@ -1,4 +1,4 @@
-package ch.fhnw.cpib.km.parser.generator;
+package ch.fhnw.cpib.project.km.parser.generator;
 
 public class Starter {
 	public static void main(String [] args) {
