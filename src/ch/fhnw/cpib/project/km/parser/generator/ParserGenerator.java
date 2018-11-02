@@ -9,7 +9,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+
+import com.google.googlejavaformat.java.Formatter;
+import com.google.googlejavaformat.java.FormatterException;
 
 public class ParserGenerator {
 
@@ -45,7 +49,7 @@ public class ParserGenerator {
 			lines = Files.readAllLines(filePath, charset);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			System.out.println("file should be here: " + System.getProperty("user.dir"));
+			System.out.println("file " + parseTablePath.toString() + " should be placed here: " + System.getProperty("user.dir"));
 			e.printStackTrace();
 		}
 		List<Line> parseTable = new ArrayList<>();
@@ -90,46 +94,56 @@ public class ParserGenerator {
 	}
 
 	private void createNonTerminalSymbolClass(String outDir, String className, String interfaceName, String insertPackage, Col c) {
-		PrintWriter pw = null;
 		try {
 			File f = new File(outDir + className + ".java");
 			f.createNewFile();
-			pw = new PrintWriter(f);
+			StringBuilder sb = new StringBuilder();
+			addnl(sb, insertPackage);
+			
+			addnl(sb, "class " + className + " implements " + interfaceName);
+			
+			addnl(sb, "{");
 
-			pw.println(insertPackage);
-
-			pw.println("class " + className + " implements " + interfaceName);
-			pw.println("{");
-			writeMembers(pw,c);
-			writeConstructor(pw, className, c);
+			writeMembers(sb,c);
+			writeConstructor(sb, className, c);
 			//pw.println("IAbsSyn.IExpr toAbsSyn() { return null; }");
-			writeToString(pw, className, c);
-			pw.println("}");
+			writeToString(sb, className, c);
+			addnl(sb, "}");
+			
+			String rawSource = sb.toString();
+			String formattedSource;
+			
+			try {
+				formattedSource = new Formatter().formatSource(rawSource);
+			} catch (FormatterException e) {
+				System.out.println("Unable to format " + f.getName());
+				formattedSource = rawSource;
+			}
+			PrintWriter pw = new PrintWriter(f);
+			pw.print(formattedSource);
+
 			pw.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private void writeToString(PrintWriter pw, String className, Col c) {
-		pw.println("String toString(String indent){");
-		pw.println("System.out.println(indent + \"" + className + "\");");
+	private void writeToString(StringBuilder sb, String className, Col c) {
+		addnl(sb, "public void toString(String indent){");
+		addnl(sb, "System.out.println(indent + \"" + className + "\");");
 		for (final String v : c.values) {
 			if (v.isEmpty()) {
 				continue;
 			}
 			String name = getCamelCase(v);
-			pw.println(name + ".toString(indent + \"    \");");
+			addnl(sb, name + ".toString(indent + \"    \");");
 		}
-		pw.println("}");
+		addnl(sb, "}");
 	}
 
-	private void writeConstructor(PrintWriter pw, String className, Col c) {
-		pw.println("private " + className + "(");
+	private void writeConstructor(StringBuilder sb, String className, Col c) {
+		List<String> constrArgs = new LinkedList<>();
+		addnl(sb, "private " + className + "(");
 		for (final String v : c.values) {
 			if (v.isEmpty()) {
 				continue;
@@ -143,24 +157,22 @@ public class ParserGenerator {
 				// terminal
 				type = getPascalCase(v);
 			}
-			pw.print("final " + type + " " + name);
-			if (!v.equals(c.values.get(c.values.size()-1))) {
-				pw.print(",");
-			}
-			pw.println();
+			
+			constrArgs.add("final " + type + " " + name);
 		}
-		pw.println("){");
+		addnl(sb, String.join(", ", constrArgs));
+		addnl(sb, "){");
 		for (final String v : c.values) {
 			if (v.isEmpty()) {
 				continue;
 			}
 			String name = getCamelCase(v);
-			pw.println("this." + name + " = " + name + ";");
+			addnl(sb, "this." + name + " = " + name + ";");
 		}
-		pw.println("}");
+		addnl(sb, "}");
 	}
 
-	private void writeMembers(PrintWriter pw, Col c) {
+	private void writeMembers(StringBuilder sb, Col c) {
 		for (final String v : c.values) {
 			if (v.isEmpty()) {
 				continue;
@@ -174,7 +186,7 @@ public class ParserGenerator {
 				// terminal
 				type = getPascalCase(v);
 			}
-			pw.println("private final " + type + " " + name + ";");
+			sb.append("private final " + type + " " + name + ";");
 		}
 	}
 
@@ -242,6 +254,18 @@ public class ParserGenerator {
 			// terminal
 			name = name.toLowerCase();
 		}
+		
+		
+		if (name.equalsIgnoreCase("if")) {
+			return "aIf";
+		} else if (name.equalsIgnoreCase("else")) {
+			return "aElse";
+		} else if (name.equalsIgnoreCase("do")) {
+			return "aDo";
+		} else if (name.equalsIgnoreCase("while")) {
+			return "aWhile";
+		}
+		
 		return name;
 	}
 
@@ -272,7 +296,7 @@ public class ParserGenerator {
 			pw.println("interface " + name);
 			pw.println("{");
 			pw.println("    IAbsSyn.IExpr toAbsSyn();");
-			pw.println("    String toString(String indent);");
+			pw.println("    void toString(String indent);");
 			pw.println("}");
 			pw.close();
 		} catch (FileNotFoundException e) {
@@ -282,6 +306,15 @@ public class ParserGenerator {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	private void addnl(StringBuilder sb, String s) {
+		sb.append(s);
+		sb.append(System.getProperty("line.separator"));
+	}
+	
+	private void addnl(StringBuilder sb) {
+		sb.append(System.getProperty("line.separator"));
 	}
 
 }
