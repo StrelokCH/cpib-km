@@ -107,7 +107,7 @@ public class ParserGenerator {
 			writeMembers(sb,c);
 			writeConstructor(sb, className, c);
 			//pw.println("IAbsSyn.IExpr toAbsSyn() { return null; }");
-			writeToString(sb, className, c);
+			writePrint(sb, className, c);
 			addnl(sb, "}");
 			
 			String rawSource = sb.toString();
@@ -128,15 +128,15 @@ public class ParserGenerator {
 		}
 	}
 	
-	private void writeToString(StringBuilder sb, String className, Col c) {
-		addnl(sb, "public void toString(String indent){");
+	private void writePrint(StringBuilder sb, String className, Col c) {
+		addnl(sb, "public void print(String indent){");
 		addnl(sb, "System.out.println(indent + \"" + className + "\");");
 		for (final String v : c.values) {
 			if (v.isEmpty()) {
 				continue;
 			}
 			String name = getCamelCase(v);
-			addnl(sb, name + ".toString(indent + \"    \");");
+			addnl(sb, name + ".print(indent + \"    \");");
 		}
 		addnl(sb, "}");
 	}
@@ -296,7 +296,7 @@ public class ParserGenerator {
 			pw.println("interface " + name);
 			pw.println("{");
 			pw.println("    IAbsSyn.IExpr toAbsSyn();");
-			pw.println("    void toString(String indent);");
+			pw.println("    void print(String indent);");
 			pw.println("}");
 			pw.close();
 		} catch (FileNotFoundException e) {
