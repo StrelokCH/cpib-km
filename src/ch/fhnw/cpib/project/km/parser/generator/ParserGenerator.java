@@ -310,7 +310,7 @@ public class ParserGenerator {
 	
 	private void addnl(StringBuilder sb, String s) {
 		sb.append(s);
-		sb.append(System.getProperty("line.separator"));
+		addnl(sb);
 	}
 	
 	private void addnl(StringBuilder sb) {
