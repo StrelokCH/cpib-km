@@ -108,6 +108,7 @@ public class ParserGenerator {
 			writeConstructor(sb, className, c);
 			//pw.println("IAbsSyn.IExpr toAbsSyn() { return null; }");
 			writePrint(sb, className, c);
+			writeToAbsSynDummy(sb);
 			addnl(sb, "}");
 			
 			String rawSource = sb.toString();
@@ -188,6 +189,13 @@ public class ParserGenerator {
 			}
 			sb.append("private final " + type + " " + name + ";");
 		}
+	}
+	
+	private void writeToAbsSynDummy(StringBuilder sb) {	
+		addnl(sb, "@Override");
+		addnl(sb, "public IAbsSyn.IExpr toAbsSyn() {");
+		addnl(sb, "return null;");
+		addnl(sb, "}");
 	}
 
 	private void addParserCol(PrintWriter parserFile, Col c, String className) {

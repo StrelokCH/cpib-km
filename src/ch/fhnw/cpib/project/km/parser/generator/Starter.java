@@ -4,7 +4,7 @@ public class Starter {
 	public static void main(String [] args) {
 		String parseTablePath = "Grammar_IML_ParseTable.txt";
 		String outDir = "output/";
-		String insertPackage = "package ch.fhnw.cpib.km.parser;\n";
+		String insertPackage = "package ch.fhnw.cpib.project.km.parser.generated;\n";
 		
 		ParserGenerator g = new ParserGenerator(parseTablePath);
 		g.generate(outDir, insertPackage);
