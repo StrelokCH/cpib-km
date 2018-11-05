@@ -133,7 +133,7 @@ public class ParserGenerator {
 		addnl(sb, "public void print(String indent){");
 		addnl(sb, "System.out.println(indent + \"" + className + "\");");
 		for (final String v : c.values) {
-			if (v.isEmpty()) {
+			if (v.isEmpty() || IsTerminal(v)) {
 				continue;
 			}
 			String name = getCamelCase(v);
@@ -146,25 +146,17 @@ public class ParserGenerator {
 		List<String> constrArgs = new LinkedList<>();
 		addnl(sb, "private " + className + "(");
 		for (final String v : c.values) {
-			if (v.isEmpty()) {
+			if (v.isEmpty() || IsTerminal(v)) {
 				continue;
 			}
 			String name = getCamelCase(v);
-			String type;
-			if (v.startsWith("<")) {
-				// non-terminal
-				type = getInterfaceName(v);
-			} else {
-				// terminal
-				type = getPascalCase(v);
-			}
-			
+			String type= getInterfaceName(v);			
 			constrArgs.add("final " + type + " " + name);
 		}
 		addnl(sb, String.join(", ", constrArgs));
 		addnl(sb, "){");
 		for (final String v : c.values) {
-			if (v.isEmpty()) {
+			if (v.isEmpty() || IsTerminal(v)) {
 				continue;
 			}
 			String name = getCamelCase(v);
@@ -175,18 +167,11 @@ public class ParserGenerator {
 
 	private void writeMembers(StringBuilder sb, Col c) {
 		for (final String v : c.values) {
-			if (v.isEmpty()) {
+			if (v.isEmpty() || IsTerminal(v)) {
 				continue;
 			}
 			String name = getCamelCase(v);
-			String type;
-			if (v.startsWith("<")) {
-				// non-terminal
-				type = getInterfaceName(v);
-			} else {
-				// terminal
-				type = getPascalCase(v);
-			}
+			String type = getInterfaceName(v);
 			sb.append("private final " + type + " " + name + ";");
 		}
 	}
@@ -221,7 +206,7 @@ public class ParserGenerator {
 		}
 		parserFile.print("return new " + className + "(");
 		for (final String v : c.values) {
-			if (v.isEmpty()) {
+			if (v.isEmpty() || IsTerminal(v)) {
 				continue;
 			}
 			String name = getCamelCase(v);
@@ -263,7 +248,6 @@ public class ParserGenerator {
 			name = name.toLowerCase();
 		}
 		
-		
 		if (name.equalsIgnoreCase("if")) {
 			return "aIf";
 		} else if (name.equalsIgnoreCase("else")) {
@@ -275,6 +259,10 @@ public class ParserGenerator {
 		}
 		
 		return name;
+	}
+	
+	private boolean IsTerminal(String s) {
+		return !s.startsWith("<");
 	}
 
 	private PrintWriter createParserFile(String outDir) {
