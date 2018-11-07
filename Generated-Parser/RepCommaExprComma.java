@@ -1,6 +1,8 @@
 package ch.fhnw.cpib.project.km.syntax.concrete;
 
-import ch.fhnw.cpib.project.km.token.*;
+import ch.fhnw.cpib.project.km.token.keywords.*;
+import ch.fhnw.cpib.project.km.token.symbols.*;
+import ch.fhnw.cpib.project.km.token.various.*;
 
 class RepCommaExprComma implements IRepCommaExpr {
   private final Comma comma;
@@ -12,8 +14,8 @@ class RepCommaExprComma implements IRepCommaExpr {
   }
 
   public void print(String indent) {
-    System.out.println(indent + "RepCommaExprComma");
-    comma.print(indent + "    ");
+    System.out.println(indent + this.getClass().getSimpleName());
+    System.out.println(ident + "    T " + comma.toString());
     cpsExpr.print(indent + "    ");
   }
 

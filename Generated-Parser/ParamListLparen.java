@@ -1,6 +1,8 @@
 package ch.fhnw.cpib.project.km.syntax.concrete;
 
-import ch.fhnw.cpib.project.km.token.*;
+import ch.fhnw.cpib.project.km.token.keywords.*;
+import ch.fhnw.cpib.project.km.token.symbols.*;
+import ch.fhnw.cpib.project.km.token.various.*;
 
 class ParamListLparen implements IParamList {
   private final Lparen lparen;
@@ -15,10 +17,10 @@ class ParamListLparen implements IParamList {
   }
 
   public void print(String indent) {
-    System.out.println(indent + "ParamListLparen");
-    lparen.print(indent + "    ");
+    System.out.println(indent + this.getClass().getSimpleName());
+    System.out.println(ident + "    T " + lparen.toString());
     optCpsParam.print(indent + "    ");
-    rparen.print(indent + "    ");
+    System.out.println(ident + "    T " + rparen.toString());
   }
 
   @Override

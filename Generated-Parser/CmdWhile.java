@@ -1,18 +1,20 @@
 package ch.fhnw.cpib.project.km.syntax.concrete;
 
-import ch.fhnw.cpib.project.km.token.*;
+import ch.fhnw.cpib.project.km.token.keywords.*;
+import ch.fhnw.cpib.project.km.token.symbols.*;
+import ch.fhnw.cpib.project.km.token.various.*;
 
-class CmdAWhile implements ICmd {
-  private final AWhile aWhile;
+class CmdWhile implements ICmd {
+  private final While aWhile;
   private final IExpr expr;
-  private final ADo aDo;
+  private final Do aDo;
   private final ICpsCmd cpsCmd;
   private final Endwhile endwhile;
 
-  private CmdAWhile(
-      final AWhile aWhile,
+  private CmdWhile(
+      final While aWhile,
       final IExpr expr,
-      final ADo aDo,
+      final Do aDo,
       final ICpsCmd cpsCmd,
       final Endwhile endwhile) {
     this.aWhile = aWhile;
@@ -23,12 +25,12 @@ class CmdAWhile implements ICmd {
   }
 
   public void print(String indent) {
-    System.out.println(indent + "CmdAWhile");
-    aWhile.print(indent + "    ");
+    System.out.println(indent + this.getClass().getSimpleName());
+    System.out.println(ident + "    T " + aWhile.toString());
     expr.print(indent + "    ");
-    aDo.print(indent + "    ");
+    System.out.println(ident + "    T " + aDo.toString());
     cpsCmd.print(indent + "    ");
-    endwhile.print(indent + "    ");
+    System.out.println(ident + "    T " + endwhile.toString());
   }
 
   @Override

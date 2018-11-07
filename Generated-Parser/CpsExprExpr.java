@@ -1,6 +1,8 @@
 package ch.fhnw.cpib.project.km.syntax.concrete;
 
-import ch.fhnw.cpib.project.km.token.*;
+import ch.fhnw.cpib.project.km.token.keywords.*;
+import ch.fhnw.cpib.project.km.token.symbols.*;
+import ch.fhnw.cpib.project.km.token.various.*;
 
 class CpsExprExpr implements ICpsExpr {
   private final IExpr expr;
@@ -12,7 +14,7 @@ class CpsExprExpr implements ICpsExpr {
   }
 
   public void print(String indent) {
-    System.out.println(indent + "CpsExprExpr");
+    System.out.println(indent + this.getClass().getSimpleName());
     expr.print(indent + "    ");
     repCommaExpr.print(indent + "    ");
   }

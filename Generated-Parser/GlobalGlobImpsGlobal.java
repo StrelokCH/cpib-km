@@ -1,6 +1,8 @@
 package ch.fhnw.cpib.project.km.syntax.concrete;
 
-import ch.fhnw.cpib.project.km.token.*;
+import ch.fhnw.cpib.project.km.token.keywords.*;
+import ch.fhnw.cpib.project.km.token.symbols.*;
+import ch.fhnw.cpib.project.km.token.various.*;
 
 class GlobalGlobImpsGlobal implements IGlobalGlobImps {
   private final Global global;
@@ -12,8 +14,8 @@ class GlobalGlobImpsGlobal implements IGlobalGlobImps {
   }
 
   public void print(String indent) {
-    System.out.println(indent + "GlobalGlobImpsGlobal");
-    global.print(indent + "    ");
+    System.out.println(indent + this.getClass().getSimpleName());
+    System.out.println(ident + "    T " + global.toString());
     globImps.print(indent + "    ");
   }
 

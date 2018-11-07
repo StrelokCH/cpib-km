@@ -1,6 +1,8 @@
 package ch.fhnw.cpib.project.km.syntax.concrete;
 
-import ch.fhnw.cpib.project.km.token.*;
+import ch.fhnw.cpib.project.km.token.keywords.*;
+import ch.fhnw.cpib.project.km.token.symbols.*;
+import ch.fhnw.cpib.project.km.token.various.*;
 
 class MonadicOprNot implements IMonadicOpr {
   private final Not not;
@@ -10,8 +12,8 @@ class MonadicOprNot implements IMonadicOpr {
   }
 
   public void print(String indent) {
-    System.out.println(indent + "MonadicOprNot");
-    not.print(indent + "    ");
+    System.out.println(indent + this.getClass().getSimpleName());
+    System.out.println(ident + "    T " + not.toString());
   }
 
   @Override

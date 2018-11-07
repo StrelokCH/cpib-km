@@ -1,6 +1,8 @@
 package ch.fhnw.cpib.project.km.syntax.concrete;
 
-import ch.fhnw.cpib.project.km.token.*;
+import ch.fhnw.cpib.project.km.token.keywords.*;
+import ch.fhnw.cpib.project.km.token.symbols.*;
+import ch.fhnw.cpib.project.km.token.various.*;
 
 class Term2Term3 implements ITerm2 {
   private final ITerm3 term3;
@@ -12,7 +14,7 @@ class Term2Term3 implements ITerm2 {
   }
 
   public void print(String indent) {
-    System.out.println(indent + "Term2Term3");
+    System.out.println(indent + this.getClass().getSimpleName());
     term3.print(indent + "    ");
     repAddoprTerm3.print(indent + "    ");
   }

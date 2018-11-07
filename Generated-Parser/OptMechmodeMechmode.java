@@ -1,6 +1,8 @@
 package ch.fhnw.cpib.project.km.syntax.concrete;
 
-import ch.fhnw.cpib.project.km.token.*;
+import ch.fhnw.cpib.project.km.token.keywords.*;
+import ch.fhnw.cpib.project.km.token.symbols.*;
+import ch.fhnw.cpib.project.km.token.various.*;
 
 class OptMechmodeMechmode implements IOptMechmode {
   private final Mechmode mechmode;
@@ -10,8 +12,8 @@ class OptMechmodeMechmode implements IOptMechmode {
   }
 
   public void print(String indent) {
-    System.out.println(indent + "OptMechmodeMechmode");
-    mechmode.print(indent + "    ");
+    System.out.println(indent + this.getClass().getSimpleName());
+    System.out.println(ident + "    T " + mechmode.toString());
   }
 
   @Override

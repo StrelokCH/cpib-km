@@ -1,6 +1,8 @@
 package ch.fhnw.cpib.project.km.syntax.concrete;
 
-import ch.fhnw.cpib.project.km.token.*;
+import ch.fhnw.cpib.project.km.token.keywords.*;
+import ch.fhnw.cpib.project.km.token.symbols.*;
+import ch.fhnw.cpib.project.km.token.various.*;
 
 class OptLocalCpsStoDeclLocal implements IOptLocalCpsStoDecl {
   private final Local local;
@@ -12,8 +14,8 @@ class OptLocalCpsStoDeclLocal implements IOptLocalCpsStoDecl {
   }
 
   public void print(String indent) {
-    System.out.println(indent + "OptLocalCpsStoDeclLocal");
-    local.print(indent + "    ");
+    System.out.println(indent + this.getClass().getSimpleName());
+    System.out.println(ident + "    T " + local.toString());
     cpsStoDecl.print(indent + "    ");
   }
 

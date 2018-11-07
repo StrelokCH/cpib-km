@@ -1,6 +1,8 @@
 package ch.fhnw.cpib.project.km.syntax.concrete;
 
-import ch.fhnw.cpib.project.km.token.*;
+import ch.fhnw.cpib.project.km.token.keywords.*;
+import ch.fhnw.cpib.project.km.token.symbols.*;
+import ch.fhnw.cpib.project.km.token.various.*;
 
 class CmdExpr implements ICmd {
   private final IExpr expr;
@@ -14,9 +16,9 @@ class CmdExpr implements ICmd {
   }
 
   public void print(String indent) {
-    System.out.println(indent + "CmdExpr");
+    System.out.println(indent + this.getClass().getSimpleName());
     expr.print(indent + "    ");
-    becomes.print(indent + "    ");
+    System.out.println(ident + "    T " + becomes.toString());
     expr.print(indent + "    ");
   }
 

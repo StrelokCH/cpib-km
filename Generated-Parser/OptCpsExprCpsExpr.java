@@ -1,6 +1,8 @@
 package ch.fhnw.cpib.project.km.syntax.concrete;
 
-import ch.fhnw.cpib.project.km.token.*;
+import ch.fhnw.cpib.project.km.token.keywords.*;
+import ch.fhnw.cpib.project.km.token.symbols.*;
+import ch.fhnw.cpib.project.km.token.various.*;
 
 class OptCpsExprCpsExpr implements IOptCpsExpr {
   private final ICpsExpr cpsExpr;
@@ -10,7 +12,7 @@ class OptCpsExprCpsExpr implements IOptCpsExpr {
   }
 
   public void print(String indent) {
-    System.out.println(indent + "OptCpsExprCpsExpr");
+    System.out.println(indent + this.getClass().getSimpleName());
     cpsExpr.print(indent + "    ");
   }
 

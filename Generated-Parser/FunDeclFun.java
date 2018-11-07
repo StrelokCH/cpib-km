@@ -1,6 +1,8 @@
 package ch.fhnw.cpib.project.km.syntax.concrete;
 
-import ch.fhnw.cpib.project.km.token.*;
+import ch.fhnw.cpib.project.km.token.keywords.*;
+import ch.fhnw.cpib.project.km.token.symbols.*;
+import ch.fhnw.cpib.project.km.token.various.*;
 
 class FunDeclFun implements IFunDecl {
   private final Fun fun;
@@ -10,7 +12,7 @@ class FunDeclFun implements IFunDecl {
   private final IStoDecl stoDecl;
   private final IGlobalGlobImps globalGlobImps;
   private final IOptLocalCpsStoDecl optLocalCpsStoDecl;
-  private final ADo aDo;
+  private final Do aDo;
   private final ICpsCmd cpsCmd;
   private final Endfun endfun;
 
@@ -22,7 +24,7 @@ class FunDeclFun implements IFunDecl {
       final IStoDecl stoDecl,
       final IGlobalGlobImps globalGlobImps,
       final IOptLocalCpsStoDecl optLocalCpsStoDecl,
-      final ADo aDo,
+      final Do aDo,
       final ICpsCmd cpsCmd,
       final Endfun endfun) {
     this.fun = fun;
@@ -38,17 +40,17 @@ class FunDeclFun implements IFunDecl {
   }
 
   public void print(String indent) {
-    System.out.println(indent + "FunDeclFun");
-    fun.print(indent + "    ");
-    ident.print(indent + "    ");
+    System.out.println(indent + this.getClass().getSimpleName());
+    System.out.println(ident + "    T " + fun.toString());
+    System.out.println(ident + "    T " + ident.toString());
     paramList.print(indent + "    ");
-    returns.print(indent + "    ");
+    System.out.println(ident + "    T " + returns.toString());
     stoDecl.print(indent + "    ");
     globalGlobImps.print(indent + "    ");
     optLocalCpsStoDecl.print(indent + "    ");
-    aDo.print(indent + "    ");
+    System.out.println(ident + "    T " + aDo.toString());
     cpsCmd.print(indent + "    ");
-    endfun.print(indent + "    ");
+    System.out.println(ident + "    T " + endfun.toString());
   }
 
   @Override

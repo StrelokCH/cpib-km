@@ -1,6 +1,8 @@
 package ch.fhnw.cpib.project.km.syntax.concrete;
 
-import ch.fhnw.cpib.project.km.token.*;
+import ch.fhnw.cpib.project.km.token.keywords.*;
+import ch.fhnw.cpib.project.km.token.symbols.*;
+import ch.fhnw.cpib.project.km.token.various.*;
 
 class CmdDebugin implements ICmd {
   private final Debugin debugin;
@@ -12,8 +14,8 @@ class CmdDebugin implements ICmd {
   }
 
   public void print(String indent) {
-    System.out.println(indent + "CmdDebugin");
-    debugin.print(indent + "    ");
+    System.out.println(indent + this.getClass().getSimpleName());
+    System.out.println(ident + "    T " + debugin.toString());
     expr.print(indent + "    ");
   }
 

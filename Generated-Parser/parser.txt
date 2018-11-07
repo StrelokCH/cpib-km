@@ -7,7 +7,7 @@ Program program=((Program) consume(Program));
 Ident ident=((Ident) consume(Ident));
 IProgParamList progParamList=progParamList();
 IOptGlobalCpsDecl optGlobalCpsDecl=optGlobalCpsDecl();
-ADo aDo=((ADo) consume(ADo));
+Do aDo=((Do) consume(Do));
 ICpsCmd cpsCmd=cpsCmd();
 Endprogram endprogram=((Endprogram) consume(Endprogram));
 return new ProgramProgram(program,ident,progParamList,optGlobalCpsDecl,aDo,cpsCmd,endprogram);
@@ -23,7 +23,7 @@ Global global=((Global) consume(Global));
 ICpsDecl cpsDecl=cpsDecl();
 return new OptGlobalCpsDeclGlobal(global,cpsDecl);
 }
-if (terminal instanceof Ado){
+if (terminal instanceof Do){
 System.out.println("\"");
 return new OptGlobalCpsDecl();
 }
@@ -77,7 +77,7 @@ Returns returns=((Returns) consume(Returns));
 IStoDecl stoDecl=stoDecl();
 IGlobalGlobImps globalGlobImps=globalGlobImps();
 IOptLocalCpsStoDecl optLocalCpsStoDecl=optLocalCpsStoDecl();
-ADo aDo=((ADo) consume(ADo));
+Do aDo=((Do) consume(Do));
 ICpsCmd cpsCmd=cpsCmd();
 Endfun endfun=((Endfun) consume(Endfun));
 return new FunDeclFun(fun,ident,paramList,returns,stoDecl,globalGlobImps,optLocalCpsStoDecl,aDo,cpsCmd,endfun);
@@ -93,7 +93,7 @@ Global global=((Global) consume(Global));
 IGlobImps globImps=globImps();
 return new GlobalGlobImpsGlobal(global,globImps);
 }
-if (terminal instanceof Ado || terminal instanceof Local){
+if (terminal instanceof Do || terminal instanceof Local){
 System.out.println("\"");
 return new GlobalGlobImps();
 }
@@ -108,7 +108,7 @@ Local local=((Local) consume(Local));
 ICpsStoDecl cpsStoDecl=cpsStoDecl();
 return new OptLocalCpsStoDeclLocal(local,cpsStoDecl);
 }
-if (terminal instanceof Ado){
+if (terminal instanceof Do){
 System.out.println("\"");
 return new OptLocalCpsStoDecl();
 }
@@ -124,7 +124,7 @@ Ident ident=((Ident) consume(Ident));
 IParamList paramList=paramList();
 IGlobalGlobImps globalGlobImps=globalGlobImps();
 IOptLocalCpsStoDecl optLocalCpsStoDecl=optLocalCpsStoDecl();
-ADo aDo=((ADo) consume(ADo));
+Do aDo=((Do) consume(Do));
 ICpsCmd cpsCmd=cpsCmd();
 Endproc endproc=((Endproc) consume(Endproc));
 return new ProcDeclProc(proc,ident,paramList,globalGlobImps,optLocalCpsStoDecl,aDo,cpsCmd,endproc);
@@ -152,7 +152,7 @@ IGlobImp globImp=globImp();
 IRepCommaGlobImps repCommaGlobImps=repCommaGlobImps();
 return new RepCommaGlobImpsComma(comma,globImp,repCommaGlobImps);
 }
-if (terminal instanceof Ado || terminal instanceof Local){
+if (terminal instanceof Do || terminal instanceof Local){
 System.out.println("\"");
 return new RepCommaGlobImps();
 }
@@ -232,7 +232,7 @@ Semicolon semicolon=((Semicolon) consume(Semicolon));
 ICpsDecl cpsDecl=cpsDecl();
 return new RepSemicolonCpsDeclSemicolon(semicolon,cpsDecl);
 }
-if (terminal instanceof Ado){
+if (terminal instanceof Do){
 System.out.println("\"");
 return new RepSemicolonCpsDecl();
 }
@@ -258,7 +258,7 @@ Semicolon semicolon=((Semicolon) consume(Semicolon));
 ICpsStoDecl cpsStoDecl=cpsStoDecl();
 return new RepSemicolonCpsStoDeclSemicolon(semicolon,cpsStoDecl);
 }
-if (terminal instanceof Ado){
+if (terminal instanceof Do){
 System.out.println("\"");
 return new RepSemicolonCpsStoDecl();
 }
@@ -420,25 +420,25 @@ Becomes becomes=((Becomes) consume(Becomes));
 IExpr expr=expr();
 return new CmdExpr(exprbecomes,expr);
 }
-if (terminal instanceof Aif){
+if (terminal instanceof If){
 System.out.println("IF <expr> THEN <cpsCmd> ELSE <cpsCmd> ENDIF\"");
-AIf aIf=((AIf) consume(AIf));
+If aIf=((If) consume(If));
 IExpr expr=expr();
 Then then=((Then) consume(Then));
 ICpsCmd cpsCmd=cpsCmd();
-AElse aElse=((AElse) consume(AElse));
+Else aElse=((Else) consume(Else));
 ICpsCmd cpsCmd=cpsCmd();
 Endif endif=((Endif) consume(Endif));
-return new CmdAIf(aIf,expr,then,cpsCmd,aElse,cpsCmd,endif);
+return new CmdIf(aIf,expr,then,cpsCmd,aElse,cpsCmd,endif);
 }
-if (terminal instanceof Awhile){
+if (terminal instanceof While){
 System.out.println("WHILE <expr> DO <cpsCmd> ENDWHILE\"");
-AWhile aWhile=((AWhile) consume(AWhile));
+While aWhile=((While) consume(While));
 IExpr expr=expr();
-ADo aDo=((ADo) consume(ADo));
+Do aDo=((Do) consume(Do));
 ICpsCmd cpsCmd=cpsCmd();
 Endwhile endwhile=((Endwhile) consume(Endwhile));
-return new CmdAWhile(aWhile,expr,aDo,cpsCmd,endwhile);
+return new CmdWhile(aWhile,expr,aDo,cpsCmd,endwhile);
 }
 if (terminal instanceof Call){
 System.out.println("CALL IDENT <exprList> <optGlobInits>\"");
@@ -470,7 +470,7 @@ System.out.println("<globInits>\"");
 IGlobInits globInits=globInits();
 return new OptGlobInitsGlobInits(globInits);
 }
-if (terminal instanceof Endwhile || terminal instanceof Endif || terminal instanceof Aelse || terminal instanceof Endproc || terminal instanceof Endfun || terminal instanceof Endprogram || terminal instanceof Semicolon){
+if (terminal instanceof Endwhile || terminal instanceof Endif || terminal instanceof Else || terminal instanceof Endproc || terminal instanceof Endfun || terminal instanceof Endprogram || terminal instanceof Semicolon){
 System.out.println("\"");
 return new OptGlobInits();
 }
@@ -479,7 +479,7 @@ throw new GrammarError("OptGlobInits");
 
 private ICpsCmd CpsCmd throws GrammarError {
 System.out.print("\"CpsCmd ::= ");
-if (terminal instanceof Debugout || terminal instanceof Debugin || terminal instanceof Call || terminal instanceof Awhile || terminal instanceof Aif || terminal instanceof Lparen || terminal instanceof Addopr || terminal instanceof Not || terminal instanceof Ident || terminal instanceof Literal || terminal instanceof Skip){
+if (terminal instanceof Debugout || terminal instanceof Debugin || terminal instanceof Call || terminal instanceof While || terminal instanceof If || terminal instanceof Lparen || terminal instanceof Addopr || terminal instanceof Not || terminal instanceof Ident || terminal instanceof Literal || terminal instanceof Skip){
 System.out.println("<cmd> <repSemicolonCmd>\"");
 ICmd cmd=cmd();
 IRepSemicolonCmd repSemicolonCmd=repSemicolonCmd();
@@ -496,7 +496,7 @@ Semicolon semicolon=((Semicolon) consume(Semicolon));
 ICpsCmd cpsCmd=cpsCmd();
 return new RepSemicolonCmdSemicolon(semicolon,cpsCmd);
 }
-if (terminal instanceof Endwhile || terminal instanceof Endif || terminal instanceof Aelse || terminal instanceof Endproc || terminal instanceof Endfun || terminal instanceof Endprogram){
+if (terminal instanceof Endwhile || terminal instanceof Endif || terminal instanceof Else || terminal instanceof Endproc || terminal instanceof Endfun || terminal instanceof Endprogram){
 System.out.println("\"");
 return new RepSemicolonCmd();
 }
@@ -533,7 +533,7 @@ Comma comma=((Comma) consume(Comma));
 IIdents idents=idents();
 return new RepCommaIdentComma(comma,idents);
 }
-if (terminal instanceof Endwhile || terminal instanceof Endif || terminal instanceof Aelse || terminal instanceof Endproc || terminal instanceof Endfun || terminal instanceof Endprogram || terminal instanceof Semicolon){
+if (terminal instanceof Endwhile || terminal instanceof Endif || terminal instanceof Else || terminal instanceof Endproc || terminal instanceof Endfun || terminal instanceof Endprogram || terminal instanceof Semicolon){
 System.out.println("\"");
 return new RepCommaIdent();
 }
@@ -559,7 +559,7 @@ Boolopr boolopr=((Boolopr) consume(Boolopr));
 IExpr expr=expr();
 return new RepBooloprExprBoolopr(boolopr,expr);
 }
-if (terminal instanceof Comma || terminal instanceof Rparen || terminal instanceof Ado || terminal instanceof Then || terminal instanceof Endwhile || terminal instanceof Endif || terminal instanceof Aelse || terminal instanceof Endproc || terminal instanceof Endfun || terminal instanceof Endprogram || terminal instanceof Semicolon || terminal instanceof Becomes){
+if (terminal instanceof Comma || terminal instanceof Rparen || terminal instanceof Do || terminal instanceof Then || terminal instanceof Endwhile || terminal instanceof Endif || terminal instanceof Else || terminal instanceof Endproc || terminal instanceof Endfun || terminal instanceof Endprogram || terminal instanceof Semicolon || terminal instanceof Becomes){
 System.out.println("\"");
 return new RepBooloprExpr();
 }
@@ -585,7 +585,7 @@ Relopr relopr=((Relopr) consume(Relopr));
 ITerm2 term2=term2();
 return new OptReloprTerm2Relopr(relopr,term2);
 }
-if (terminal instanceof Comma || terminal instanceof Rparen || terminal instanceof Ado || terminal instanceof Then || terminal instanceof Endwhile || terminal instanceof Endif || terminal instanceof Aelse || terminal instanceof Endproc || terminal instanceof Endfun || terminal instanceof Endprogram || terminal instanceof Semicolon || terminal instanceof Becomes || terminal instanceof Boolopr){
+if (terminal instanceof Comma || terminal instanceof Rparen || terminal instanceof Do || terminal instanceof Then || terminal instanceof Endwhile || terminal instanceof Endif || terminal instanceof Else || terminal instanceof Endproc || terminal instanceof Endfun || terminal instanceof Endprogram || terminal instanceof Semicolon || terminal instanceof Becomes || terminal instanceof Boolopr){
 System.out.println("\"");
 return new OptReloprTerm2();
 }
@@ -611,7 +611,7 @@ Addopr addopr=((Addopr) consume(Addopr));
 ITerm2 term2=term2();
 return new RepAddoprTerm3Addopr(addopr,term2);
 }
-if (terminal instanceof Comma || terminal instanceof Rparen || terminal instanceof Ado || terminal instanceof Then || terminal instanceof Endwhile || terminal instanceof Endif || terminal instanceof Aelse || terminal instanceof Endproc || terminal instanceof Endfun || terminal instanceof Endprogram || terminal instanceof Semicolon || terminal instanceof Becomes || terminal instanceof Boolopr || terminal instanceof Relopr){
+if (terminal instanceof Comma || terminal instanceof Rparen || terminal instanceof Do || terminal instanceof Then || terminal instanceof Endwhile || terminal instanceof Endif || terminal instanceof Else || terminal instanceof Endproc || terminal instanceof Endfun || terminal instanceof Endprogram || terminal instanceof Semicolon || terminal instanceof Becomes || terminal instanceof Boolopr || terminal instanceof Relopr){
 System.out.println("\"");
 return new RepAddoprTerm3();
 }
@@ -637,7 +637,7 @@ Multopr multopr=((Multopr) consume(Multopr));
 ITerm3 term3=term3();
 return new RepMultoprFactorMultopr(multopr,term3);
 }
-if (terminal instanceof Comma || terminal instanceof Rparen || terminal instanceof Ado || terminal instanceof Then || terminal instanceof Endwhile || terminal instanceof Endif || terminal instanceof Aelse || terminal instanceof Endproc || terminal instanceof Endfun || terminal instanceof Endprogram || terminal instanceof Semicolon || terminal instanceof Becomes || terminal instanceof Boolopr || terminal instanceof Relopr || terminal instanceof Addopr){
+if (terminal instanceof Comma || terminal instanceof Rparen || terminal instanceof Do || terminal instanceof Then || terminal instanceof Endwhile || terminal instanceof Endif || terminal instanceof Else || terminal instanceof Endproc || terminal instanceof Endfun || terminal instanceof Endprogram || terminal instanceof Semicolon || terminal instanceof Becomes || terminal instanceof Boolopr || terminal instanceof Relopr || terminal instanceof Addopr){
 System.out.println("\"");
 return new RepMultoprFactor();
 }
@@ -685,7 +685,7 @@ System.out.println("<exprList>\"");
 IExprList exprList=exprList();
 return new Ident1ExprList(exprList);
 }
-if (terminal instanceof Comma || terminal instanceof Rparen || terminal instanceof Ado || terminal instanceof Then || terminal instanceof Endwhile || terminal instanceof Endif || terminal instanceof Aelse || terminal instanceof Endproc || terminal instanceof Endfun || terminal instanceof Endprogram || terminal instanceof Semicolon || terminal instanceof Becomes || terminal instanceof Boolopr || terminal instanceof Relopr || terminal instanceof Addopr || terminal instanceof Multopr){
+if (terminal instanceof Comma || terminal instanceof Rparen || terminal instanceof Do || terminal instanceof Then || terminal instanceof Endwhile || terminal instanceof Endif || terminal instanceof Else || terminal instanceof Endproc || terminal instanceof Endfun || terminal instanceof Endprogram || terminal instanceof Semicolon || terminal instanceof Becomes || terminal instanceof Boolopr || terminal instanceof Relopr || terminal instanceof Addopr || terminal instanceof Multopr){
 System.out.println("\"");
 return new Ident1();
 }

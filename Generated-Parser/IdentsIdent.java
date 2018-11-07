@@ -1,6 +1,8 @@
 package ch.fhnw.cpib.project.km.syntax.concrete;
 
-import ch.fhnw.cpib.project.km.token.*;
+import ch.fhnw.cpib.project.km.token.keywords.*;
+import ch.fhnw.cpib.project.km.token.symbols.*;
+import ch.fhnw.cpib.project.km.token.various.*;
 
 class IdentsIdent implements IIdents {
   private final Ident ident;
@@ -12,8 +14,8 @@ class IdentsIdent implements IIdents {
   }
 
   public void print(String indent) {
-    System.out.println(indent + "IdentsIdent");
-    ident.print(indent + "    ");
+    System.out.println(indent + this.getClass().getSimpleName());
+    System.out.println(ident + "    T " + ident.toString());
     repCommaIdent.print(indent + "    ");
   }
 

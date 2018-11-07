@@ -1,6 +1,8 @@
 package ch.fhnw.cpib.project.km.syntax.concrete;
 
-import ch.fhnw.cpib.project.km.token.*;
+import ch.fhnw.cpib.project.km.token.keywords.*;
+import ch.fhnw.cpib.project.km.token.symbols.*;
+import ch.fhnw.cpib.project.km.token.various.*;
 
 class CpsCmdCmd implements ICpsCmd {
   private final ICmd cmd;
@@ -12,7 +14,7 @@ class CpsCmdCmd implements ICpsCmd {
   }
 
   public void print(String indent) {
-    System.out.println(indent + "CpsCmdCmd");
+    System.out.println(indent + this.getClass().getSimpleName());
     cmd.print(indent + "    ");
     repSemicolonCmd.print(indent + "    ");
   }

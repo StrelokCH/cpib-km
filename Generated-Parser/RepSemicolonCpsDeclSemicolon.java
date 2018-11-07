@@ -1,6 +1,8 @@
 package ch.fhnw.cpib.project.km.syntax.concrete;
 
-import ch.fhnw.cpib.project.km.token.*;
+import ch.fhnw.cpib.project.km.token.keywords.*;
+import ch.fhnw.cpib.project.km.token.symbols.*;
+import ch.fhnw.cpib.project.km.token.various.*;
 
 class RepSemicolonCpsDeclSemicolon implements IRepSemicolonCpsDecl {
   private final Semicolon semicolon;
@@ -12,8 +14,8 @@ class RepSemicolonCpsDeclSemicolon implements IRepSemicolonCpsDecl {
   }
 
   public void print(String indent) {
-    System.out.println(indent + "RepSemicolonCpsDeclSemicolon");
-    semicolon.print(indent + "    ");
+    System.out.println(indent + this.getClass().getSimpleName());
+    System.out.println(ident + "    T " + semicolon.toString());
     cpsDecl.print(indent + "    ");
   }
 

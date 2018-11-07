@@ -1,22 +1,24 @@
 package ch.fhnw.cpib.project.km.syntax.concrete;
 
-import ch.fhnw.cpib.project.km.token.*;
+import ch.fhnw.cpib.project.km.token.keywords.*;
+import ch.fhnw.cpib.project.km.token.symbols.*;
+import ch.fhnw.cpib.project.km.token.various.*;
 
-class CmdAIf implements ICmd {
-  private final AIf aIf;
+class CmdIf implements ICmd {
+  private final If aIf;
   private final IExpr expr;
   private final Then then;
   private final ICpsCmd cpsCmd;
-  private final AElse aElse;
+  private final Else aElse;
   private final ICpsCmd cpsCmd;
   private final Endif endif;
 
-  private CmdAIf(
-      final AIf aIf,
+  private CmdIf(
+      final If aIf,
       final IExpr expr,
       final Then then,
       final ICpsCmd cpsCmd,
-      final AElse aElse,
+      final Else aElse,
       final ICpsCmd cpsCmd,
       final Endif endif) {
     this.aIf = aIf;
@@ -29,14 +31,14 @@ class CmdAIf implements ICmd {
   }
 
   public void print(String indent) {
-    System.out.println(indent + "CmdAIf");
-    aIf.print(indent + "    ");
+    System.out.println(indent + this.getClass().getSimpleName());
+    System.out.println(ident + "    T " + aIf.toString());
     expr.print(indent + "    ");
-    then.print(indent + "    ");
+    System.out.println(ident + "    T " + then.toString());
     cpsCmd.print(indent + "    ");
-    aElse.print(indent + "    ");
+    System.out.println(ident + "    T " + aElse.toString());
     cpsCmd.print(indent + "    ");
-    endif.print(indent + "    ");
+    System.out.println(ident + "    T " + endif.toString());
   }
 
   @Override

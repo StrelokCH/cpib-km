@@ -1,13 +1,15 @@
 package ch.fhnw.cpib.project.km.syntax.concrete;
 
-import ch.fhnw.cpib.project.km.token.*;
+import ch.fhnw.cpib.project.km.token.keywords.*;
+import ch.fhnw.cpib.project.km.token.symbols.*;
+import ch.fhnw.cpib.project.km.token.various.*;
 
 class ProgramProgram implements IProgram {
   private final Program program;
   private final Ident ident;
   private final IProgParamList progParamList;
   private final IOptGlobalCpsDecl optGlobalCpsDecl;
-  private final ADo aDo;
+  private final Do aDo;
   private final ICpsCmd cpsCmd;
   private final Endprogram endprogram;
 
@@ -16,7 +18,7 @@ class ProgramProgram implements IProgram {
       final Ident ident,
       final IProgParamList progParamList,
       final IOptGlobalCpsDecl optGlobalCpsDecl,
-      final ADo aDo,
+      final Do aDo,
       final ICpsCmd cpsCmd,
       final Endprogram endprogram) {
     this.program = program;
@@ -29,14 +31,14 @@ class ProgramProgram implements IProgram {
   }
 
   public void print(String indent) {
-    System.out.println(indent + "ProgramProgram");
-    program.print(indent + "    ");
-    ident.print(indent + "    ");
+    System.out.println(indent + this.getClass().getSimpleName());
+    System.out.println(ident + "    T " + program.toString());
+    System.out.println(ident + "    T " + ident.toString());
     progParamList.print(indent + "    ");
     optGlobalCpsDecl.print(indent + "    ");
-    aDo.print(indent + "    ");
+    System.out.println(ident + "    T " + aDo.toString());
     cpsCmd.print(indent + "    ");
-    endprogram.print(indent + "    ");
+    System.out.println(ident + "    T " + endprogram.toString());
   }
 
   @Override

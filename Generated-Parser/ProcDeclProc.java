@@ -1,6 +1,8 @@
 package ch.fhnw.cpib.project.km.syntax.concrete;
 
-import ch.fhnw.cpib.project.km.token.*;
+import ch.fhnw.cpib.project.km.token.keywords.*;
+import ch.fhnw.cpib.project.km.token.symbols.*;
+import ch.fhnw.cpib.project.km.token.various.*;
 
 class ProcDeclProc implements IProcDecl {
   private final Proc proc;
@@ -8,7 +10,7 @@ class ProcDeclProc implements IProcDecl {
   private final IParamList paramList;
   private final IGlobalGlobImps globalGlobImps;
   private final IOptLocalCpsStoDecl optLocalCpsStoDecl;
-  private final ADo aDo;
+  private final Do aDo;
   private final ICpsCmd cpsCmd;
   private final Endproc endproc;
 
@@ -18,7 +20,7 @@ class ProcDeclProc implements IProcDecl {
       final IParamList paramList,
       final IGlobalGlobImps globalGlobImps,
       final IOptLocalCpsStoDecl optLocalCpsStoDecl,
-      final ADo aDo,
+      final Do aDo,
       final ICpsCmd cpsCmd,
       final Endproc endproc) {
     this.proc = proc;
@@ -32,15 +34,15 @@ class ProcDeclProc implements IProcDecl {
   }
 
   public void print(String indent) {
-    System.out.println(indent + "ProcDeclProc");
-    proc.print(indent + "    ");
-    ident.print(indent + "    ");
+    System.out.println(indent + this.getClass().getSimpleName());
+    System.out.println(ident + "    T " + proc.toString());
+    System.out.println(ident + "    T " + ident.toString());
     paramList.print(indent + "    ");
     globalGlobImps.print(indent + "    ");
     optLocalCpsStoDecl.print(indent + "    ");
-    aDo.print(indent + "    ");
+    System.out.println(ident + "    T " + aDo.toString());
     cpsCmd.print(indent + "    ");
-    endproc.print(indent + "    ");
+    System.out.println(ident + "    T " + endproc.toString());
   }
 
   @Override

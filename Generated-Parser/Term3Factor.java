@@ -1,6 +1,8 @@
 package ch.fhnw.cpib.project.km.syntax.concrete;
 
-import ch.fhnw.cpib.project.km.token.*;
+import ch.fhnw.cpib.project.km.token.keywords.*;
+import ch.fhnw.cpib.project.km.token.symbols.*;
+import ch.fhnw.cpib.project.km.token.various.*;
 
 class Term3Factor implements ITerm3 {
   private final IFactor factor;
@@ -12,7 +14,7 @@ class Term3Factor implements ITerm3 {
   }
 
   public void print(String indent) {
-    System.out.println(indent + "Term3Factor");
+    System.out.println(indent + this.getClass().getSimpleName());
     factor.print(indent + "    ");
     repMultoprFactor.print(indent + "    ");
   }

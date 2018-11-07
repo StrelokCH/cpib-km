@@ -1,6 +1,8 @@
 package ch.fhnw.cpib.project.km.syntax.concrete;
 
-import ch.fhnw.cpib.project.km.token.*;
+import ch.fhnw.cpib.project.km.token.keywords.*;
+import ch.fhnw.cpib.project.km.token.symbols.*;
+import ch.fhnw.cpib.project.km.token.various.*;
 
 class ExprTerm1 implements IExpr {
   private final ITerm1 term1;
@@ -12,7 +14,7 @@ class ExprTerm1 implements IExpr {
   }
 
   public void print(String indent) {
-    System.out.println(indent + "ExprTerm1");
+    System.out.println(indent + this.getClass().getSimpleName());
     term1.print(indent + "    ");
     repBooloprExpr.print(indent + "    ");
   }

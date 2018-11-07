@@ -1,6 +1,8 @@
 package ch.fhnw.cpib.project.km.syntax.concrete;
 
-import ch.fhnw.cpib.project.km.token.*;
+import ch.fhnw.cpib.project.km.token.keywords.*;
+import ch.fhnw.cpib.project.km.token.symbols.*;
+import ch.fhnw.cpib.project.km.token.various.*;
 
 class TypedIdentIdent implements ITypedIdent {
   private final Ident ident;
@@ -14,10 +16,10 @@ class TypedIdentIdent implements ITypedIdent {
   }
 
   public void print(String indent) {
-    System.out.println(indent + "TypedIdentIdent");
-    ident.print(indent + "    ");
-    colon.print(indent + "    ");
-    atomtype.print(indent + "    ");
+    System.out.println(indent + this.getClass().getSimpleName());
+    System.out.println(ident + "    T " + ident.toString());
+    System.out.println(ident + "    T " + colon.toString());
+    System.out.println(ident + "    T " + atomtype.toString());
   }
 
   @Override
