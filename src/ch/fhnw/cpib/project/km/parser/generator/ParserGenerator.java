@@ -162,7 +162,7 @@ public class ParserGenerator {
 	
 	private void writePrint(StringBuilder sb, String className, Col c) {
 		addnl(sb, "public void print(String indent){");
-		addnl(sb, "System.out.println(indent + \"this.getClass().getSimpleName()\");");
+		addnl(sb, "System.out.println(indent + this.getClass().getSimpleName());");
 		for (final String v : c.values) {
 			if (v.isEmpty()) {
 				continue;
