@@ -162,14 +162,18 @@ public class ParserGenerator {
 	
 	private void writePrint(StringBuilder sb, String className, Col c) {
 		addnl(sb, "public void print(String indent){");
-		addnl(sb, "System.out.println(indent + \"" + className + "\");");
+		addnl(sb, "System.out.println(indent + \"this.getClass().getSimpleName()\");");
 		for (final String v : c.values) {
 			if (v.isEmpty()) {
 				continue;
 			}
 			String name = getCamelCase(v);
-			addnl(sb, name + ".print(indent + \"    \");");
-		}
+			if (IsTerminal(v)) {
+				addnl(sb, "System.out.println(\"    T \" + " + name + ".toString());");
+			} else {
+				addnl(sb, name + ".print(indent + \"    \");");
+			}
+		};
 		addnl(sb, "}");
 	}
 
