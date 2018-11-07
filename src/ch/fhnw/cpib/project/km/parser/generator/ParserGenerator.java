@@ -66,7 +66,12 @@ public class ParserGenerator {
 				Col col = new Col(terminal);
 				currentLine.cols.add(col);
 				l++;
-				line = lines.get(l);
+				if (l < lines.size()) {
+					line = lines.get(l);
+				} else {
+					// last line might me empty because it matches e
+					line = "";
+				}
 				col.values.addAll(Arrays.asList(line.split("\\s+")));
 				col.values.removeIf(v -> v.isEmpty());
 				if (col.values.isEmpty()) {
