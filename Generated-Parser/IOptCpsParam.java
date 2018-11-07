@@ -1,4 +1,4 @@
-package ch.fhnw.cpib.project.km.parser.generated;
+package ch.fhnw.cpib.project.km.syntax.concrete;
 
 import ch.fhnw.cpib.project.km.token.*;
 interface IOptCpsParam
