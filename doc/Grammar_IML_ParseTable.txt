@@ -125,7 +125,7 @@
     <progParam> <repCommaProgParam>
 <repCommaProgParam>
   terminal COMMA
-    COMMA <optCpsProgParam>
+    COMMA <cpsProgParam>
   terminal RPAREN
 
 <progParam>
@@ -140,6 +140,17 @@
     LPAREN <optCpsParam> RPAREN
 <optCpsParam>
   terminal IDENT
+    <cpsParam>
+  terminal CHANGEMODE
+    <cpsParam>
+  terminal MECHMODE
+    <cpsParam>
+  terminal FLOWMODE
+    <cpsParam>
+  terminal RPAREN
+
+<cpsParam>
+  terminal IDENT
     <param> <repCommaParam>
   terminal CHANGEMODE
     <param> <repCommaParam>
@@ -147,11 +158,9 @@
     <param> <repCommaParam>
   terminal FLOWMODE
     <param> <repCommaParam>
-  terminal RPAREN
-
 <repCommaParam>
   terminal COMMA
-    COMMA <optCpsParam>
+    COMMA <cpsParam>
   terminal RPAREN
 
 <param>
@@ -280,7 +289,7 @@
     <term1> <repBooloprExpr>
 <repBooloprExpr>
   terminal BOOLOPR
-    BOOLOPR <term1> <repBooloprExpr>
+    BOOLOPR <expr>
   terminal COMMA
 
   terminal RPAREN
@@ -307,16 +316,16 @@
 
 <term1>
   terminal LPAREN
-    <term2> <term11>
+    <term2> <optReloprTerm2>
   terminal ADDOPR
-    <term2> <term11>
+    <term2> <optReloprTerm2>
   terminal NOT
-    <term2> <term11>
+    <term2> <optReloprTerm2>
   terminal IDENT
-    <term2> <term11>
+    <term2> <optReloprTerm2>
   terminal LITERAL
-    <term2> <term11>
-<term11>
+    <term2> <optReloprTerm2>
+<optReloprTerm2>
   terminal RELOPR
     RELOPR <term2>
   terminal COMMA
@@ -358,7 +367,7 @@
     <term3> <repAddoprTerm3>
 <repAddoprTerm3>
   terminal ADDOPR
-    ADDOPR <term3> <repAddoprTerm3>
+    ADDOPR <term2>
   terminal COMMA
 
   terminal RPAREN
@@ -389,18 +398,18 @@
 
 <term3>
   terminal LPAREN
-    <factor> <term31>
+    <factor> <repMultoprFactor>
   terminal ADDOPR
-    <factor> <term31>
+    <factor> <repMultoprFactor>
   terminal NOT
-    <factor> <term31>
+    <factor> <repMultoprFactor>
   terminal IDENT
-    <factor> <term31>
+    <factor> <repMultoprFactor>
   terminal LITERAL
-    <factor> <term31>
-<term31>
+    <factor> <repMultoprFactor>
+<repMultoprFactor>
   terminal MULTOPR
-    MULTOPR <factor> <term31>
+    MULTOPR <term3>
   terminal COMMA
 
   terminal RPAREN
@@ -486,7 +495,20 @@
     ADDOPR
 <exprList>
   terminal LPAREN
-    LPAREN <cpsExpr> RPAREN
+    LPAREN <optCpsExpr> RPAREN
+<optCpsExpr>
+  terminal LPAREN
+    <cpsExpr>
+  terminal ADDOPR
+    <cpsExpr>
+  terminal NOT
+    <cpsExpr>
+  terminal IDENT
+    <cpsExpr>
+  terminal LITERAL
+    <cpsExpr>
+  terminal RPAREN
+
 <cpsExpr>
   terminal LPAREN
     <expr> <repCommaExpr>
@@ -498,10 +520,7 @@
     <expr> <repCommaExpr>
   terminal LITERAL
     <expr> <repCommaExpr>
-  terminal RPAREN
-
 <repCommaExpr>
   terminal COMMA
     COMMA <cpsExpr>
   terminal RPAREN
-
