@@ -19,11 +19,12 @@ import com.google.googlejavaformat.java.FormatterException;
 public class ParserGenerator {
 
 	private class Col {
-		String terminal;
+		List<String> terminals;
 		List<String> values = new ArrayList<>();
 
 		Col(String terminal) {
-			this.terminal = terminal;
+			this.terminals = new ArrayList<>();
+			this.terminals.add(terminal);
 		}
 	}
 
@@ -76,22 +77,46 @@ public class ParserGenerator {
 		return parseTable;
 	}
 
-	public void generate(String outDir, String insertPackage) {
+	public void generate(String outDir, String javaFileHeader) {
 		new File(outDir).mkdirs();
+		
+		SummarizeSameRows();
 		
 		PrintWriter parserFile = createParserFile(outDir);
 		for (Line l : parseTable) {
 			String interfaceName = getInterfaceName(l.name);
-			createInterface(outDir, interfaceName, insertPackage);
+			createInterface(outDir, interfaceName, javaFileHeader);
 			addParserFunctionHeader(parserFile, l, interfaceName);
 			for (Col c : l.cols) {
-				String className = getPascalCase(l.name) + c.values.stream().map(s -> getPascalCase(s)).collect(Collectors.joining(""));
-				createNonTerminalSymbolClass(outDir, className, interfaceName, insertPackage, c);
+				String className = getPascalCase(l.name) + getPascalCase(c.values.get(0));
+				createNonTerminalSymbolClass(outDir, className, interfaceName, javaFileHeader, c);
 				addParserCol(parserFile, c, className);
 			}
 			addParserFunctionFooter(parserFile, l);
 		}
 		parserFile.close();
+	}
+
+	/**
+	 * Summarize rows, if the production is the same
+	 * Assumption: same productions with different terminals follow each others
+	 */
+	private void SummarizeSameRows() {
+		for (Line l : parseTable) {
+			Col previous = l.cols.get(0);
+			for (int i = 1; i < l.cols.size(); i++) {
+				Col current = l.cols.get(i);
+				if (previous.values.equals(current.values)) {
+					// same, add to previous and delete
+					previous.terminals.addAll(current.terminals);
+					l.cols.remove(i);
+					i--;
+				} else {
+					// not same
+					previous = current;
+				}
+			}
+		}
 	}
 
 	private void createNonTerminalSymbolClass(String outDir, String className, String interfaceName, String insertPackage, Col c) {
@@ -134,7 +159,7 @@ public class ParserGenerator {
 		addnl(sb, "public void print(String indent){");
 		addnl(sb, "System.out.println(indent + \"" + className + "\");");
 		for (final String v : c.values) {
-			if (v.isEmpty() || IsTerminal(v)) {
+			if (v.isEmpty()) {
 				continue;
 			}
 			String name = getCamelCase(v);
@@ -147,17 +172,22 @@ public class ParserGenerator {
 		List<String> constrArgs = new LinkedList<>();
 		addnl(sb, "private " + className + "(");
 		for (final String v : c.values) {
-			if (v.isEmpty() || IsTerminal(v)) {
+			if (v.isEmpty()) {
 				continue;
 			}
 			String name = getCamelCase(v);
-			String type= getInterfaceName(v);			
+			String type;
+			if (IsTerminal(v)) {
+				type = getPascalCase(v);
+			} else {
+				type = getInterfaceName(v);	
+			}
 			constrArgs.add("final " + type + " " + name);
 		}
 		addnl(sb, String.join(", ", constrArgs));
 		addnl(sb, "){");
 		for (final String v : c.values) {
-			if (v.isEmpty() || IsTerminal(v)) {
+			if (v.isEmpty()) {
 				continue;
 			}
 			String name = getCamelCase(v);
@@ -168,11 +198,16 @@ public class ParserGenerator {
 
 	private void writeMembers(StringBuilder sb, Col c) {
 		for (final String v : c.values) {
-			if (v.isEmpty() || IsTerminal(v)) {
+			if (v.isEmpty()) {
 				continue;
 			}
 			String name = getCamelCase(v);
-			String type = getInterfaceName(v);
+			String type;
+			if (IsTerminal(v)) {
+				type = getPascalCase(v);
+			} else {
+				type = getInterfaceName(v);	
+			}
 			sb.append("private final " + type + " " + name + ";");
 		}
 	}
@@ -185,7 +220,7 @@ public class ParserGenerator {
 	}
 
 	private void addParserCol(PrintWriter parserFile, Col c, String className) {
-		parserFile.println("if (terminal instanceof " + c.terminal +"){");
+		parserFile.println("if (" + GetIfExpression(c) +"){");
 		parserFile.println("System.out.println(\"" + String.join(" ", c.values) + "\\\"\");");
 		for (final String v : c.values) {
 			if (v.isEmpty()) {
@@ -207,7 +242,7 @@ public class ParserGenerator {
 		}
 		parserFile.print("return new " + className + "(");
 		for (final String v : c.values) {
-			if (v.isEmpty() || IsTerminal(v)) {
+			if (v.isEmpty()) {
 				continue;
 			}
 			String name = getCamelCase(v);
@@ -218,6 +253,10 @@ public class ParserGenerator {
 		}
 		parserFile.println(");");
 		parserFile.println("}");	
+	}
+
+	private String GetIfExpression(Col c) {
+		return "terminal instanceof " +c.terminals.stream().map(s -> getPascalCase(s)).collect(Collectors.joining(" || terminal instanceof "));
 	}
 
 	private void addParserFunctionFooter(PrintWriter parserFile, Line l) {
@@ -237,6 +276,9 @@ public class ParserGenerator {
 	
 	private String getPascalCase(String name) {
 		name = getCamelCase(name);
+		if (name.isEmpty()) {
+			return name;
+		}
 		return name.substring(0, 1).toUpperCase() + name.substring(1);
 	}
 	
@@ -282,13 +324,13 @@ public class ParserGenerator {
 		return pw;
 	}
 
-	private void createInterface(String outDir, String name, String insertPackage) {
+	private void createInterface(String outDir, String name, String javaFileHeader) {
 		PrintWriter pw = null;
 		try {
 			File f = new File(outDir + name + ".java");
 			f.createNewFile();
 			pw = new PrintWriter(f);
-			pw.println(insertPackage);
+			pw.println(javaFileHeader);
 
 			pw.println("interface " + name);
 			pw.println("{");
