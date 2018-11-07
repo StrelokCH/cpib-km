@@ -1,7 +1,7 @@
 <program>
   terminal PROGRAM
-    PROGRAM IDENT <progParamList> <program1> DO <cpsCmd> ENDPROGRAM
-<program1>
+    PROGRAM IDENT <progParamList> <optGlobalCpsDecl> DO <cpsCmd> ENDPROGRAM
+<optGlobalCpsDecl>
   terminal GLOBAL
     GLOBAL <cpsDecl>
   terminal DO
@@ -22,7 +22,7 @@
     <typedIdent>
 <funDecl>
   terminal FUN
-    FUN IDENT <paramList> RETURNS <stoDecl> <globalGlobImps> <localCpsStoDecl> DO <cpsCmd> ENDFUN
+    FUN IDENT <paramList> RETURNS <stoDecl> <globalGlobImps> <optLocalCpsStoDecl> DO <cpsCmd> ENDFUN
 <globalGlobImps>
   terminal GLOBAL
     GLOBAL <globImps>
@@ -30,24 +30,24 @@
 
   terminal LOCAL
 
-<localCpsStoDecl>
+<optLocalCpsStoDecl>
   terminal LOCAL
     LOCAL <cpsStoDecl>
   terminal DO
 
 <procDecl>
   terminal PROC
-    PROC IDENT <paramList> <globalGlobImps> <localCpsStoDecl> DO <cpsCmd> ENDPROC
+    PROC IDENT <paramList> <globalGlobImps> <optLocalCpsStoDecl> DO <cpsCmd> ENDPROC
 <globImps>
   terminal IDENT
-    <globImp> <globImps1>
+    <globImp> <repCommaGlobImps>
   terminal CHANGEMODE
-    <globImp> <globImps1>
+    <globImp> <repCommaGlobImps>
   terminal FLOWMODE
-    <globImp> <globImps1>
-<globImps1>
+    <globImp> <repCommaGlobImps>
+<repCommaGlobImps>
   terminal COMMA
-    COMMA <globImp> <globImps1>
+    COMMA <globImp> <repCommaGlobImps>
   terminal DO
 
   terminal LOCAL
@@ -82,50 +82,50 @@
 
 <cpsDecl>
   terminal PROC
-    <decl> <cpsDecl1>
+    <decl> <repSemicolonCpsDecl>
   terminal FUN
-    <decl> <cpsDecl1>
+    <decl> <repSemicolonCpsDecl>
   terminal IDENT
-    <decl> <cpsDecl1>
+    <decl> <repSemicolonCpsDecl>
   terminal CHANGEMODE
-    <decl> <cpsDecl1>
-<cpsDecl1>
+    <decl> <repSemicolonCpsDecl>
+<repSemicolonCpsDecl>
   terminal SEMICOLON
     SEMICOLON <cpsDecl>
   terminal DO
 
 <cpsStoDecl>
   terminal IDENT
-    <stoDecl> <cpsStoDecl1>
+    <stoDecl> <repSemicolonCpsStoDecl>
   terminal CHANGEMODE
-    <stoDecl> <cpsStoDecl1>
-<cpsStoDecl1>
+    <stoDecl> <repSemicolonCpsStoDecl>
+<repSemicolonCpsStoDecl>
   terminal SEMICOLON
     SEMICOLON <cpsStoDecl>
   terminal DO
 
 <progParamList>
   terminal LPAREN
-    LPAREN <optProgParams> RPAREN
-<optProgParams>
+    LPAREN <optCpsProgParam> RPAREN
+<optCpsProgParam>
   terminal IDENT
-    <optProgParams1>
+    <cpsProgParam>
   terminal CHANGEMODE
-    <optProgParams1>
+    <cpsProgParam>
   terminal FLOWMODE
-    <optProgParams1>
+    <cpsProgParam>
   terminal RPAREN
 
-<optProgParams1>
+<cpsProgParam>
   terminal IDENT
-    <progParam> <optProgParams2>
+    <progParam> <repCommaProgParam>
   terminal CHANGEMODE
-    <progParam> <optProgParams2>
+    <progParam> <repCommaProgParam>
   terminal FLOWMODE
-    <progParam> <optProgParams2>
-<optProgParams2>
+    <progParam> <repCommaProgParam>
+<repCommaProgParam>
   terminal COMMA
-    COMMA <optProgParams>
+    COMMA <optCpsProgParam>
   terminal RPAREN
 
 <progParam>
@@ -137,21 +137,21 @@
     <optFlowmode> <optChangemode> <typedIdent>
 <paramList>
   terminal LPAREN
-    LPAREN <paramList1> RPAREN
-<paramList1>
+    LPAREN <optCpsParam> RPAREN
+<optCpsParam>
   terminal IDENT
-    <param> <paramList2>
+    <param> <repCommaParam>
   terminal CHANGEMODE
-    <param> <paramList2>
+    <param> <repCommaParam>
   terminal MECHMODE
-    <param> <paramList2>
+    <param> <repCommaParam>
   terminal FLOWMODE
-    <param> <paramList2>
+    <param> <repCommaParam>
   terminal RPAREN
 
-<paramList2>
+<repCommaParam>
   terminal COMMA
-    COMMA <paramList1>
+    COMMA <optCpsParam>
   terminal RPAREN
 
 <param>
@@ -208,28 +208,28 @@
 
 <cpsCmd>
   terminal DEBUGOUT
-    <cmd> <cpsCmd1>
+    <cmd> <repSemicolonCmd>
   terminal DEBUGIN
-    <cmd> <cpsCmd1>
+    <cmd> <repSemicolonCmd>
   terminal CALL
-    <cmd> <cpsCmd1>
+    <cmd> <repSemicolonCmd>
   terminal WHILE
-    <cmd> <cpsCmd1>
+    <cmd> <repSemicolonCmd>
   terminal IF
-    <cmd> <cpsCmd1>
+    <cmd> <repSemicolonCmd>
   terminal LPAREN
-    <cmd> <cpsCmd1>
+    <cmd> <repSemicolonCmd>
   terminal ADDOPR
-    <cmd> <cpsCmd1>
+    <cmd> <repSemicolonCmd>
   terminal NOT
-    <cmd> <cpsCmd1>
+    <cmd> <repSemicolonCmd>
   terminal IDENT
-    <cmd> <cpsCmd1>
+    <cmd> <repSemicolonCmd>
   terminal LITERAL
-    <cmd> <cpsCmd1>
+    <cmd> <repSemicolonCmd>
   terminal SKIP
-    <cmd> <cpsCmd1>
-<cpsCmd1>
+    <cmd> <repSemicolonCmd>
+<repSemicolonCmd>
   terminal SEMICOLON
     SEMICOLON <cpsCmd>
   terminal ENDWHILE
@@ -249,8 +249,8 @@
     INIT <idents>
 <idents>
   terminal IDENT
-    IDENT <idents1>
-<idents1>
+    IDENT <repCommaIdent>
+<repCommaIdent>
   terminal COMMA
     COMMA <idents>
   terminal ENDWHILE
@@ -269,18 +269,18 @@
 
 <expr>
   terminal LPAREN
-    <term1> <expr1>
+    <term1> <repBooloprExpr>
   terminal ADDOPR
-    <term1> <expr1>
+    <term1> <repBooloprExpr>
   terminal NOT
-    <term1> <expr1>
+    <term1> <repBooloprExpr>
   terminal IDENT
-    <term1> <expr1>
+    <term1> <repBooloprExpr>
   terminal LITERAL
-    <term1> <expr1>
-<expr1>
+    <term1> <repBooloprExpr>
+<repBooloprExpr>
   terminal BOOLOPR
-    BOOLOPR <term1> <expr1>
+    BOOLOPR <term1> <repBooloprExpr>
   terminal COMMA
 
   terminal RPAREN
@@ -347,18 +347,18 @@
 
 <term2>
   terminal LPAREN
-    <term3> <term21>
+    <term3> <repAddoprTerm3>
   terminal ADDOPR
-    <term3> <term21>
+    <term3> <repAddoprTerm3>
   terminal NOT
-    <term3> <term21>
+    <term3> <repAddoprTerm3>
   terminal IDENT
-    <term3> <term21>
+    <term3> <repAddoprTerm3>
   terminal LITERAL
-    <term3> <term21>
-<term21>
+    <term3> <repAddoprTerm3>
+<repAddoprTerm3>
   terminal ADDOPR
-    ADDOPR <term3> <term21>
+    ADDOPR <term3> <repAddoprTerm3>
   terminal COMMA
 
   terminal RPAREN
@@ -486,22 +486,22 @@
     ADDOPR
 <exprList>
   terminal LPAREN
-    LPAREN <exprList1> RPAREN
-<exprList1>
+    LPAREN <cpsExpr> RPAREN
+<cpsExpr>
   terminal LPAREN
-    <expr> <exprList2>
+    <expr> <repCommaExpr>
   terminal ADDOPR
-    <expr> <exprList2>
+    <expr> <repCommaExpr>
   terminal NOT
-    <expr> <exprList2>
+    <expr> <repCommaExpr>
   terminal IDENT
-    <expr> <exprList2>
+    <expr> <repCommaExpr>
   terminal LITERAL
-    <expr> <exprList2>
+    <expr> <repCommaExpr>
   terminal RPAREN
 
-<exprList2>
+<repCommaExpr>
   terminal COMMA
-    COMMA <exprList1>
+    COMMA <cpsExpr>
   terminal RPAREN
 

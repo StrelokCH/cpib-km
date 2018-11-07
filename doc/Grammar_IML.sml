@@ -82,103 +82,107 @@ val string_of_term =
 datatype nonterm
   = cmd
   | cpsCmd
-  | cpsCmd1
+  | repSemicolonCmd
   | cpsDecl
-  | cpsDecl1
+  | cpsParam
+  | repSemicolonCpsDecl
   | cpsStoDecl
-  | cpsStoDecl1
+  | repSemicolonCpsStoDecl
   | decl
   | expr
-  | expr1
+  | repBooloprExpr
   | exprList
-  | exprList1
-  | exprList2
+  | optCpsExpr
+  | cpsExpr
+  | repCommaExpr
   | factor
   | funDecl
   | globalGlobImps
   | globImp
   | globImps
-  | globImps1
+  | repCommaGlobImps
   | globInits
   | ident1
   | idents
-  | idents1
-  | localCpsStoDecl
+  | repCommaIdent
+  | optLocalCpsStoDecl
   | monadicOpr
   | optChangemode
   | optFlowmode
   | optGlobInits
   | optMechmode
-  | optProgParams
-  | optProgParams1
-  | optProgParams2
+  | optCpsProgParam
+  | cpsProgParam
+  | repCommaProgParam
   | param
   | paramList
-  | paramList1
-  | paramList2
+  | optCpsParam
+  | repCommaParam
   | procDecl
   | progParam
   | progParamList
   | program
-  | program1
+  | optGlobalCpsDecl
   | stoDecl
   | term1
-  | term11
+  | optReloprTerm2
   | term2
-  | term21
+  | repAddoprTerm3
   | term3
-  | term31
+  | repMultoprFactor
   | typedIdent
 
 val string_of_nonterm =
   fn cmd              => "cmd"
    | cpsCmd           => "cpsCmd"
-   | cpsCmd1          => "cpsCmd1"
+   | repSemicolonCmd          => "repSemicolonCmd"
    | cpsDecl          => "cpsDecl"
-   | cpsDecl1         => "cpsDecl1"
+   | cpsParam         => "cpsParam"
+   | repSemicolonCpsDecl         => "repSemicolonCpsDecl"
    | cpsStoDecl       => "cpsStoDecl"
-   | cpsStoDecl1      => "cpsStoDecl1"
+   | repSemicolonCpsStoDecl      => "repSemicolonCpsStoDecl"
    | decl             => "decl"
    | expr             => "expr"
-   | expr1            => "expr1"
+   | repBooloprExpr            => "repBooloprExpr"
    | exprList         => "exprList"
-   | exprList1        => "exprList1"
-   | exprList2       => "exprList2"
+   | optCpsExpr       => "optCpsExpr"
+   | cpsExpr        => "cpsExpr"
+   | repCommaExpr       => "repCommaExpr"
    | factor           => "factor"
    | funDecl          => "funDecl"
    | globalGlobImps   => "globalGlobImps"
    | globImp          => "globImp"
    | globImps         => "globImps"
-   | globImps1        => "globImps1"
+   | repCommaGlobImps        => "repCommaGlobImps"
    | globInits        => "globInits"
    | ident1           => "ident1"
    | idents           => "idents"
-   | idents1          => "idents1"
-   | localCpsStoDecl  => "localCpsStoDecl"
+   | repCommaIdent          => "repCommaIdent"
+   | optLocalCpsStoDecl  => "optLocalCpsStoDecl"
    | monadicOpr       => "monadicOpr"
    | optChangemode    => "optChangemode"
    | optFlowmode      => "optFlowmode"
    | optGlobInits     => "optGlobInits"
    | optMechmode      => "optMechmode"
-   | optProgParams    => "optProgParams"
-   | optProgParams1   => "optProgParams1"
-   | optProgParams2  => "optProgParams2"
+   | optCpsProgParam    => "optCpsProgParam"
+   | cpsProgParam   => "cpsProgParam"
+   | repCommaProgParam  => "repCommaProgParam"
    | param            => "param"
    | paramList        => "paramList"
-   | paramList1       => "paramList1"
-   | paramList2      => "paramList2"
+   | optCpsParam       => "optCpsParam"
+   | repCommaParam      => "repCommaParam"
    | procDecl         => "procDecl"
    | progParam        => "progParam"
    | progParamList    => "progParamList"
    | program          => "program"
-   | program1         => "program1"
+   | optGlobalCpsDecl         => "optGlobalCpsDecl"
    | stoDecl          => "stoDecl"
    | term1            => "term1"
-   | term11           => "term11"
+   | optReloprTerm2           => "optReloprTerm2"
    | term2            => "term2"
-   | term21           => "term21"
+   | repAddoprTerm3           => "repAddoprTerm3"
    | term3            => "term3"
-   | term31           => "term31"
+   | repMultoprFactor           => "repMultoprFactor"
    | typedIdent       => "typedIdent"
 
 val string_of_gramsym = (string_of_term, string_of_nonterm)
@@ -189,55 +193,57 @@ in
 
 val productions =
 [
-( program, [[ T PROGRAM, T IDENT, N progParamList, N program1, T DO, N cpsCmd, T ENDPROGRAM]]),
-( program1,[[ T GLOBAL, N cpsDecl],[]]),
+( program, [[ T PROGRAM, T IDENT, N progParamList, N optGlobalCpsDecl, T DO, N cpsCmd, T ENDPROGRAM]]),
+( optGlobalCpsDecl,[[ T GLOBAL, N cpsDecl],[]]),
 ( decl, [[ N stoDecl ],[ N funDecl ],[ N procDecl]]),
 ( stoDecl, [[ T CHANGEMODE, N typedIdent ],[ N typedIdent]]),
-( funDecl, [[ T FUN, T IDENT, N paramList, T RETURNS, N stoDecl, N globalGlobImps, N localCpsStoDecl, T DO, N cpsCmd, T ENDFUN]]),
+( funDecl, [[ T FUN, T IDENT, N paramList, T RETURNS, N stoDecl, N globalGlobImps, N optLocalCpsStoDecl, T DO, N cpsCmd, T ENDFUN]]),
 ( globalGlobImps, [[ T GLOBAL, N globImps],[]]),
-( localCpsStoDecl, [[ T LOCAL, N cpsStoDecl ],[]]),
-( procDecl, [[ T PROC, T IDENT, N paramList, N globalGlobImps, N localCpsStoDecl, T DO, N cpsCmd, T ENDPROC]]),
-( globImps, [[ N globImp, N globImps1 ]]),
-( globImps1, [[ T COMMA, N globImp, N globImps1 ],[]]),
+( optLocalCpsStoDecl, [[ T LOCAL, N cpsStoDecl ],[]]),
+( procDecl, [[ T PROC, T IDENT, N paramList, N globalGlobImps, N optLocalCpsStoDecl, T DO, N cpsCmd, T ENDPROC]]),
+( globImps, [[ N globImp, N repCommaGlobImps ]]),
+( repCommaGlobImps, [[ T COMMA, N globImp, N repCommaGlobImps ],[]]),
 ( globImp, [[ N optFlowmode, N optChangemode, T IDENT ]]),
 ( optFlowmode, [[ T FLOWMODE],[]]),
 ( optChangemode, [[ T CHANGEMODE],[]]),
 ( optMechmode, [[ T MECHMODE],[]]),
-( cpsDecl, [[ N decl, N cpsDecl1]]),
-( cpsDecl1, [[ T SEMICOLON, N cpsDecl ],[]]),
-( cpsStoDecl, [[ N stoDecl, N cpsStoDecl1]]),
-( cpsStoDecl1, [[ T SEMICOLON, N cpsStoDecl ],[]]),
-( progParamList, [[ T LPAREN, N optProgParams, T RPAREN]]),
-( optProgParams, [[ N optProgParams1],[]]),
-( optProgParams1, [[ N progParam, N optProgParams2]]),
-( optProgParams2, [[ T COMMA, N optProgParams],[]]),
+( cpsDecl, [[ N decl, N repSemicolonCpsDecl]]),
+( repSemicolonCpsDecl, [[ T SEMICOLON, N cpsDecl ],[]]),
+( cpsStoDecl, [[ N stoDecl, N repSemicolonCpsStoDecl]]),
+( repSemicolonCpsStoDecl, [[ T SEMICOLON, N cpsStoDecl ],[]]),
+( progParamList, [[ T LPAREN, N optCpsProgParam, T RPAREN]]),
+( optCpsProgParam, [[ N cpsProgParam],[]]),
+( cpsProgParam, [[ N progParam, N repCommaProgParam]]),
+( repCommaProgParam, [[ T COMMA, N cpsProgParam],[]]),
 ( progParam, [[ N optFlowmode, N optChangemode, N typedIdent ]]),
-( paramList, [[ T LPAREN, N paramList1, T RPAREN ]]),
-( paramList1, [[ N param, N paramList2],[]]),
-( paramList2, [[ T COMMA, N paramList1],[]]),
+( paramList, [[ T LPAREN, N optCpsParam, T RPAREN ]]),
+( optCpsParam, [[ N cpsParam],[]]),
+( cpsParam, [[N param, N repCommaParam]]),
+( repCommaParam, [[ T COMMA, N cpsParam],[]]),
 ( param, [[ N optFlowmode, N optMechmode, N optChangemode, N typedIdent]]),
 ( typedIdent, [[ T IDENT, T COLON, T ATOMTYPE]]),
 ( cmd, [[ T SKIP],[ N expr, T BECOMES, N expr],[ T IF, N expr, T THEN, N cpsCmd, T ELSE, N cpsCmd, T ENDIF ],[ T WHILE, N expr, T DO, N cpsCmd, T ENDWHILE ],[ T CALL, T IDENT, N exprList, N optGlobInits ],[ T DEBUGIN, N expr ],[ T DEBUGOUT, N expr]]),
 ( optGlobInits, [[ N globInits ],[]]),
-( cpsCmd, [[ N cmd, N cpsCmd1]]),
-( cpsCmd1, [[ T SEMICOLON, N cpsCmd],[]]),
+( cpsCmd, [[ N cmd, N repSemicolonCmd]]),
+( repSemicolonCmd, [[ T SEMICOLON, N cpsCmd],[]]),
 ( globInits, [[ T INIT, N idents]]),
-( idents, [[ T IDENT, N idents1]]),
-( idents1, [[ T COMMA, N idents],[]]),
-( expr, [[ N term1, N expr1]]),
-( expr1, [[ T BOOLOPR, N term1, N expr1],[]]),
-( term1, [[ N term2, N term11]]),
-( term11, [[ T RELOPR, N term2 ],[]]),
-( term2, [[ N term3, N term21]]),
-( term21, [[ T ADDOPR, N term3, N term21],[]]),
-( term3, [[ N factor, N term31 ]]),
-( term31, [[ T MULTOPR, N factor, N term31],[]]),
+( idents, [[ T IDENT, N repCommaIdent]]),
+( repCommaIdent, [[ T COMMA, N idents],[]]),
+( expr, [[ N term1, N repBooloprExpr]]),
+( repBooloprExpr, [[ T BOOLOPR, N expr],[]]),
+( term1, [[ N term2, N optReloprTerm2]]),
+( optReloprTerm2, [[ T RELOPR, N term2 ],[]]),
+( term2, [[ N term3, N repAddoprTerm3]]),
+( repAddoprTerm3, [[ T ADDOPR, N term2],[]]),
+( term3, [[ N factor, N repMultoprFactor ]]),
+( repMultoprFactor, [[ T MULTOPR, N term3],[]]),
 ( factor, [[ T LITERAL],[ T IDENT, N ident1 ],[ N monadicOpr, N factor],[ T LPAREN, N expr, T RPAREN]]),
 ( ident1, [[ T INIT],[ N exprList ],[]]),
 ( monadicOpr, [[ T NOT ],[ T ADDOPR]]),
-( exprList, [[ T LPAREN, N exprList1, T RPAREN]]),
-( exprList1, [[ N expr, N exprList2],[]]),
-( exprList2, [[ T COMMA, N exprList1 ],[]])
+( exprList, [[ T LPAREN, N optCpsExpr, T RPAREN]]),
+( optCpsExpr, [[ N cpsExpr],[]]),
+( cpsExpr, [[ N expr, N repCommaExpr]]),
+( repCommaExpr, [[ T COMMA, N cpsExpr ],[]])
 ]
 
 val S = program
