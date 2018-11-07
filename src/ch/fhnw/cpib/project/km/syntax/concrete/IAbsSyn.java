@@ -1,4 +1,4 @@
-package ch.fhnw.cpib.project.km.parser;
+package ch.fhnw.cpib.project.km.syntax.concrete;
 
 public class IAbsSyn {
 	
