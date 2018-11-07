@@ -4,9 +4,10 @@ public class Starter {
 	public static void main(String [] args) {
 		String parseTablePath = "Grammar_IML_ParseTable.txt";
 		String outDir = "output/";
-		String insertPackage = "package ch.fhnw.cpib.project.km.parser.generated;\n";
+		String javaFileHeader = "package ch.fhnw.cpib.project.km.parser.generated;\r\n\r\n" + 
+				"import ch.fhnw.cpib.project.km.token.*;";
 		
 		ParserGenerator g = new ParserGenerator(parseTablePath);
-		g.generate(outDir, insertPackage);
+		g.generate(outDir, javaFileHeader);
 	}
 }
