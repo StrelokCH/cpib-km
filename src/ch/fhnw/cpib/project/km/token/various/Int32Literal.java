@@ -1,7 +1,5 @@
 package ch.fhnw.cpib.project.km.token.various;
 
-import java.util.regex.Matcher;
-
 import ch.fhnw.cpib.project.km.token.BaseToken;
 
 public class Int32Literal extends Literal {
