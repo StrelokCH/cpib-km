@@ -280,7 +280,7 @@ public class ParserGenerator {
 	}
 	
 	private String getPascalCase(String name) {
-		name = getCamelCase(name);
+		name = getCamelCase(name, false);
 		if (name.isEmpty()) {
 			return name;
 		}
@@ -288,6 +288,10 @@ public class ParserGenerator {
 	}
 	
 	private String getCamelCase(String name) {
+		return getCamelCase(name, true);
+	}
+	
+	private String getCamelCase(String name, boolean avoidReserved) {
 		if (name.startsWith("<")) {
 			// non-terminal
 			name = name.substring(1,name.length()-1);
@@ -296,14 +300,16 @@ public class ParserGenerator {
 			name = name.toLowerCase();
 		}
 		
-		if (name.equalsIgnoreCase("if")) {
-			return "aIf";
-		} else if (name.equalsIgnoreCase("else")) {
-			return "aElse";
-		} else if (name.equalsIgnoreCase("do")) {
-			return "aDo";
-		} else if (name.equalsIgnoreCase("while")) {
-			return "aWhile";
+		if (avoidReserved) {
+			if (name.equalsIgnoreCase("if")) {
+				name = "aIf";
+			} else if (name.equalsIgnoreCase("else")) {
+				name =  "aElse";
+			} else if (name.equalsIgnoreCase("do")) {
+				name =  "aDo";
+			} else if (name.equalsIgnoreCase("while")) {
+				name =  "aWhile";
+			}
 		}
 		
 		return name;
