@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.google.googlejavaformat.java.Formatter;
 import com.google.googlejavaformat.java.FormatterException;
@@ -84,7 +85,7 @@ public class ParserGenerator {
 			createInterface(outDir, interfaceName, insertPackage);
 			addParserFunctionHeader(parserFile, l, interfaceName);
 			for (Col c : l.cols) {
-				String className = getPascalCase(l.name) + getPascalCase(c.terminal);
+				String className = getPascalCase(l.name) + c.values.stream().map(s -> getPascalCase(s)).collect(Collectors.joining(""));
 				createNonTerminalSymbolClass(outDir, className, interfaceName, insertPackage, c);
 				addParserCol(parserFile, c, className);
 			}
