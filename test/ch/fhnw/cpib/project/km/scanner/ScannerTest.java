@@ -1,7 +1,6 @@
 package ch.fhnw.cpib.project.km.scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
 
 import ch.fhnw.cpib.project.km.exceptions.LexicalErrorException;
