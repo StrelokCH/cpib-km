@@ -4,6 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 import ch.fhnw.cpib.project.km.exceptions.*;
+import ch.fhnw.cpib.project.km.syntax.concrete.*;
 
 public class Parser {
 
