@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class RepCommaGlobImpsComma implements IRepCommaGlobImps {
+public class RepCommaGlobImpsComma implements IRepCommaGlobImps {
   private final Comma comma;
   private final IGlobImp globImp;
   private final IRepCommaGlobImps repCommaGlobImps;

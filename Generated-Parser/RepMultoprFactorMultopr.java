@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class RepMultoprFactorMultopr implements IRepMultoprFactor {
+public class RepMultoprFactorMultopr implements IRepMultoprFactor {
   private final Multopr multopr;
   private final ITerm3 term3;
 

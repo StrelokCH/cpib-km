@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class ParamOptFlowmode implements IParam {
+public class ParamOptFlowmode implements IParam {
   private final IOptFlowmode optFlowmode;
   private final IOptMechmode optMechmode;
   private final IOptChangemode optChangemode;

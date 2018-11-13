@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class ExprTerm1 implements IExpr {
+public class ExprTerm1 implements IExpr {
   private final ITerm1 term1;
   private final IRepBooloprExpr repBooloprExpr;
 

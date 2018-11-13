@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class ProgramProgram implements IProgram {
+public class ProgramProgram implements IProgram {
   private final Program program;
   private final Ident ident;
   private final IProgParamList progParamList;

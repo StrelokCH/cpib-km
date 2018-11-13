@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class MonadicOprAddopr implements IMonadicOpr {
+public class MonadicOprAddopr implements IMonadicOpr {
   private final Addopr addopr;
 
   private MonadicOprAddopr(final Addopr addopr) {

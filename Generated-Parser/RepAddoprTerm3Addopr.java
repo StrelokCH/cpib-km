@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class RepAddoprTerm3Addopr implements IRepAddoprTerm3 {
+public class RepAddoprTerm3Addopr implements IRepAddoprTerm3 {
   private final Addopr addopr;
   private final ITerm2 term2;
 

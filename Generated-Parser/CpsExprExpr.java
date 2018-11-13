@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class CpsExprExpr implements ICpsExpr {
+public class CpsExprExpr implements ICpsExpr {
   private final IExpr expr;
   private final IRepCommaExpr repCommaExpr;
 

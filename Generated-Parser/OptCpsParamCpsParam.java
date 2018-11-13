@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class OptCpsParamCpsParam implements IOptCpsParam {
+public class OptCpsParamCpsParam implements IOptCpsParam {
   private final ICpsParam cpsParam;
 
   private OptCpsParamCpsParam(final ICpsParam cpsParam) {

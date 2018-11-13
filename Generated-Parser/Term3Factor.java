@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class Term3Factor implements ITerm3 {
+public class Term3Factor implements ITerm3 {
   private final IFactor factor;
   private final IRepMultoprFactor repMultoprFactor;
 

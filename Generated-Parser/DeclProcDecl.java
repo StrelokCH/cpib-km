@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class DeclProcDecl implements IDecl {
+public class DeclProcDecl implements IDecl {
   private final IProcDecl procDecl;
 
   private DeclProcDecl(final IProcDecl procDecl) {

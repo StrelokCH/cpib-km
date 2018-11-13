@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class Term1Term2 implements ITerm1 {
+public class Term1Term2 implements ITerm1 {
   private final ITerm2 term2;
   private final IOptReloprTerm2 optReloprTerm2;
 

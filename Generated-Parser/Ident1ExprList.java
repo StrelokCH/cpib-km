@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class Ident1ExprList implements IIdent1 {
+public class Ident1ExprList implements IIdent1 {
   private final IExprList exprList;
 
   private Ident1ExprList(final IExprList exprList) {

@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class CmdDebugin implements ICmd {
+public class CmdDebugin implements ICmd {
   private final Debugin debugin;
   private final IExpr expr;
 

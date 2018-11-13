@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class ParamListLparen implements IParamList {
+public class ParamListLparen implements IParamList {
   private final Lparen lparen;
   private final IOptCpsParam optCpsParam;
   private final Rparen rparen;

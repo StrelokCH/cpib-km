@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class OptLocalCpsStoDeclLocal implements IOptLocalCpsStoDecl {
+public class OptLocalCpsStoDeclLocal implements IOptLocalCpsStoDecl {
   private final Local local;
   private final ICpsStoDecl cpsStoDecl;
 
