@@ -241,7 +241,7 @@ public class ParserGenerator {
 			if (v.startsWith("<")) {
 				// non-terminal
 				type = getInterfaceName(v);
-				expr = getCamelCase(v) + "()";
+				expr = getPascalCase(v) + "()";
 			} else {
 				// terminal
 				type = getPascalCase(v);

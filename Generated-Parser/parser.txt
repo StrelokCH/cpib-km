@@ -5,10 +5,10 @@ if (terminal instanceof Program){
 System.out.println("PROGRAM IDENT <progParamList> <optGlobalCpsDecl> DO <cpsCmd> ENDPROGRAM\"");
 Program program=((Program) consume(Program));
 Ident ident=((Ident) consume(Ident));
-IProgParamList progParamList=progParamList();
-IOptGlobalCpsDecl optGlobalCpsDecl=optGlobalCpsDecl();
+IProgParamList progParamList=ProgParamList();
+IOptGlobalCpsDecl optGlobalCpsDecl=OptGlobalCpsDecl();
 Do aDo=((Do) consume(Do));
-ICpsCmd cpsCmd=cpsCmd();
+ICpsCmd cpsCmd=CpsCmd();
 Endprogram endprogram=((Endprogram) consume(Endprogram));
 return new ProgramProgram(program,ident,progParamList,optGlobalCpsDecl,aDo,cpsCmd,endprogram);
 }
@@ -20,7 +20,7 @@ System.out.print("\"OptGlobalCpsDecl ::= ");
 if (terminal instanceof Global){
 System.out.println("GLOBAL <cpsDecl>\"");
 Global global=((Global) consume(Global));
-ICpsDecl cpsDecl=cpsDecl();
+ICpsDecl cpsDecl=CpsDecl();
 return new OptGlobalCpsDeclGlobal(global,cpsDecl);
 }
 if (terminal instanceof Do){
@@ -34,17 +34,17 @@ private IDecl Decl throws GrammarError {
 System.out.print("\"Decl ::= ");
 if (terminal instanceof Ident || terminal instanceof Changemode){
 System.out.println("<stoDecl>\"");
-IStoDecl stoDecl=stoDecl();
+IStoDecl stoDecl=StoDecl();
 return new DeclStoDecl(stoDecl);
 }
 if (terminal instanceof Fun){
 System.out.println("<funDecl>\"");
-IFunDecl funDecl=funDecl();
+IFunDecl funDecl=FunDecl();
 return new DeclFunDecl(funDecl);
 }
 if (terminal instanceof Proc){
 System.out.println("<procDecl>\"");
-IProcDecl procDecl=procDecl();
+IProcDecl procDecl=ProcDecl();
 return new DeclProcDecl(procDecl);
 }
 throw new GrammarError("Decl");
@@ -55,12 +55,12 @@ System.out.print("\"StoDecl ::= ");
 if (terminal instanceof Changemode){
 System.out.println("CHANGEMODE <typedIdent>\"");
 Changemode changemode=((Changemode) consume(Changemode));
-ITypedIdent typedIdent=typedIdent();
+ITypedIdent typedIdent=TypedIdent();
 return new StoDeclChangemode(changemode,typedIdent);
 }
 if (terminal instanceof Ident){
 System.out.println("<typedIdent>\"");
-ITypedIdent typedIdent=typedIdent();
+ITypedIdent typedIdent=TypedIdent();
 return new StoDeclTypedIdent(typedIdent);
 }
 throw new GrammarError("StoDecl");
@@ -72,13 +72,13 @@ if (terminal instanceof Fun){
 System.out.println("FUN IDENT <paramList> RETURNS <stoDecl> <globalGlobImps> <optLocalCpsStoDecl> DO <cpsCmd> ENDFUN\"");
 Fun fun=((Fun) consume(Fun));
 Ident ident=((Ident) consume(Ident));
-IParamList paramList=paramList();
+IParamList paramList=ParamList();
 Returns returns=((Returns) consume(Returns));
-IStoDecl stoDecl=stoDecl();
-IGlobalGlobImps globalGlobImps=globalGlobImps();
-IOptLocalCpsStoDecl optLocalCpsStoDecl=optLocalCpsStoDecl();
+IStoDecl stoDecl=StoDecl();
+IGlobalGlobImps globalGlobImps=GlobalGlobImps();
+IOptLocalCpsStoDecl optLocalCpsStoDecl=OptLocalCpsStoDecl();
 Do aDo=((Do) consume(Do));
-ICpsCmd cpsCmd=cpsCmd();
+ICpsCmd cpsCmd=CpsCmd();
 Endfun endfun=((Endfun) consume(Endfun));
 return new FunDeclFun(fun,ident,paramList,returns,stoDecl,globalGlobImps,optLocalCpsStoDecl,aDo,cpsCmd,endfun);
 }
@@ -90,7 +90,7 @@ System.out.print("\"GlobalGlobImps ::= ");
 if (terminal instanceof Global){
 System.out.println("GLOBAL <globImps>\"");
 Global global=((Global) consume(Global));
-IGlobImps globImps=globImps();
+IGlobImps globImps=GlobImps();
 return new GlobalGlobImpsGlobal(global,globImps);
 }
 if (terminal instanceof Do || terminal instanceof Local){
@@ -105,7 +105,7 @@ System.out.print("\"OptLocalCpsStoDecl ::= ");
 if (terminal instanceof Local){
 System.out.println("LOCAL <cpsStoDecl>\"");
 Local local=((Local) consume(Local));
-ICpsStoDecl cpsStoDecl=cpsStoDecl();
+ICpsStoDecl cpsStoDecl=CpsStoDecl();
 return new OptLocalCpsStoDeclLocal(local,cpsStoDecl);
 }
 if (terminal instanceof Do){
@@ -121,11 +121,11 @@ if (terminal instanceof Proc){
 System.out.println("PROC IDENT <paramList> <globalGlobImps> <optLocalCpsStoDecl> DO <cpsCmd> ENDPROC\"");
 Proc proc=((Proc) consume(Proc));
 Ident ident=((Ident) consume(Ident));
-IParamList paramList=paramList();
-IGlobalGlobImps globalGlobImps=globalGlobImps();
-IOptLocalCpsStoDecl optLocalCpsStoDecl=optLocalCpsStoDecl();
+IParamList paramList=ParamList();
+IGlobalGlobImps globalGlobImps=GlobalGlobImps();
+IOptLocalCpsStoDecl optLocalCpsStoDecl=OptLocalCpsStoDecl();
 Do aDo=((Do) consume(Do));
-ICpsCmd cpsCmd=cpsCmd();
+ICpsCmd cpsCmd=CpsCmd();
 Endproc endproc=((Endproc) consume(Endproc));
 return new ProcDeclProc(proc,ident,paramList,globalGlobImps,optLocalCpsStoDecl,aDo,cpsCmd,endproc);
 }
@@ -136,8 +136,8 @@ private IGlobImps GlobImps throws GrammarError {
 System.out.print("\"GlobImps ::= ");
 if (terminal instanceof Ident || terminal instanceof Changemode || terminal instanceof Flowmode){
 System.out.println("<globImp> <repCommaGlobImps>\"");
-IGlobImp globImp=globImp();
-IRepCommaGlobImps repCommaGlobImps=repCommaGlobImps();
+IGlobImp globImp=GlobImp();
+IRepCommaGlobImps repCommaGlobImps=RepCommaGlobImps();
 return new GlobImpsGlobImp(globImp,repCommaGlobImps);
 }
 throw new GrammarError("GlobImps");
@@ -148,8 +148,8 @@ System.out.print("\"RepCommaGlobImps ::= ");
 if (terminal instanceof Comma){
 System.out.println("COMMA <globImp> <repCommaGlobImps>\"");
 Comma comma=((Comma) consume(Comma));
-IGlobImp globImp=globImp();
-IRepCommaGlobImps repCommaGlobImps=repCommaGlobImps();
+IGlobImp globImp=GlobImp();
+IRepCommaGlobImps repCommaGlobImps=RepCommaGlobImps();
 return new RepCommaGlobImpsComma(comma,globImp,repCommaGlobImps);
 }
 if (terminal instanceof Do || terminal instanceof Local){
@@ -163,8 +163,8 @@ private IGlobImp GlobImp throws GrammarError {
 System.out.print("\"GlobImp ::= ");
 if (terminal instanceof Ident || terminal instanceof Changemode || terminal instanceof Flowmode){
 System.out.println("<optFlowmode> <optChangemode> IDENT\"");
-IOptFlowmode optFlowmode=optFlowmode();
-IOptChangemode optChangemode=optChangemode();
+IOptFlowmode optFlowmode=OptFlowmode();
+IOptChangemode optChangemode=OptChangemode();
 Ident ident=((Ident) consume(Ident));
 return new GlobImpOptFlowmode(optFlowmode,optChangemode,ident);
 }
@@ -217,8 +217,8 @@ private ICpsDecl CpsDecl throws GrammarError {
 System.out.print("\"CpsDecl ::= ");
 if (terminal instanceof Proc || terminal instanceof Fun || terminal instanceof Ident || terminal instanceof Changemode){
 System.out.println("<decl> <repSemicolonCpsDecl>\"");
-IDecl decl=decl();
-IRepSemicolonCpsDecl repSemicolonCpsDecl=repSemicolonCpsDecl();
+IDecl decl=Decl();
+IRepSemicolonCpsDecl repSemicolonCpsDecl=RepSemicolonCpsDecl();
 return new CpsDeclDecl(decl,repSemicolonCpsDecl);
 }
 throw new GrammarError("CpsDecl");
@@ -229,7 +229,7 @@ System.out.print("\"RepSemicolonCpsDecl ::= ");
 if (terminal instanceof Semicolon){
 System.out.println("SEMICOLON <cpsDecl>\"");
 Semicolon semicolon=((Semicolon) consume(Semicolon));
-ICpsDecl cpsDecl=cpsDecl();
+ICpsDecl cpsDecl=CpsDecl();
 return new RepSemicolonCpsDeclSemicolon(semicolon,cpsDecl);
 }
 if (terminal instanceof Do){
@@ -243,8 +243,8 @@ private ICpsStoDecl CpsStoDecl throws GrammarError {
 System.out.print("\"CpsStoDecl ::= ");
 if (terminal instanceof Ident || terminal instanceof Changemode){
 System.out.println("<stoDecl> <repSemicolonCpsStoDecl>\"");
-IStoDecl stoDecl=stoDecl();
-IRepSemicolonCpsStoDecl repSemicolonCpsStoDecl=repSemicolonCpsStoDecl();
+IStoDecl stoDecl=StoDecl();
+IRepSemicolonCpsStoDecl repSemicolonCpsStoDecl=RepSemicolonCpsStoDecl();
 return new CpsStoDeclStoDecl(stoDecl,repSemicolonCpsStoDecl);
 }
 throw new GrammarError("CpsStoDecl");
@@ -255,7 +255,7 @@ System.out.print("\"RepSemicolonCpsStoDecl ::= ");
 if (terminal instanceof Semicolon){
 System.out.println("SEMICOLON <cpsStoDecl>\"");
 Semicolon semicolon=((Semicolon) consume(Semicolon));
-ICpsStoDecl cpsStoDecl=cpsStoDecl();
+ICpsStoDecl cpsStoDecl=CpsStoDecl();
 return new RepSemicolonCpsStoDeclSemicolon(semicolon,cpsStoDecl);
 }
 if (terminal instanceof Do){
@@ -270,7 +270,7 @@ System.out.print("\"ProgParamList ::= ");
 if (terminal instanceof Lparen){
 System.out.println("LPAREN <optCpsProgParam> RPAREN\"");
 Lparen lparen=((Lparen) consume(Lparen));
-IOptCpsProgParam optCpsProgParam=optCpsProgParam();
+IOptCpsProgParam optCpsProgParam=OptCpsProgParam();
 Rparen rparen=((Rparen) consume(Rparen));
 return new ProgParamListLparen(lparen,optCpsProgParam,rparen);
 }
@@ -281,7 +281,7 @@ private IOptCpsProgParam OptCpsProgParam throws GrammarError {
 System.out.print("\"OptCpsProgParam ::= ");
 if (terminal instanceof Ident || terminal instanceof Changemode || terminal instanceof Flowmode){
 System.out.println("<cpsProgParam>\"");
-ICpsProgParam cpsProgParam=cpsProgParam();
+ICpsProgParam cpsProgParam=CpsProgParam();
 return new OptCpsProgParamCpsProgParam(cpsProgParam);
 }
 if (terminal instanceof Rparen){
@@ -295,8 +295,8 @@ private ICpsProgParam CpsProgParam throws GrammarError {
 System.out.print("\"CpsProgParam ::= ");
 if (terminal instanceof Ident || terminal instanceof Changemode || terminal instanceof Flowmode){
 System.out.println("<progParam> <repCommaProgParam>\"");
-IProgParam progParam=progParam();
-IRepCommaProgParam repCommaProgParam=repCommaProgParam();
+IProgParam progParam=ProgParam();
+IRepCommaProgParam repCommaProgParam=RepCommaProgParam();
 return new CpsProgParamProgParam(progParam,repCommaProgParam);
 }
 throw new GrammarError("CpsProgParam");
@@ -307,7 +307,7 @@ System.out.print("\"RepCommaProgParam ::= ");
 if (terminal instanceof Comma){
 System.out.println("COMMA <cpsProgParam>\"");
 Comma comma=((Comma) consume(Comma));
-ICpsProgParam cpsProgParam=cpsProgParam();
+ICpsProgParam cpsProgParam=CpsProgParam();
 return new RepCommaProgParamComma(comma,cpsProgParam);
 }
 if (terminal instanceof Rparen){
@@ -321,9 +321,9 @@ private IProgParam ProgParam throws GrammarError {
 System.out.print("\"ProgParam ::= ");
 if (terminal instanceof Ident || terminal instanceof Changemode || terminal instanceof Flowmode){
 System.out.println("<optFlowmode> <optChangemode> <typedIdent>\"");
-IOptFlowmode optFlowmode=optFlowmode();
-IOptChangemode optChangemode=optChangemode();
-ITypedIdent typedIdent=typedIdent();
+IOptFlowmode optFlowmode=OptFlowmode();
+IOptChangemode optChangemode=OptChangemode();
+ITypedIdent typedIdent=TypedIdent();
 return new ProgParamOptFlowmode(optFlowmode,optChangemode,typedIdent);
 }
 throw new GrammarError("ProgParam");
@@ -334,7 +334,7 @@ System.out.print("\"ParamList ::= ");
 if (terminal instanceof Lparen){
 System.out.println("LPAREN <optCpsParam> RPAREN\"");
 Lparen lparen=((Lparen) consume(Lparen));
-IOptCpsParam optCpsParam=optCpsParam();
+IOptCpsParam optCpsParam=OptCpsParam();
 Rparen rparen=((Rparen) consume(Rparen));
 return new ParamListLparen(lparen,optCpsParam,rparen);
 }
@@ -345,7 +345,7 @@ private IOptCpsParam OptCpsParam throws GrammarError {
 System.out.print("\"OptCpsParam ::= ");
 if (terminal instanceof Ident || terminal instanceof Changemode || terminal instanceof Mechmode || terminal instanceof Flowmode){
 System.out.println("<cpsParam>\"");
-ICpsParam cpsParam=cpsParam();
+ICpsParam cpsParam=CpsParam();
 return new OptCpsParamCpsParam(cpsParam);
 }
 if (terminal instanceof Rparen){
@@ -359,8 +359,8 @@ private ICpsParam CpsParam throws GrammarError {
 System.out.print("\"CpsParam ::= ");
 if (terminal instanceof Ident || terminal instanceof Changemode || terminal instanceof Mechmode || terminal instanceof Flowmode){
 System.out.println("<param> <repCommaParam>\"");
-IParam param=param();
-IRepCommaParam repCommaParam=repCommaParam();
+IParam param=Param();
+IRepCommaParam repCommaParam=RepCommaParam();
 return new CpsParamParam(param,repCommaParam);
 }
 throw new GrammarError("CpsParam");
@@ -371,7 +371,7 @@ System.out.print("\"RepCommaParam ::= ");
 if (terminal instanceof Comma){
 System.out.println("COMMA <cpsParam>\"");
 Comma comma=((Comma) consume(Comma));
-ICpsParam cpsParam=cpsParam();
+ICpsParam cpsParam=CpsParam();
 return new RepCommaParamComma(comma,cpsParam);
 }
 if (terminal instanceof Rparen){
@@ -385,10 +385,10 @@ private IParam Param throws GrammarError {
 System.out.print("\"Param ::= ");
 if (terminal instanceof Ident || terminal instanceof Changemode || terminal instanceof Mechmode || terminal instanceof Flowmode){
 System.out.println("<optFlowmode> <optMechmode> <optChangemode> <typedIdent>\"");
-IOptFlowmode optFlowmode=optFlowmode();
-IOptMechmode optMechmode=optMechmode();
-IOptChangemode optChangemode=optChangemode();
-ITypedIdent typedIdent=typedIdent();
+IOptFlowmode optFlowmode=OptFlowmode();
+IOptMechmode optMechmode=OptMechmode();
+IOptChangemode optChangemode=OptChangemode();
+ITypedIdent typedIdent=TypedIdent();
 return new ParamOptFlowmode(optFlowmode,optMechmode,optChangemode,typedIdent);
 }
 throw new GrammarError("Param");
@@ -415,28 +415,28 @@ return new CmdSkip(skip);
 }
 if (terminal instanceof Lparen || terminal instanceof Addopr || terminal instanceof Not || terminal instanceof Ident || terminal instanceof Literal){
 System.out.println("<expr> BECOMES <expr>\"");
-IExpr expr=expr();
+IExpr expr=Expr();
 Becomes becomes=((Becomes) consume(Becomes));
-IExpr expr=expr();
+IExpr expr=Expr();
 return new CmdExpr(exprbecomes,expr);
 }
 if (terminal instanceof If){
 System.out.println("IF <expr> THEN <cpsCmd> ELSE <cpsCmd> ENDIF\"");
 If aIf=((If) consume(If));
-IExpr expr=expr();
+IExpr expr=Expr();
 Then then=((Then) consume(Then));
-ICpsCmd cpsCmd=cpsCmd();
+ICpsCmd cpsCmd=CpsCmd();
 Else aElse=((Else) consume(Else));
-ICpsCmd cpsCmd=cpsCmd();
+ICpsCmd cpsCmd=CpsCmd();
 Endif endif=((Endif) consume(Endif));
 return new CmdIf(aIf,expr,then,cpsCmd,aElse,cpsCmd,endif);
 }
 if (terminal instanceof While){
 System.out.println("WHILE <expr> DO <cpsCmd> ENDWHILE\"");
 While aWhile=((While) consume(While));
-IExpr expr=expr();
+IExpr expr=Expr();
 Do aDo=((Do) consume(Do));
-ICpsCmd cpsCmd=cpsCmd();
+ICpsCmd cpsCmd=CpsCmd();
 Endwhile endwhile=((Endwhile) consume(Endwhile));
 return new CmdWhile(aWhile,expr,aDo,cpsCmd,endwhile);
 }
@@ -444,20 +444,20 @@ if (terminal instanceof Call){
 System.out.println("CALL IDENT <exprList> <optGlobInits>\"");
 Call call=((Call) consume(Call));
 Ident ident=((Ident) consume(Ident));
-IExprList exprList=exprList();
-IOptGlobInits optGlobInits=optGlobInits();
+IExprList exprList=ExprList();
+IOptGlobInits optGlobInits=OptGlobInits();
 return new CmdCall(call,ident,exprList,optGlobInits);
 }
 if (terminal instanceof Debugin){
 System.out.println("DEBUGIN <expr>\"");
 Debugin debugin=((Debugin) consume(Debugin));
-IExpr expr=expr();
+IExpr expr=Expr();
 return new CmdDebugin(debugin,expr);
 }
 if (terminal instanceof Debugout){
 System.out.println("DEBUGOUT <expr>\"");
 Debugout debugout=((Debugout) consume(Debugout));
-IExpr expr=expr();
+IExpr expr=Expr();
 return new CmdDebugout(debugout,expr);
 }
 throw new GrammarError("Cmd");
@@ -467,7 +467,7 @@ private IOptGlobInits OptGlobInits throws GrammarError {
 System.out.print("\"OptGlobInits ::= ");
 if (terminal instanceof Init){
 System.out.println("<globInits>\"");
-IGlobInits globInits=globInits();
+IGlobInits globInits=GlobInits();
 return new OptGlobInitsGlobInits(globInits);
 }
 if (terminal instanceof Endwhile || terminal instanceof Endif || terminal instanceof Else || terminal instanceof Endproc || terminal instanceof Endfun || terminal instanceof Endprogram || terminal instanceof Semicolon){
@@ -481,8 +481,8 @@ private ICpsCmd CpsCmd throws GrammarError {
 System.out.print("\"CpsCmd ::= ");
 if (terminal instanceof Debugout || terminal instanceof Debugin || terminal instanceof Call || terminal instanceof While || terminal instanceof If || terminal instanceof Lparen || terminal instanceof Addopr || terminal instanceof Not || terminal instanceof Ident || terminal instanceof Literal || terminal instanceof Skip){
 System.out.println("<cmd> <repSemicolonCmd>\"");
-ICmd cmd=cmd();
-IRepSemicolonCmd repSemicolonCmd=repSemicolonCmd();
+ICmd cmd=Cmd();
+IRepSemicolonCmd repSemicolonCmd=RepSemicolonCmd();
 return new CpsCmdCmd(cmd,repSemicolonCmd);
 }
 throw new GrammarError("CpsCmd");
@@ -493,7 +493,7 @@ System.out.print("\"RepSemicolonCmd ::= ");
 if (terminal instanceof Semicolon){
 System.out.println("SEMICOLON <cpsCmd>\"");
 Semicolon semicolon=((Semicolon) consume(Semicolon));
-ICpsCmd cpsCmd=cpsCmd();
+ICpsCmd cpsCmd=CpsCmd();
 return new RepSemicolonCmdSemicolon(semicolon,cpsCmd);
 }
 if (terminal instanceof Endwhile || terminal instanceof Endif || terminal instanceof Else || terminal instanceof Endproc || terminal instanceof Endfun || terminal instanceof Endprogram){
@@ -508,7 +508,7 @@ System.out.print("\"GlobInits ::= ");
 if (terminal instanceof Init){
 System.out.println("INIT <idents>\"");
 Init init=((Init) consume(Init));
-IIdents idents=idents();
+IIdents idents=Idents();
 return new GlobInitsInit(init,idents);
 }
 throw new GrammarError("GlobInits");
@@ -519,7 +519,7 @@ System.out.print("\"Idents ::= ");
 if (terminal instanceof Ident){
 System.out.println("IDENT <repCommaIdent>\"");
 Ident ident=((Ident) consume(Ident));
-IRepCommaIdent repCommaIdent=repCommaIdent();
+IRepCommaIdent repCommaIdent=RepCommaIdent();
 return new IdentsIdent(ident,repCommaIdent);
 }
 throw new GrammarError("Idents");
@@ -530,7 +530,7 @@ System.out.print("\"RepCommaIdent ::= ");
 if (terminal instanceof Comma){
 System.out.println("COMMA <idents>\"");
 Comma comma=((Comma) consume(Comma));
-IIdents idents=idents();
+IIdents idents=Idents();
 return new RepCommaIdentComma(comma,idents);
 }
 if (terminal instanceof Endwhile || terminal instanceof Endif || terminal instanceof Else || terminal instanceof Endproc || terminal instanceof Endfun || terminal instanceof Endprogram || terminal instanceof Semicolon){
@@ -544,8 +544,8 @@ private IExpr Expr throws GrammarError {
 System.out.print("\"Expr ::= ");
 if (terminal instanceof Lparen || terminal instanceof Addopr || terminal instanceof Not || terminal instanceof Ident || terminal instanceof Literal){
 System.out.println("<term1> <repBooloprExpr>\"");
-ITerm1 term1=term1();
-IRepBooloprExpr repBooloprExpr=repBooloprExpr();
+ITerm1 term1=Term1();
+IRepBooloprExpr repBooloprExpr=RepBooloprExpr();
 return new ExprTerm1(term1,repBooloprExpr);
 }
 throw new GrammarError("Expr");
@@ -556,7 +556,7 @@ System.out.print("\"RepBooloprExpr ::= ");
 if (terminal instanceof Boolopr){
 System.out.println("BOOLOPR <expr>\"");
 Boolopr boolopr=((Boolopr) consume(Boolopr));
-IExpr expr=expr();
+IExpr expr=Expr();
 return new RepBooloprExprBoolopr(boolopr,expr);
 }
 if (terminal instanceof Comma || terminal instanceof Rparen || terminal instanceof Do || terminal instanceof Then || terminal instanceof Endwhile || terminal instanceof Endif || terminal instanceof Else || terminal instanceof Endproc || terminal instanceof Endfun || terminal instanceof Endprogram || terminal instanceof Semicolon || terminal instanceof Becomes){
@@ -570,8 +570,8 @@ private ITerm1 Term1 throws GrammarError {
 System.out.print("\"Term1 ::= ");
 if (terminal instanceof Lparen || terminal instanceof Addopr || terminal instanceof Not || terminal instanceof Ident || terminal instanceof Literal){
 System.out.println("<term2> <optReloprTerm2>\"");
-ITerm2 term2=term2();
-IOptReloprTerm2 optReloprTerm2=optReloprTerm2();
+ITerm2 term2=Term2();
+IOptReloprTerm2 optReloprTerm2=OptReloprTerm2();
 return new Term1Term2(term2,optReloprTerm2);
 }
 throw new GrammarError("Term1");
@@ -582,7 +582,7 @@ System.out.print("\"OptReloprTerm2 ::= ");
 if (terminal instanceof Relopr){
 System.out.println("RELOPR <term2>\"");
 Relopr relopr=((Relopr) consume(Relopr));
-ITerm2 term2=term2();
+ITerm2 term2=Term2();
 return new OptReloprTerm2Relopr(relopr,term2);
 }
 if (terminal instanceof Comma || terminal instanceof Rparen || terminal instanceof Do || terminal instanceof Then || terminal instanceof Endwhile || terminal instanceof Endif || terminal instanceof Else || terminal instanceof Endproc || terminal instanceof Endfun || terminal instanceof Endprogram || terminal instanceof Semicolon || terminal instanceof Becomes || terminal instanceof Boolopr){
@@ -596,8 +596,8 @@ private ITerm2 Term2 throws GrammarError {
 System.out.print("\"Term2 ::= ");
 if (terminal instanceof Lparen || terminal instanceof Addopr || terminal instanceof Not || terminal instanceof Ident || terminal instanceof Literal){
 System.out.println("<term3> <repAddoprTerm3>\"");
-ITerm3 term3=term3();
-IRepAddoprTerm3 repAddoprTerm3=repAddoprTerm3();
+ITerm3 term3=Term3();
+IRepAddoprTerm3 repAddoprTerm3=RepAddoprTerm3();
 return new Term2Term3(term3,repAddoprTerm3);
 }
 throw new GrammarError("Term2");
@@ -608,7 +608,7 @@ System.out.print("\"RepAddoprTerm3 ::= ");
 if (terminal instanceof Addopr){
 System.out.println("ADDOPR <term2>\"");
 Addopr addopr=((Addopr) consume(Addopr));
-ITerm2 term2=term2();
+ITerm2 term2=Term2();
 return new RepAddoprTerm3Addopr(addopr,term2);
 }
 if (terminal instanceof Comma || terminal instanceof Rparen || terminal instanceof Do || terminal instanceof Then || terminal instanceof Endwhile || terminal instanceof Endif || terminal instanceof Else || terminal instanceof Endproc || terminal instanceof Endfun || terminal instanceof Endprogram || terminal instanceof Semicolon || terminal instanceof Becomes || terminal instanceof Boolopr || terminal instanceof Relopr){
@@ -622,8 +622,8 @@ private ITerm3 Term3 throws GrammarError {
 System.out.print("\"Term3 ::= ");
 if (terminal instanceof Lparen || terminal instanceof Addopr || terminal instanceof Not || terminal instanceof Ident || terminal instanceof Literal){
 System.out.println("<factor> <repMultoprFactor>\"");
-IFactor factor=factor();
-IRepMultoprFactor repMultoprFactor=repMultoprFactor();
+IFactor factor=Factor();
+IRepMultoprFactor repMultoprFactor=RepMultoprFactor();
 return new Term3Factor(factor,repMultoprFactor);
 }
 throw new GrammarError("Term3");
@@ -634,7 +634,7 @@ System.out.print("\"RepMultoprFactor ::= ");
 if (terminal instanceof Multopr){
 System.out.println("MULTOPR <term3>\"");
 Multopr multopr=((Multopr) consume(Multopr));
-ITerm3 term3=term3();
+ITerm3 term3=Term3();
 return new RepMultoprFactorMultopr(multopr,term3);
 }
 if (terminal instanceof Comma || terminal instanceof Rparen || terminal instanceof Do || terminal instanceof Then || terminal instanceof Endwhile || terminal instanceof Endif || terminal instanceof Else || terminal instanceof Endproc || terminal instanceof Endfun || terminal instanceof Endprogram || terminal instanceof Semicolon || terminal instanceof Becomes || terminal instanceof Boolopr || terminal instanceof Relopr || terminal instanceof Addopr){
@@ -654,19 +654,19 @@ return new FactorLiteral(literal);
 if (terminal instanceof Ident){
 System.out.println("IDENT <ident1>\"");
 Ident ident=((Ident) consume(Ident));
-IIdent1 ident1=ident1();
+IIdent1 ident1=Ident1();
 return new FactorIdent(ident,ident1);
 }
 if (terminal instanceof Addopr || terminal instanceof Not){
 System.out.println("<monadicOpr> <factor>\"");
-IMonadicOpr monadicOpr=monadicOpr();
-IFactor factor=factor();
+IMonadicOpr monadicOpr=MonadicOpr();
+IFactor factor=Factor();
 return new FactorMonadicOpr(monadicOpr,factor);
 }
 if (terminal instanceof Lparen){
 System.out.println("LPAREN <expr> RPAREN\"");
 Lparen lparen=((Lparen) consume(Lparen));
-IExpr expr=expr();
+IExpr expr=Expr();
 Rparen rparen=((Rparen) consume(Rparen));
 return new FactorLparen(lparen,expr,rparen);
 }
@@ -682,7 +682,7 @@ return new Ident1Init(init);
 }
 if (terminal instanceof Lparen){
 System.out.println("<exprList>\"");
-IExprList exprList=exprList();
+IExprList exprList=ExprList();
 return new Ident1ExprList(exprList);
 }
 if (terminal instanceof Comma || terminal instanceof Rparen || terminal instanceof Do || terminal instanceof Then || terminal instanceof Endwhile || terminal instanceof Endif || terminal instanceof Else || terminal instanceof Endproc || terminal instanceof Endfun || terminal instanceof Endprogram || terminal instanceof Semicolon || terminal instanceof Becomes || terminal instanceof Boolopr || terminal instanceof Relopr || terminal instanceof Addopr || terminal instanceof Multopr){
@@ -712,7 +712,7 @@ System.out.print("\"ExprList ::= ");
 if (terminal instanceof Lparen){
 System.out.println("LPAREN <optCpsExpr> RPAREN\"");
 Lparen lparen=((Lparen) consume(Lparen));
-IOptCpsExpr optCpsExpr=optCpsExpr();
+IOptCpsExpr optCpsExpr=OptCpsExpr();
 Rparen rparen=((Rparen) consume(Rparen));
 return new ExprListLparen(lparen,optCpsExpr,rparen);
 }
@@ -723,7 +723,7 @@ private IOptCpsExpr OptCpsExpr throws GrammarError {
 System.out.print("\"OptCpsExpr ::= ");
 if (terminal instanceof Lparen || terminal instanceof Addopr || terminal instanceof Not || terminal instanceof Ident || terminal instanceof Literal){
 System.out.println("<cpsExpr>\"");
-ICpsExpr cpsExpr=cpsExpr();
+ICpsExpr cpsExpr=CpsExpr();
 return new OptCpsExprCpsExpr(cpsExpr);
 }
 if (terminal instanceof Rparen){
@@ -737,8 +737,8 @@ private ICpsExpr CpsExpr throws GrammarError {
 System.out.print("\"CpsExpr ::= ");
 if (terminal instanceof Lparen || terminal instanceof Addopr || terminal instanceof Not || terminal instanceof Ident || terminal instanceof Literal){
 System.out.println("<expr> <repCommaExpr>\"");
-IExpr expr=expr();
-IRepCommaExpr repCommaExpr=repCommaExpr();
+IExpr expr=Expr();
+IRepCommaExpr repCommaExpr=RepCommaExpr();
 return new CpsExprExpr(expr,repCommaExpr);
 }
 throw new GrammarError("CpsExpr");
@@ -749,7 +749,7 @@ System.out.print("\"RepCommaExpr ::= ");
 if (terminal instanceof Comma){
 System.out.println("COMMA <cpsExpr>\"");
 Comma comma=((Comma) consume(Comma));
-ICpsExpr cpsExpr=cpsExpr();
+ICpsExpr cpsExpr=CpsExpr();
 return new RepCommaExprComma(comma,cpsExpr);
 }
 if (terminal instanceof Rparen){
