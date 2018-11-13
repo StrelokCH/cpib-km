@@ -241,7 +241,7 @@ public class ParserGenerator {
 			if (v.startsWith("<")) {
 				// non-terminal
 				type = getInterfaceName(v);
-				expr = getPascalCase(v) + "()";
+				expr = getCamelCase(v) + "()";
 			} else {
 				// terminal
 				type = getPascalCase(v);
@@ -275,7 +275,7 @@ public class ParserGenerator {
 
 	private void addParserFunctionHeader(PrintWriter parserFile, Line l, String interfaceName) {
 		parserFile.println();
-		parserFile.println("private " + interfaceName + " " + getPascalCase(l.name) + "() throws GrammarError {");
+		parserFile.println("private " + interfaceName + " " + getCamelCase(l.name) + "() throws GrammarError {");
 		parserFile.println("System.out.print(\"\\\"" + getPascalCase(l.name) +" ::= \");");
 	}
 	
