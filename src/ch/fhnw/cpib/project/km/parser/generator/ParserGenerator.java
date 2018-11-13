@@ -131,7 +131,7 @@ public class ParserGenerator {
 			StringBuilder sb = new StringBuilder();
 			addnl(sb, insertPackage);
 			
-			addnl(sb, "class " + className + " implements " + interfaceName);
+			addnl(sb, "public class " + className + " implements " + interfaceName);
 			
 			addnl(sb, "{");
 
@@ -347,7 +347,7 @@ public class ParserGenerator {
 			pw = new PrintWriter(f);
 			pw.println(javaFileHeader);
 
-			pw.println("interface " + name);
+			pw.println("public interface " + name);
 			pw.println("{");
 			pw.println("    IAbsSyn.IExpr toAbsSyn();");
 			pw.println("    void print(String indent);");
