@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class TypedIdentIdent implements ITypedIdent {
+public class TypedIdentIdent implements ITypedIdent {
   private final Identifier ident;
   private final Colon colon;
   private final Type atomtype;

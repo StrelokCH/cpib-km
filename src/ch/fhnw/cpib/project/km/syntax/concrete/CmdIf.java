@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class CmdIf implements ICmd {
+public class CmdIf implements ICmd {
   private final If aIf;
   private final IExpr expr;
   private final Then then;

@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class RepSemicolonCpsDeclSemicolon implements IRepSemicolonCpsDecl {
+public class RepSemicolonCpsDeclSemicolon implements IRepSemicolonCpsDecl {
   private final Semicolon semicolon;
   private final ICpsDecl cpsDecl;
 

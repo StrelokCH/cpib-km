@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class FactorLparen implements IFactor {
+public class FactorLparen implements IFactor {
   private final LeftParenthesis lparen;
   private final IExpr expr;
   private final RightParenthesis rparen;

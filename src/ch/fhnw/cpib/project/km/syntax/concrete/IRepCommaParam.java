@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-interface IRepCommaParam
+public interface IRepCommaParam
 {
     IAbsSyn.IExpr toAbsSyn();
     void print(String indent);

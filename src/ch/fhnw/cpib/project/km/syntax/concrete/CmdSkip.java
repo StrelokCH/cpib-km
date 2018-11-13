@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class CmdSkip implements ICmd {
+public class CmdSkip implements ICmd {
   private final Skip skip;
 
   private CmdSkip(final Skip skip) {

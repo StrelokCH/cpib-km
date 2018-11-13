@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class OptFlowmode implements IOptFlowmode {
+public class OptFlowmode implements IOptFlowmode {
   private OptFlowmode() {}
 
   public void print(String indent) {

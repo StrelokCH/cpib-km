@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-interface IFactor
+public interface IFactor
 {
     IAbsSyn.IExpr toAbsSyn();
     void print(String indent);

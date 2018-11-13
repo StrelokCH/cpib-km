@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class FactorMonadicOpr implements IFactor {
+public class FactorMonadicOpr implements IFactor {
   private final IMonadicOpr monadicOpr;
   private final IFactor factor;
 

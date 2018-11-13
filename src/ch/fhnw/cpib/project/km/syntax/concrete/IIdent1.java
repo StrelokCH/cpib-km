@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-interface IIdent1
+public interface IIdent1
 {
     IAbsSyn.IExpr toAbsSyn();
     void print(String indent);

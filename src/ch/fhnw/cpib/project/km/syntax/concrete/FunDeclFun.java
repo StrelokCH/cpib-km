@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class FunDeclFun implements IFunDecl {
+public class FunDeclFun implements IFunDecl {
   private final Function fun;
   private final Identifier ident;
   private final IParamList paramList;

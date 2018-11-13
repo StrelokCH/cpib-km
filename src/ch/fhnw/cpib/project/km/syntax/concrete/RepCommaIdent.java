@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class RepCommaIdent implements IRepCommaIdent {
+public class RepCommaIdent implements IRepCommaIdent {
   private RepCommaIdent() {}
 
   public void print(String indent) {

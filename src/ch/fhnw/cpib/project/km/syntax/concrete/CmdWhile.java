@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class CmdWhile implements ICmd {
+public class CmdWhile implements ICmd {
   private final While aWhile;
   private final IExpr expr;
   private final Do aDo;

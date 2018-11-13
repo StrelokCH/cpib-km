@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class RepBooloprExpr implements IRepBooloprExpr {
+public class RepBooloprExpr implements IRepBooloprExpr {
   private RepBooloprExpr() {}
 
   public void print(String indent) {

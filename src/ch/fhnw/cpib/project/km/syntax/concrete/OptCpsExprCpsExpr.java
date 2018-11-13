@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class OptCpsExprCpsExpr implements IOptCpsExpr {
+public class OptCpsExprCpsExpr implements IOptCpsExpr {
   private final ICpsExpr cpsExpr;
 
   private OptCpsExprCpsExpr(final ICpsExpr cpsExpr) {

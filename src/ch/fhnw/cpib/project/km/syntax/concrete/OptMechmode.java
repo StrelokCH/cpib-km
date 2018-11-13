@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class OptMechmode implements IOptMechmode {
+public class OptMechmode implements IOptMechmode {
   private OptMechmode() {}
 
   public void print(String indent) {

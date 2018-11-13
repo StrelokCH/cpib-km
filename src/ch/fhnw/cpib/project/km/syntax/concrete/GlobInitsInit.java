@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class GlobInitsInit implements IGlobInits {
+public class GlobInitsInit implements IGlobInits {
   private final Init init;
   private final IIdents idents;
 

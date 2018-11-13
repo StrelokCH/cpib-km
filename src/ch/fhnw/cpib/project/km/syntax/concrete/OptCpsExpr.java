@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class OptCpsExpr implements IOptCpsExpr {
+public class OptCpsExpr implements IOptCpsExpr {
   private OptCpsExpr() {}
 
   public void print(String indent) {

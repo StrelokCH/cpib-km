@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class StoDeclTypedIdent implements IStoDecl {
+public class StoDeclTypedIdent implements IStoDecl {
   private final ITypedIdent typedIdent;
 
   private StoDeclTypedIdent(final ITypedIdent typedIdent) {

@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class OptReloprTerm2Relopr implements IOptReloprTerm2 {
+public class OptReloprTerm2Relopr implements IOptReloprTerm2 {
   private final RelationalOperator relopr;
   private final ITerm2 term2;
 

@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class ProgParamOptFlowmode implements IProgParam {
+public class ProgParamOptFlowmode implements IProgParam {
   private final IOptFlowmode optFlowmode;
   private final IOptChangemode optChangemode;
   private final ITypedIdent typedIdent;

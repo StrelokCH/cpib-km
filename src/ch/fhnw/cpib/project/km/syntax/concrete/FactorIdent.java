@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class FactorIdent implements IFactor {
+public class FactorIdent implements IFactor {
   private final Identifier ident;
   private final IIdent1 ident1;
 

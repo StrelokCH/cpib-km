@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class RepCommaProgParam implements IRepCommaProgParam {
+public class RepCommaProgParam implements IRepCommaProgParam {
   private RepCommaProgParam() {}
 
   public void print(String indent) {

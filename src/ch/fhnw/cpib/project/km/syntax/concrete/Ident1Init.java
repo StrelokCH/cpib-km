@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class Ident1Init implements IIdent1 {
+public class Ident1Init implements IIdent1 {
   private final Init init;
 
   private Ident1Init(final Init init) {

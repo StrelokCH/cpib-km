@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class OptChangemodeChangemode implements IOptChangemode {
+public class OptChangemodeChangemode implements IOptChangemode {
   private final ChangeMode changemode;
 
   private OptChangemodeChangemode(final ChangeMode changemode) {

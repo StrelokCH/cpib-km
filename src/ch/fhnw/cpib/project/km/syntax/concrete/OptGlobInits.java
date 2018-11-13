@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class OptGlobInits implements IOptGlobInits {
+public class OptGlobInits implements IOptGlobInits {
   private OptGlobInits() {}
 
   public void print(String indent) {

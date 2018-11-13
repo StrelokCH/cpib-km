@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class CmdCall implements ICmd {
+public class CmdCall implements ICmd {
   private final Call call;
   private final Identifier ident;
   private final IExprList exprList;

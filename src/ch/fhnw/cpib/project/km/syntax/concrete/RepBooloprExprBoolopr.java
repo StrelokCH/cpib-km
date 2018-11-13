@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class RepBooloprExprBoolopr implements IRepBooloprExpr {
+public class RepBooloprExprBoolopr implements IRepBooloprExpr {
   private final BooleanOperator boolopr;
   private final IExpr expr;
 

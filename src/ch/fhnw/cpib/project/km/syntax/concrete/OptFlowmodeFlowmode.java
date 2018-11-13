@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class OptFlowmodeFlowmode implements IOptFlowmode {
+public class OptFlowmodeFlowmode implements IOptFlowmode {
   private final Flowmode flowmode;
 
   private OptFlowmodeFlowmode(final Flowmode flowmode) {

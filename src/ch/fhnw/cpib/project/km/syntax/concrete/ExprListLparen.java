@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class ExprListLparen implements IExprList {
+public class ExprListLparen implements IExprList {
   private final LeftParenthesis lparen;
   private final IOptCpsExpr optCpsExpr;
   private final RightParenthesis rparen;

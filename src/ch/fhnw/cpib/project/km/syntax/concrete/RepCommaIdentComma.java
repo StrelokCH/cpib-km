@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class RepCommaIdentComma implements IRepCommaIdent {
+public class RepCommaIdentComma implements IRepCommaIdent {
   private final Comma comma;
   private final IIdents idents;
 

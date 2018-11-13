@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class MonadicOprNot implements IMonadicOpr {
+public class MonadicOprNot implements IMonadicOpr {
   private final NotOperator not;
 
   private MonadicOprNot(final NotOperator not) {

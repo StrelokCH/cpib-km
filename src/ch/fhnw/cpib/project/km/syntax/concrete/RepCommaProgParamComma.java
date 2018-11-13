@@ -4,7 +4,7 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
-class RepCommaProgParamComma implements IRepCommaProgParam {
+public class RepCommaProgParamComma implements IRepCommaProgParam {
   private final Comma comma;
   private final ICpsProgParam cpsProgParam;
 
