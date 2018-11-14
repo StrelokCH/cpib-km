@@ -179,7 +179,7 @@ public class ParserGenerator {
 
 	private void writeConstructor(StringBuilder sb, String className, Col c) {
 		List<String> constrArgs = new LinkedList<>();
-		addnl(sb, "private " + className + "(");
+		addnl(sb, "public " + className + "(");
 		for (final String v : c.values) {
 			if (v.isEmpty()) {
 				continue;
