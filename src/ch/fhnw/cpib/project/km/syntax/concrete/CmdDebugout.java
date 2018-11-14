@@ -8,7 +8,7 @@ public class CmdDebugout implements ICmd {
   private final DebugOut debugout;
   private final IExpr expr;
 
-  private CmdDebugout(final DebugOut debugout, final IExpr expr) {
+  public CmdDebugout(final DebugOut debugout, final IExpr expr) {
     this.debugout = debugout;
     this.expr = expr;
   }

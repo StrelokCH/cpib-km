@@ -8,7 +8,7 @@ public class RepCommaExprComma implements IRepCommaExpr {
   private final Comma comma;
   private final ICpsExpr cpsExpr;
 
-  private RepCommaExprComma(final Comma comma, final ICpsExpr cpsExpr) {
+  public RepCommaExprComma(final Comma comma, final ICpsExpr cpsExpr) {
     this.comma = comma;
     this.cpsExpr = cpsExpr;
   }

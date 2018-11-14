@@ -8,7 +8,7 @@ public class OptGlobalCpsDeclGlobal implements IOptGlobalCpsDecl {
   private final Global global;
   private final ICpsDecl cpsDecl;
 
-  private OptGlobalCpsDeclGlobal(final Global global, final ICpsDecl cpsDecl) {
+  public OptGlobalCpsDeclGlobal(final Global global, final ICpsDecl cpsDecl) {
     this.global = global;
     this.cpsDecl = cpsDecl;
   }

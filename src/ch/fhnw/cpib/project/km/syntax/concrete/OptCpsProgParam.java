@@ -5,7 +5,7 @@ import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
 public class OptCpsProgParam implements IOptCpsProgParam {
-  private OptCpsProgParam() {}
+  public OptCpsProgParam() {}
 
   public void print(String indent) {
     System.out.println(indent + this.getClass().getSimpleName());

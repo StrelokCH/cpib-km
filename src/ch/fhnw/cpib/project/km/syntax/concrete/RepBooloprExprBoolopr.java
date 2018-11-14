@@ -8,7 +8,7 @@ public class RepBooloprExprBoolopr implements IRepBooloprExpr {
   private final BooleanOperator boolopr;
   private final IExpr expr;
 
-  private RepBooloprExprBoolopr(final BooleanOperator boolopr, final IExpr expr) {
+  public RepBooloprExprBoolopr(final BooleanOperator boolopr, final IExpr expr) {
     this.boolopr = boolopr;
     this.expr = expr;
   }

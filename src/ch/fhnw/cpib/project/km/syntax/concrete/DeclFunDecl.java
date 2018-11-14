@@ -7,7 +7,7 @@ import ch.fhnw.cpib.project.km.token.various.*;
 public class DeclFunDecl implements IDecl {
   private final IFunDecl funDecl;
 
-  private DeclFunDecl(final IFunDecl funDecl) {
+  public DeclFunDecl(final IFunDecl funDecl) {
     this.funDecl = funDecl;
   }
 

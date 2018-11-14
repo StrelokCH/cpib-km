@@ -8,7 +8,7 @@ public class FactorMonadicOpr implements IFactor {
   private final IMonadicOpr monadicOpr;
   private final IFactor factor;
 
-  private FactorMonadicOpr(final IMonadicOpr monadicOpr, final IFactor factor) {
+  public FactorMonadicOpr(final IMonadicOpr monadicOpr, final IFactor factor) {
     this.monadicOpr = monadicOpr;
     this.factor = factor;
   }

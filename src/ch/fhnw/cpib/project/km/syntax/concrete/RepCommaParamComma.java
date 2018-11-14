@@ -8,7 +8,7 @@ public class RepCommaParamComma implements IRepCommaParam {
   private final Comma comma;
   private final ICpsParam cpsParam;
 
-  private RepCommaParamComma(final Comma comma, final ICpsParam cpsParam) {
+  public RepCommaParamComma(final Comma comma, final ICpsParam cpsParam) {
     this.comma = comma;
     this.cpsParam = cpsParam;
   }

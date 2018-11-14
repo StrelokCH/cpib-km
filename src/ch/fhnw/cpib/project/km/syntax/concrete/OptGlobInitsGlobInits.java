@@ -7,7 +7,7 @@ import ch.fhnw.cpib.project.km.token.various.*;
 public class OptGlobInitsGlobInits implements IOptGlobInits {
   private final IGlobInits globInits;
 
-  private OptGlobInitsGlobInits(final IGlobInits globInits) {
+  public OptGlobInitsGlobInits(final IGlobInits globInits) {
     this.globInits = globInits;
   }
 

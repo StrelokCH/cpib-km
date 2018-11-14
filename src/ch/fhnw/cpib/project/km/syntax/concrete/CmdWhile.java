@@ -11,7 +11,7 @@ public class CmdWhile implements ICmd {
   private final ICpsCmd cpsCmd;
   private final EndWhile endwhile;
 
-  private CmdWhile(
+  public CmdWhile(
       final While aWhile,
       final IExpr expr,
       final Do aDo,

@@ -7,7 +7,7 @@ import ch.fhnw.cpib.project.km.token.various.*;
 public class DeclProcDecl implements IDecl {
   private final IProcDecl procDecl;
 
-  private DeclProcDecl(final IProcDecl procDecl) {
+  public DeclProcDecl(final IProcDecl procDecl) {
     this.procDecl = procDecl;
   }
 

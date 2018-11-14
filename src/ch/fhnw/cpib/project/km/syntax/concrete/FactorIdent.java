@@ -8,7 +8,7 @@ public class FactorIdent implements IFactor {
   private final Identifier ident;
   private final IIdent1 ident1;
 
-  private FactorIdent(final Identifier ident, final IIdent1 ident1) {
+  public FactorIdent(final Identifier ident, final IIdent1 ident1) {
     this.ident = ident;
     this.ident1 = ident1;
   }

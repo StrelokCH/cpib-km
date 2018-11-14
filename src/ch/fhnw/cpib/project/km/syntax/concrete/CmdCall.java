@@ -10,7 +10,7 @@ public class CmdCall implements ICmd {
   private final IExprList exprList;
   private final IOptGlobInits optGlobInits;
 
-  private CmdCall(
+  public CmdCall(
       final Call call,
       final Identifier ident,
       final IExprList exprList,

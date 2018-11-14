@@ -7,7 +7,7 @@ import ch.fhnw.cpib.project.km.token.various.*;
 public class MonadicOprAddopr implements IMonadicOpr {
   private final AddOperator addopr;
 
-  private MonadicOprAddopr(final AddOperator addopr) {
+  public MonadicOprAddopr(final AddOperator addopr) {
     this.addopr = addopr;
   }
 

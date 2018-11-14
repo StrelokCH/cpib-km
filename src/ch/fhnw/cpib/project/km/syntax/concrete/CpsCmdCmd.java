@@ -8,7 +8,7 @@ public class CpsCmdCmd implements ICpsCmd {
   private final ICmd cmd;
   private final IRepSemicolonCmd repSemicolonCmd;
 
-  private CpsCmdCmd(final ICmd cmd, final IRepSemicolonCmd repSemicolonCmd) {
+  public CpsCmdCmd(final ICmd cmd, final IRepSemicolonCmd repSemicolonCmd) {
     this.cmd = cmd;
     this.repSemicolonCmd = repSemicolonCmd;
   }

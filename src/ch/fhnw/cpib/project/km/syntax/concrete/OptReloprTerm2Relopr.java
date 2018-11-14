@@ -8,7 +8,7 @@ public class OptReloprTerm2Relopr implements IOptReloprTerm2 {
   private final RelationalOperator relopr;
   private final ITerm2 term2;
 
-  private OptReloprTerm2Relopr(final RelationalOperator relopr, final ITerm2 term2) {
+  public OptReloprTerm2Relopr(final RelationalOperator relopr, final ITerm2 term2) {
     this.relopr = relopr;
     this.term2 = term2;
   }

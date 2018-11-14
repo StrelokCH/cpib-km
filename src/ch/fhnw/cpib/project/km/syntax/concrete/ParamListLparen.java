@@ -9,7 +9,7 @@ public class ParamListLparen implements IParamList {
   private final IOptCpsParam optCpsParam;
   private final RightParenthesis rparen;
 
-  private ParamListLparen(
+  public ParamListLparen(
       final LeftParenthesis lparen, final IOptCpsParam optCpsParam, final RightParenthesis rparen) {
     this.lparen = lparen;
     this.optCpsParam = optCpsParam;

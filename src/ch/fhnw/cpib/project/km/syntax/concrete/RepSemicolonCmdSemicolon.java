@@ -8,7 +8,7 @@ public class RepSemicolonCmdSemicolon implements IRepSemicolonCmd {
   private final Semicolon semicolon;
   private final ICpsCmd cpsCmd;
 
-  private RepSemicolonCmdSemicolon(final Semicolon semicolon, final ICpsCmd cpsCmd) {
+  public RepSemicolonCmdSemicolon(final Semicolon semicolon, final ICpsCmd cpsCmd) {
     this.semicolon = semicolon;
     this.cpsCmd = cpsCmd;
   }

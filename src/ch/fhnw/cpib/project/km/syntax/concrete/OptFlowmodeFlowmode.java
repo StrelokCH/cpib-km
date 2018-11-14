@@ -7,7 +7,7 @@ import ch.fhnw.cpib.project.km.token.various.*;
 public class OptFlowmodeFlowmode implements IOptFlowmode {
   private final Flowmode flowmode;
 
-  private OptFlowmodeFlowmode(final Flowmode flowmode) {
+  public OptFlowmodeFlowmode(final Flowmode flowmode) {
     this.flowmode = flowmode;
   }
 

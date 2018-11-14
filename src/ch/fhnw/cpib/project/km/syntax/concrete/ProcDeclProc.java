@@ -14,7 +14,7 @@ public class ProcDeclProc implements IProcDecl {
   private final ICpsCmd cpsCmd;
   private final EndProcedure endproc;
 
-  private ProcDeclProc(
+  public ProcDeclProc(
       final Procedure proc,
       final Identifier ident,
       final IParamList paramList,

@@ -8,7 +8,7 @@ public class RepMultoprFactorMultopr implements IRepMultoprFactor {
   private final MultiplicationOperator multopr;
   private final ITerm3 term3;
 
-  private RepMultoprFactorMultopr(final MultiplicationOperator multopr, final ITerm3 term3) {
+  public RepMultoprFactorMultopr(final MultiplicationOperator multopr, final ITerm3 term3) {
     this.multopr = multopr;
     this.term3 = term3;
   }

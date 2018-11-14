@@ -5,7 +5,7 @@ import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
 public class RepSemicolonCmd implements IRepSemicolonCmd {
-  private RepSemicolonCmd() {}
+  public RepSemicolonCmd() {}
 
   public void print(String indent) {
     System.out.println(indent + this.getClass().getSimpleName());

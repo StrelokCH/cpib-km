@@ -16,7 +16,7 @@ public class FunDeclFun implements IFunDecl {
   private final ICpsCmd cpsCmd;
   private final EndFunction endfun;
 
-  private FunDeclFun(
+  public FunDeclFun(
       final Function fun,
       final Identifier ident,
       final IParamList paramList,

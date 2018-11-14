@@ -8,7 +8,7 @@ public class Term2Term3 implements ITerm2 {
   private final ITerm3 term3;
   private final IRepAddoprTerm3 repAddoprTerm3;
 
-  private Term2Term3(final ITerm3 term3, final IRepAddoprTerm3 repAddoprTerm3) {
+  public Term2Term3(final ITerm3 term3, final IRepAddoprTerm3 repAddoprTerm3) {
     this.term3 = term3;
     this.repAddoprTerm3 = repAddoprTerm3;
   }

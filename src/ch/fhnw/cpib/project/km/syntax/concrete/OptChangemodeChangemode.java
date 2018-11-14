@@ -7,7 +7,7 @@ import ch.fhnw.cpib.project.km.token.various.*;
 public class OptChangemodeChangemode implements IOptChangemode {
   private final ChangeMode changemode;
 
-  private OptChangemodeChangemode(final ChangeMode changemode) {
+  public OptChangemodeChangemode(final ChangeMode changemode) {
     this.changemode = changemode;
   }
 

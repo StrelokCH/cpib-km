@@ -8,7 +8,7 @@ public class RepAddoprTerm3Addopr implements IRepAddoprTerm3 {
   private final AddOperator addopr;
   private final ITerm2 term2;
 
-  private RepAddoprTerm3Addopr(final AddOperator addopr, final ITerm2 term2) {
+  public RepAddoprTerm3Addopr(final AddOperator addopr, final ITerm2 term2) {
     this.addopr = addopr;
     this.term2 = term2;
   }

@@ -9,7 +9,7 @@ public class GlobImpOptFlowmode implements IGlobImp {
   private final IOptChangemode optChangemode;
   private final Identifier ident;
 
-  private GlobImpOptFlowmode(
+  public GlobImpOptFlowmode(
       final IOptFlowmode optFlowmode, final IOptChangemode optChangemode, final Identifier ident) {
     this.optFlowmode = optFlowmode;
     this.optChangemode = optChangemode;

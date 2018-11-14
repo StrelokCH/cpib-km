@@ -8,7 +8,7 @@ public class CpsDeclDecl implements ICpsDecl {
   private final IDecl decl;
   private final IRepSemicolonCpsDecl repSemicolonCpsDecl;
 
-  private CpsDeclDecl(final IDecl decl, final IRepSemicolonCpsDecl repSemicolonCpsDecl) {
+  public CpsDeclDecl(final IDecl decl, final IRepSemicolonCpsDecl repSemicolonCpsDecl) {
     this.decl = decl;
     this.repSemicolonCpsDecl = repSemicolonCpsDecl;
   }

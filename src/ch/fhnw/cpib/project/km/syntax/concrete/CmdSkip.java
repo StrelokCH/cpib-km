@@ -7,7 +7,7 @@ import ch.fhnw.cpib.project.km.token.various.*;
 public class CmdSkip implements ICmd {
   private final Skip skip;
 
-  private CmdSkip(final Skip skip) {
+  public CmdSkip(final Skip skip) {
     this.skip = skip;
   }
 

@@ -8,7 +8,7 @@ public class RepSemicolonCpsDeclSemicolon implements IRepSemicolonCpsDecl {
   private final Semicolon semicolon;
   private final ICpsDecl cpsDecl;
 
-  private RepSemicolonCpsDeclSemicolon(final Semicolon semicolon, final ICpsDecl cpsDecl) {
+  public RepSemicolonCpsDeclSemicolon(final Semicolon semicolon, final ICpsDecl cpsDecl) {
     this.semicolon = semicolon;
     this.cpsDecl = cpsDecl;
   }

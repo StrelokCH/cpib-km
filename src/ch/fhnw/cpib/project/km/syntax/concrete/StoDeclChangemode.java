@@ -8,7 +8,7 @@ public class StoDeclChangemode implements IStoDecl {
   private final ChangeMode changemode;
   private final ITypedIdent typedIdent;
 
-  private StoDeclChangemode(final ChangeMode changemode, final ITypedIdent typedIdent) {
+  public StoDeclChangemode(final ChangeMode changemode, final ITypedIdent typedIdent) {
     this.changemode = changemode;
     this.typedIdent = typedIdent;
   }

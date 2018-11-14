@@ -8,7 +8,7 @@ public class GlobInitsInit implements IGlobInits {
   private final Init init;
   private final IIdents idents;
 
-  private GlobInitsInit(final Init init, final IIdents idents) {
+  public GlobInitsInit(final Init init, final IIdents idents) {
     this.init = init;
     this.idents = idents;
   }

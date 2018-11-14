@@ -8,7 +8,7 @@ public class CpsExprExpr implements ICpsExpr {
   private final IExpr expr;
   private final IRepCommaExpr repCommaExpr;
 
-  private CpsExprExpr(final IExpr expr, final IRepCommaExpr repCommaExpr) {
+  public CpsExprExpr(final IExpr expr, final IRepCommaExpr repCommaExpr) {
     this.expr = expr;
     this.repCommaExpr = repCommaExpr;
   }

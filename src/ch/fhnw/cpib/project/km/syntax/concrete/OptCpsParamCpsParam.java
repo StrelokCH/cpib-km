@@ -7,7 +7,7 @@ import ch.fhnw.cpib.project.km.token.various.*;
 public class OptCpsParamCpsParam implements IOptCpsParam {
   private final ICpsParam cpsParam;
 
-  private OptCpsParamCpsParam(final ICpsParam cpsParam) {
+  public OptCpsParamCpsParam(final ICpsParam cpsParam) {
     this.cpsParam = cpsParam;
   }
 

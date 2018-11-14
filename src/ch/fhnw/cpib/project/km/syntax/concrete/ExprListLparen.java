@@ -9,7 +9,7 @@ public class ExprListLparen implements IExprList {
   private final IOptCpsExpr optCpsExpr;
   private final RightParenthesis rparen;
 
-  private ExprListLparen(final LeftParenthesis lparen, final IOptCpsExpr optCpsExpr, final RightParenthesis rparen) {
+  public ExprListLparen(final LeftParenthesis lparen, final IOptCpsExpr optCpsExpr, final RightParenthesis rparen) {
     this.lparen = lparen;
     this.optCpsExpr = optCpsExpr;
     this.rparen = rparen;

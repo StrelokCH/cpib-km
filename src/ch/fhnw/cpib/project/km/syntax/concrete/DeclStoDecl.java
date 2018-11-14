@@ -7,7 +7,7 @@ import ch.fhnw.cpib.project.km.token.various.*;
 public class DeclStoDecl implements IDecl {
   private final IStoDecl stoDecl;
 
-  private DeclStoDecl(final IStoDecl stoDecl) {
+  public DeclStoDecl(final IStoDecl stoDecl) {
     this.stoDecl = stoDecl;
   }
 

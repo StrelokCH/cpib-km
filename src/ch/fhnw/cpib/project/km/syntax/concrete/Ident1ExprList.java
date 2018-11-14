@@ -7,7 +7,7 @@ import ch.fhnw.cpib.project.km.token.various.*;
 public class Ident1ExprList implements IIdent1 {
   private final IExprList exprList;
 
-  private Ident1ExprList(final IExprList exprList) {
+  public Ident1ExprList(final IExprList exprList) {
     this.exprList = exprList;
   }
 

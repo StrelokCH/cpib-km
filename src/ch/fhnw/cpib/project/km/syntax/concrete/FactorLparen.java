@@ -9,7 +9,7 @@ public class FactorLparen implements IFactor {
   private final IExpr expr;
   private final RightParenthesis rparen;
 
-  private FactorLparen(final LeftParenthesis lparen, final IExpr expr, final RightParenthesis rparen) {
+  public FactorLparen(final LeftParenthesis lparen, final IExpr expr, final RightParenthesis rparen) {
     this.lparen = lparen;
     this.expr = expr;
     this.rparen = rparen;

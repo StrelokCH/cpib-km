@@ -5,7 +5,7 @@ import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
 public class OptChangemode implements IOptChangemode {
-  private OptChangemode() {}
+  public OptChangemode() {}
 
   public void print(String indent) {
     System.out.println(indent + this.getClass().getSimpleName());

@@ -10,7 +10,7 @@ public class ParamOptFlowmode implements IParam {
   private final IOptChangemode optChangemode;
   private final ITypedIdent typedIdent;
 
-  private ParamOptFlowmode(
+  public ParamOptFlowmode(
       final IOptFlowmode optFlowmode,
       final IOptMechmode optMechmode,
       final IOptChangemode optChangemode,

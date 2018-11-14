@@ -8,7 +8,7 @@ public class CpsParamParam implements ICpsParam {
   private final IParam param;
   private final IRepCommaParam repCommaParam;
 
-  private CpsParamParam(final IParam param, final IRepCommaParam repCommaParam) {
+  public CpsParamParam(final IParam param, final IRepCommaParam repCommaParam) {
     this.param = param;
     this.repCommaParam = repCommaParam;
   }

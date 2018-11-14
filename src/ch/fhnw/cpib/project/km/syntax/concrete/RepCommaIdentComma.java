@@ -8,7 +8,7 @@ public class RepCommaIdentComma implements IRepCommaIdent {
   private final Comma comma;
   private final IIdents idents;
 
-  private RepCommaIdentComma(final Comma comma, final IIdents idents) {
+  public RepCommaIdentComma(final Comma comma, final IIdents idents) {
     this.comma = comma;
     this.idents = idents;
   }

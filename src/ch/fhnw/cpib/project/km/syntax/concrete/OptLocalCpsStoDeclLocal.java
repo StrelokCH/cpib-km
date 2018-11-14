@@ -8,7 +8,7 @@ public class OptLocalCpsStoDeclLocal implements IOptLocalCpsStoDecl {
   private final Local local;
   private final ICpsStoDecl cpsStoDecl;
 
-  private OptLocalCpsStoDeclLocal(final Local local, final ICpsStoDecl cpsStoDecl) {
+  public OptLocalCpsStoDeclLocal(final Local local, final ICpsStoDecl cpsStoDecl) {
     this.local = local;
     this.cpsStoDecl = cpsStoDecl;
   }

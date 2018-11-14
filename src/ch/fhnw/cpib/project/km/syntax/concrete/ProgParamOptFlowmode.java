@@ -9,7 +9,7 @@ public class ProgParamOptFlowmode implements IProgParam {
   private final IOptChangemode optChangemode;
   private final ITypedIdent typedIdent;
 
-  private ProgParamOptFlowmode(
+  public ProgParamOptFlowmode(
       final IOptFlowmode optFlowmode,
       final IOptChangemode optChangemode,
       final ITypedIdent typedIdent) {

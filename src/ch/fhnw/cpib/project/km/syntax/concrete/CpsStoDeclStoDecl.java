@@ -8,7 +8,7 @@ public class CpsStoDeclStoDecl implements ICpsStoDecl {
   private final IStoDecl stoDecl;
   private final IRepSemicolonCpsStoDecl repSemicolonCpsStoDecl;
 
-  private CpsStoDeclStoDecl(
+  public CpsStoDeclStoDecl(
       final IStoDecl stoDecl, final IRepSemicolonCpsStoDecl repSemicolonCpsStoDecl) {
     this.stoDecl = stoDecl;
     this.repSemicolonCpsStoDecl = repSemicolonCpsStoDecl;

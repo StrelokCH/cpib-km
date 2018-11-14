@@ -7,7 +7,7 @@ import ch.fhnw.cpib.project.km.token.various.*;
 public class FactorLiteral implements IFactor {
   private final Literal literal;
 
-  private FactorLiteral(final Literal literal) {
+  public FactorLiteral(final Literal literal) {
     this.literal = literal;
   }
 

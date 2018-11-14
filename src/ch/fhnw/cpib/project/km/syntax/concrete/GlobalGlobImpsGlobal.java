@@ -8,7 +8,7 @@ public class GlobalGlobImpsGlobal implements IGlobalGlobImps {
   private final Global global;
   private final IGlobImps globImps;
 
-  private GlobalGlobImpsGlobal(final Global global, final IGlobImps globImps) {
+  public GlobalGlobImpsGlobal(final Global global, final IGlobImps globImps) {
     this.global = global;
     this.globImps = globImps;
   }

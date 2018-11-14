@@ -5,7 +5,7 @@ import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
 public class GlobalGlobImps implements IGlobalGlobImps {
-  private GlobalGlobImps() {}
+  public GlobalGlobImps() {}
 
   public void print(String indent) {
     System.out.println(indent + this.getClass().getSimpleName());

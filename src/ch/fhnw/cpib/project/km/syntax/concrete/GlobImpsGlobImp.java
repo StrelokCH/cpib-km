@@ -8,7 +8,7 @@ public class GlobImpsGlobImp implements IGlobImps {
   private final IGlobImp globImp;
   private final IRepCommaGlobImps repCommaGlobImps;
 
-  private GlobImpsGlobImp(final IGlobImp globImp, final IRepCommaGlobImps repCommaGlobImps) {
+  public GlobImpsGlobImp(final IGlobImp globImp, final IRepCommaGlobImps repCommaGlobImps) {
     this.globImp = globImp;
     this.repCommaGlobImps = repCommaGlobImps;
   }

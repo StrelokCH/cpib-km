@@ -7,7 +7,7 @@ import ch.fhnw.cpib.project.km.token.various.*;
 public class OptMechmodeMechmode implements IOptMechmode {
   private final Mechmode mechmode;
 
-  private OptMechmodeMechmode(final Mechmode mechmode) {
+  public OptMechmodeMechmode(final Mechmode mechmode) {
     this.mechmode = mechmode;
   }
 

@@ -7,7 +7,7 @@ import ch.fhnw.cpib.project.km.token.various.*;
 public class MonadicOprNot implements IMonadicOpr {
   private final NotOperator not;
 
-  private MonadicOprNot(final NotOperator not) {
+  public MonadicOprNot(final NotOperator not) {
     this.not = not;
   }
 

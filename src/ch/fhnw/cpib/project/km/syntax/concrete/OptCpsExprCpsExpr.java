@@ -7,7 +7,7 @@ import ch.fhnw.cpib.project.km.token.various.*;
 public class OptCpsExprCpsExpr implements IOptCpsExpr {
   private final ICpsExpr cpsExpr;
 
-  private OptCpsExprCpsExpr(final ICpsExpr cpsExpr) {
+  public OptCpsExprCpsExpr(final ICpsExpr cpsExpr) {
     this.cpsExpr = cpsExpr;
   }
 

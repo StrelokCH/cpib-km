@@ -8,7 +8,7 @@ public class CmdDebugin implements ICmd {
   private final DebugIn debugin;
   private final IExpr expr;
 
-  private CmdDebugin(final DebugIn debugin, final IExpr expr) {
+  public CmdDebugin(final DebugIn debugin, final IExpr expr) {
     this.debugin = debugin;
     this.expr = expr;
   }

@@ -8,7 +8,7 @@ public class IdentsIdent implements IIdents {
   private final Identifier ident;
   private final IRepCommaIdent repCommaIdent;
 
-  private IdentsIdent(final Identifier ident, final IRepCommaIdent repCommaIdent) {
+  public IdentsIdent(final Identifier ident, final IRepCommaIdent repCommaIdent) {
     this.ident = ident;
     this.repCommaIdent = repCommaIdent;
   }

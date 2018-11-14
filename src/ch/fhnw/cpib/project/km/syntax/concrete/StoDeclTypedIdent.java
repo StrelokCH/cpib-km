@@ -7,7 +7,7 @@ import ch.fhnw.cpib.project.km.token.various.*;
 public class StoDeclTypedIdent implements IStoDecl {
   private final ITypedIdent typedIdent;
 
-  private StoDeclTypedIdent(final ITypedIdent typedIdent) {
+  public StoDeclTypedIdent(final ITypedIdent typedIdent) {
     this.typedIdent = typedIdent;
   }
 

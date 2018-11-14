@@ -8,7 +8,7 @@ public class Term3Factor implements ITerm3 {
   private final IFactor factor;
   private final IRepMultoprFactor repMultoprFactor;
 
-  private Term3Factor(final IFactor factor, final IRepMultoprFactor repMultoprFactor) {
+  public Term3Factor(final IFactor factor, final IRepMultoprFactor repMultoprFactor) {
     this.factor = factor;
     this.repMultoprFactor = repMultoprFactor;
   }

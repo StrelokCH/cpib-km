@@ -13,7 +13,7 @@ public class CmdIf implements ICmd {
   private final ICpsCmd cpsCmd2;
   private final EndIf endif;
 
-  private CmdIf(
+  public CmdIf(
       final If aIf,
       final IExpr expr,
       final Then then,

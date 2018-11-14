@@ -7,7 +7,7 @@ import ch.fhnw.cpib.project.km.token.various.*;
 public class Ident1Init implements IIdent1 {
   private final Init init;
 
-  private Ident1Init(final Init init) {
+  public Ident1Init(final Init init) {
     this.init = init;
   }
 

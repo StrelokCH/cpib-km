@@ -5,7 +5,7 @@ import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
 public class RepCommaParam implements IRepCommaParam {
-  private RepCommaParam() {}
+  public RepCommaParam() {}
 
   public void print(String indent) {
     System.out.println(indent + this.getClass().getSimpleName());

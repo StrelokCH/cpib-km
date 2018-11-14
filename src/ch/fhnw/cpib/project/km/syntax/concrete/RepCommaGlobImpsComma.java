@@ -9,7 +9,7 @@ public class RepCommaGlobImpsComma implements IRepCommaGlobImps {
   private final IGlobImp globImp;
   private final IRepCommaGlobImps repCommaGlobImps;
 
-  private RepCommaGlobImpsComma(
+  public RepCommaGlobImpsComma(
       final Comma comma, final IGlobImp globImp, final IRepCommaGlobImps repCommaGlobImps) {
     this.comma = comma;
     this.globImp = globImp;

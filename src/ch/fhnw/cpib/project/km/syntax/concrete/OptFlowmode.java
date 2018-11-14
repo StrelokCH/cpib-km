@@ -5,7 +5,7 @@ import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
 public class OptFlowmode implements IOptFlowmode {
-  private OptFlowmode() {}
+  public OptFlowmode() {}
 
   public void print(String indent) {
     System.out.println(indent + this.getClass().getSimpleName());

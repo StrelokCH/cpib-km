@@ -9,7 +9,7 @@ public class CmdExpr implements ICmd {
   private final Becomes becomes;
   private final IExpr expr2;
 
-  private CmdExpr(final IExpr expr, final Becomes becomes, final IExpr expr2) {
+  public CmdExpr(final IExpr expr, final Becomes becomes, final IExpr expr2) {
     this.expr = expr;
     this.becomes = becomes;
     this.expr2 = expr2;

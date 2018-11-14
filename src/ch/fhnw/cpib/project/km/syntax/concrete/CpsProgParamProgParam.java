@@ -8,7 +8,7 @@ public class CpsProgParamProgParam implements ICpsProgParam {
   private final IProgParam progParam;
   private final IRepCommaProgParam repCommaProgParam;
 
-  private CpsProgParamProgParam(
+  public CpsProgParamProgParam(
       final IProgParam progParam, final IRepCommaProgParam repCommaProgParam) {
     this.progParam = progParam;
     this.repCommaProgParam = repCommaProgParam;

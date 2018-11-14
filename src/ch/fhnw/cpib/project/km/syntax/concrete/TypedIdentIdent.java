@@ -9,7 +9,7 @@ public class TypedIdentIdent implements ITypedIdent {
   private final Colon colon;
   private final Type atomtype;
 
-  private TypedIdentIdent(final Identifier ident, final Colon colon, final Type atomtype) {
+  public TypedIdentIdent(final Identifier ident, final Colon colon, final Type atomtype) {
     this.ident = ident;
     this.colon = colon;
     this.atomtype = atomtype;

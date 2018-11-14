@@ -13,7 +13,7 @@ public class ProgramProgram implements IProgram {
   private final ICpsCmd cpsCmd;
   private final EndProgram endprogram;
 
-  private ProgramProgram(
+  public ProgramProgram(
       final Program program,
       final Identifier ident,
       final IProgParamList progParamList,
