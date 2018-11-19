@@ -33,4 +33,39 @@ class ParserTest {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	@Test
+	void testParse2() {
+		String input = "program GlobalInits1()\r\n" + 
+				"global\r\n" + 
+				"var g1:int64;\r\n" + 
+				"var g2:int64;\r\n" + 
+				"proc p(in copy const x:int64)\r\n" + 
+				"global out const g1, out const g2\r\n" + 
+				"do\r\n" + 
+				"g1 init := x * x;\r\n" + 
+				"g2 init := -g1\r\n" + 
+				"endproc\r\n" + 
+				"do\r\n" + 
+				"call p(5) init g1, g2;"+
+				"debugout g1;" + "debugout g2;\r\n" + 
+				"call p(6);"
+				+ "debugout g1;"
+				+ "debugout g2\r\n" + 
+				"endprogram\r\n"
+				;
+		
+		ITokenList tokens;
+		try {
+			tokens = Scanner.scan(input);
+			IProgram program = new Parser(tokens).parse();
+		} catch (LexicalErrorException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (GrammarError e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
