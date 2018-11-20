@@ -1,8 +1,13 @@
 package ch.fhnw.cpib.project.km.parser;
 
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
+
+import ch.fhnw.cpib.project.km.exceptions.GrammarError;
+import ch.fhnw.cpib.project.km.exceptions.LexicalErrorException;
 import ch.fhnw.cpib.project.km.scanner.Scanner;
 import ch.fhnw.cpib.project.km.syntax.concrete.IProgram;
 import ch.fhnw.cpib.project.km.token.ITokenList;
@@ -43,6 +48,20 @@ class ParserTest {
 			assertNotNull(program);
 			program.print("");
 		} catch (Exception e) {
+			fail(e);
+		}
+	}
+
+	@Test
+	void testParse_Invalid() {
+		String input = "Liebe Grossmutter ;)\r\n" + "Zu Deinem 67-ten Geburtstag\n";
+
+		ITokenList tokens;
+		try {
+			tokens = Scanner.scan(input);
+			Executable exe = () -> new Parser(tokens).parse();
+			assertThrows(GrammarError.class, exe);
+		} catch (LexicalErrorException e) {
 			fail(e);
 		}
 	}
