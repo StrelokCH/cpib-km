@@ -3,10 +3,7 @@ package ch.fhnw.cpib.project.km.parser;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
-import ch.fhnw.cpib.project.km.exceptions.GrammarError;
-import ch.fhnw.cpib.project.km.exceptions.LexicalErrorException;
 import ch.fhnw.cpib.project.km.scanner.Scanner;
-import ch.fhnw.cpib.project.km.syntax.concrete.IProgram;
 import ch.fhnw.cpib.project.km.token.ITokenList;
 
 class ParserTest {
@@ -21,10 +18,9 @@ class ParserTest {
 				+ "while r >= n do\r\n" + "q := q + 1;\r\n" + "r := r - n\r\n" + "endwhile\r\n" + "endproc\r\n"
 				+ "do\r\n" + "call divide(m, n, q init, r init)\r\n" + "endprogram\n";
 		
-		ITokenList tokens;
 		try {
-			tokens = Scanner.scan(input);
-			IProgram program = new Parser(tokens).parse();
+			ITokenList tokens = Scanner.scan(input);
+			assertNotNull(new Parser(tokens).parse());
 		} catch (Exception e) {
 			fail(e);
 		}
@@ -52,10 +48,9 @@ class ParserTest {
 				"endprogram\r\n"
 				;
 		
-		ITokenList tokens;
 		try {
-			tokens = Scanner.scan(input);
-			IProgram program = new Parser(tokens).parse();
+			ITokenList tokens = Scanner.scan(input);
+			assertNotNull(new Parser(tokens).parse());
 		} catch (Exception e) {
 			fail(e);
 		}
