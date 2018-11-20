@@ -17,9 +17,9 @@ public class TypedIdentIdent implements ITypedIdent {
 
   public void print(String indent) {
     System.out.println(indent + this.getClass().getSimpleName());
-    System.out.println(ident + "    T " + ident.toString());
-    System.out.println(ident + "    T " + colon.toString());
-    System.out.println(ident + "    T " + atomtype.toString());
+    System.out.println(indent + "    T " + ident.toString());
+    System.out.println(indent + "    T " + colon.toString());
+    System.out.println(indent + "    T " + atomtype.toString());
   }
 
   @Override

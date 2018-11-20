@@ -32,13 +32,13 @@ public class ProgramProgram implements IProgram {
 
   public void print(String indent) {
     System.out.println(indent + this.getClass().getSimpleName());
-    System.out.println(ident + "    T " + program.toString());
-    System.out.println(ident + "    T " + ident.toString());
+    System.out.println(indent + "    T " + program.toString());
+    System.out.println(indent + "    T " + ident.toString());
     progParamList.print(indent + "    ");
     optGlobalCpsDecl.print(indent + "    ");
-    System.out.println(ident + "    T " + aDo.toString());
+    System.out.println(indent + "    T " + aDo.toString());
     cpsCmd.print(indent + "    ");
-    System.out.println(ident + "    T " + endprogram.toString());
+    System.out.println(indent + "    T " + endprogram.toString());
   }
 
   @Override

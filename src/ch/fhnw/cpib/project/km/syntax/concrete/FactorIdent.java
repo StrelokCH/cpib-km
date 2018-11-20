@@ -15,7 +15,7 @@ public class FactorIdent implements IFactor {
 
   public void print(String indent) {
     System.out.println(indent + this.getClass().getSimpleName());
-    System.out.println(ident + "    T " + ident.toString());
+    System.out.println(indent + "    T " + ident.toString());
     ident1.print(indent + "    ");
   }
 

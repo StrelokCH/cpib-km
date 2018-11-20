@@ -41,16 +41,16 @@ public class FunDeclFun implements IFunDecl {
 
   public void print(String indent) {
     System.out.println(indent + this.getClass().getSimpleName());
-    System.out.println(ident + "    T " + fun.toString());
-    System.out.println(ident + "    T " + ident.toString());
+    System.out.println(indent + "    T " + fun.toString());
+    System.out.println(indent + "    T " + ident.toString());
     paramList.print(indent + "    ");
-    System.out.println(ident + "    T " + returns.toString());
+    System.out.println(indent + "    T " + returns.toString());
     stoDecl.print(indent + "    ");
     globalGlobImps.print(indent + "    ");
     optLocalCpsStoDecl.print(indent + "    ");
-    System.out.println(ident + "    T " + aDo.toString());
+    System.out.println(indent + "    T " + aDo.toString());
     cpsCmd.print(indent + "    ");
-    System.out.println(ident + "    T " + endfun.toString());
+    System.out.println(indent + "    T " + endfun.toString());
   }
 
   @Override

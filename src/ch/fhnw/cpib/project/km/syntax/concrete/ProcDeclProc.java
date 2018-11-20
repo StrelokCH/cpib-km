@@ -35,14 +35,14 @@ public class ProcDeclProc implements IProcDecl {
 
   public void print(String indent) {
     System.out.println(indent + this.getClass().getSimpleName());
-    System.out.println(ident + "    T " + proc.toString());
-    System.out.println(ident + "    T " + ident.toString());
+    System.out.println(indent + "    T " + proc.toString());
+    System.out.println(indent + "    T " + ident.toString());
     paramList.print(indent + "    ");
     globalGlobImps.print(indent + "    ");
     optLocalCpsStoDecl.print(indent + "    ");
-    System.out.println(ident + "    T " + aDo.toString());
+    System.out.println(indent + "    T " + aDo.toString());
     cpsCmd.print(indent + "    ");
-    System.out.println(ident + "    T " + endproc.toString());
+    System.out.println(indent + "    T " + endproc.toString());
   }
 
   @Override

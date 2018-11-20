@@ -169,7 +169,7 @@ public class ParserGenerator {
 			}
 			String name = getCamelCase(v);
 			if (IsTerminal(v)) {
-				addnl(sb, "System.out.println(ident + \"    T \" + " + name + ".toString());");
+				addnl(sb, "System.out.println(indent + \"    T \" + " + name + ".toString());");
 			} else {
 				addnl(sb, name + ".print(indent + \"    \");");
 			}

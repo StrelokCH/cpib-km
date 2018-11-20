@@ -23,8 +23,8 @@ public class CmdCall implements ICmd {
 
   public void print(String indent) {
     System.out.println(indent + this.getClass().getSimpleName());
-    System.out.println(ident + "    T " + call.toString());
-    System.out.println(ident + "    T " + ident.toString());
+    System.out.println(indent + "    T " + call.toString());
+    System.out.println(indent + "    T " + ident.toString());
     exprList.print(indent + "    ");
     optGlobInits.print(indent + "    ");
   }
