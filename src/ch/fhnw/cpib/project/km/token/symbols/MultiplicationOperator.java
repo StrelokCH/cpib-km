@@ -1,8 +1,8 @@
 package ch.fhnw.cpib.project.km.token.symbols;
 
-import ch.fhnw.cpib.project.km.token.BaseToken;
+import ch.fhnw.cpib.project.km.token.various.Operator;
 
-public abstract class MultiplicationOperator extends BaseToken {
+public abstract class MultiplicationOperator extends Operator {
 
 	public MultiplicationOperator(String regex) {
 		super(regex);
