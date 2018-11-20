@@ -25,12 +25,8 @@ class ParserTest {
 		try {
 			tokens = Scanner.scan(input);
 			IProgram program = new Parser(tokens).parse();
-		} catch (LexicalErrorException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (GrammarError e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			fail(e);
 		}
 	}
 	
@@ -60,12 +56,8 @@ class ParserTest {
 		try {
 			tokens = Scanner.scan(input);
 			IProgram program = new Parser(tokens).parse();
-		} catch (LexicalErrorException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (GrammarError e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			fail(e);
 		}
 	}
 }
