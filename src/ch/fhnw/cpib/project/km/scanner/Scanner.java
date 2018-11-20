@@ -35,6 +35,7 @@ public class Scanner {
 		ret.add(new Global());
 		ret.add(new If());
 		ret.add(new Init());
+		ret.add(new Int32());
 		ret.add(new Int64());
 		ret.add(new Local());
 		ret.add(new MechmodeCopy());
