@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import ch.fhnw.cpib.project.km.scanner.Scanner;
+import ch.fhnw.cpib.project.km.syntax.concrete.IProgram;
 import ch.fhnw.cpib.project.km.token.ITokenList;
 
 class ParserTest {
@@ -20,7 +21,9 @@ class ParserTest {
 
 		try {
 			ITokenList tokens = Scanner.scan(input);
-			assertNotNull(new Parser(tokens).parse());
+			IProgram program = new Parser(tokens).parse();
+			assertNotNull(program);
+			program.print("");
 		} catch (Exception e) {
 			fail(e);
 		}
@@ -36,7 +39,9 @@ class ParserTest {
 
 		try {
 			ITokenList tokens = Scanner.scan(input);
-			assertNotNull(new Parser(tokens).parse());
+			IProgram program = new Parser(tokens).parse();
+			assertNotNull(program);
+			program.print("");
 		} catch (Exception e) {
 			fail(e);
 		}
