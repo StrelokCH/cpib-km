@@ -12,4 +12,9 @@ public class Int64 extends Type {
 	protected BaseToken internalCreateToken(String s) {
 		return new Int64();
 	}
+
+	@Override
+	public String toString() {
+		return "(" + super.toString() + "Int64)";
+	}
 }
