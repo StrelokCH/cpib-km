@@ -2,10 +2,17 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 
 public class OutputCmd implements ICommand {
 
+	private IExpression expression;
+		
+	public OutputCmd(IExpression expression) {
+		super();
+		this.expression = expression;
+	}
+
 	@Override
 	public String toString(String indent) {
-		// TODO Auto-generated method stub
-		return null;
+		return indent + "(" + this.getClass().getSimpleName() + ")\n"
+				+ expression.toString(indent + "    \n");
 	}
 
 }
