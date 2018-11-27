@@ -1,11 +1,22 @@
 package ch.fhnw.cpib.project.km.syntax.abst;
 
-public class ProcCallCmd implements ICommand {
+import ch.fhnw.cpib.project.km.token.various.Identifier;
 
+public class ProcCallCmd implements ICommand {
+	
+	private final Identifier identifier;
+	/* -- TO-DO: -- 
+		routineCall
+		[identifier]*/
+	
+	public ProcCallCmd(Identifier identifier) {
+		super();
+		this.identifier = identifier;
+	}
+	
 	@Override
 	public String toString(String indent) {
-		// TODO Auto-generated method stub
-		return null;
+		return indent + "(" + this.getClass().getSimpleName() + ", " + identifier.toString() + ")\n";
 	}
-
+	
 }

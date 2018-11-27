@@ -2,9 +2,9 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 
 public class SkipCmd implements IExpression {
 
+	//Nothing ?
 	@Override
 	public String toString(String indent) {
-		// TODO Auto-generated method stub
-		return null;
+		return indent + "(" + this.getClass().getSimpleName() + ")\n";
 	}
 }

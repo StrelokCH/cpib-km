@@ -16,6 +16,7 @@ public class CondCmd implements ICommand {
 	@Override
 	public String toString(String indent) {
 		return indent + "(" + this.getClass().getSimpleName() + ")\n"
+				+ expression.toString(indent + "    \n")
 				+ ifCase.toString(indent + "    \n")
 				+ elseCase.toString(indent + "    \n") ;
 	}
