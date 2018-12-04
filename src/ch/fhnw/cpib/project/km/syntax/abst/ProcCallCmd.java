@@ -21,10 +21,20 @@ public class ProcCallCmd implements ICommand {
 	}
 
 
+	//Not sure...
 	@Override
 	public String toString(String indent) {
-		return indent + "(" + this.getClass().getSimpleName() + ", " + identifierProc.toString() + ")\n";
-		//To-Do show parameters and identifiers
+		String ret = indent + "(" + this.getClass().getSimpleName() + ", " + identifierProc.toString() + ")\n";
+		for(IExpression param: parameters) {
+			ret = ret + param.toString(indent + ", ");
+		};
+		ret = ret + "\n";
+		for(Identifier ident: identifiers) {
+			ret = ret + ident + ", ";
+		};
+		
+		return ret;
+				
 	}
 	
 }
