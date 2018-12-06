@@ -1,5 +1,8 @@
 package ch.fhnw.cpib.project.km.syntax.concrete;
 
+import java.util.List;
+
+import ch.fhnw.cpib.project.km.syntax.abst.FullIdentifier;
 import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
@@ -21,7 +24,9 @@ public class CpsProgParamProgParam implements ICpsProgParam {
   }
 
   @Override
-  public IAbsSyn.IExpr toAbsSyn() {
-    return null;
+  public List<FullIdentifier> toAbsSyn() {
+	  List<FullIdentifier> list = repCommaProgParam.toAbsSyn();
+	  list.add(0, progParam.toAbsSyn());
+	  return list;
   }
 }

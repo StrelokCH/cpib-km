@@ -5,14 +5,15 @@ import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
 public class OptChangemode implements IOptChangemode {
-  public OptChangemode() {}
+	public OptChangemode() {
+	}
 
-  public void print(String indent) {
-    System.out.println(indent + this.getClass().getSimpleName());
-  }
+	public void print(String indent) {
+		System.out.println(indent + this.getClass().getSimpleName());
+	}
 
-  @Override
-  public IAbsSyn.IExpr toAbsSyn() {
-    return null;
-  }
+	@Override
+	public Changemode toAbsSyn() {
+		return null;
+	}
 }

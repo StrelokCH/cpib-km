@@ -5,14 +5,15 @@ import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
 public class OptFlowmode implements IOptFlowmode {
-  public OptFlowmode() {}
+	public OptFlowmode() {
+	}
 
-  public void print(String indent) {
-    System.out.println(indent + this.getClass().getSimpleName());
-  }
+	public void print(String indent) {
+		System.out.println(indent + this.getClass().getSimpleName());
+	}
 
-  @Override
-  public IAbsSyn.IExpr toAbsSyn() {
-    return null;
-  }
+	@Override
+	public Flowmode toAbsSyn() {
+		return null;
+	}
 }

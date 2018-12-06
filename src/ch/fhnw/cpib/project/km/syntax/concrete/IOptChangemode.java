@@ -6,6 +6,6 @@ import ch.fhnw.cpib.project.km.token.various.*;
 
 public interface IOptChangemode
 {
-    IAbsSyn.IExpr toAbsSyn();
+    Changemode toAbsSyn();
     void print(String indent);
 }

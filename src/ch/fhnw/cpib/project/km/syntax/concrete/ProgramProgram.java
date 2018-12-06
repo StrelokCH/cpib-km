@@ -42,7 +42,8 @@ public class ProgramProgram implements IProgram {
   }
 
   @Override
-  public IAbsSyn.IExpr toAbsSyn() {
-    return null;
+  public ch.fhnw.cpib.project.km.syntax.abst.Program toAbsSyn() {
+    return new ch.fhnw.cpib.project.km.syntax.abst.Program
+    		(ident, progParamList.toAbsSyn(), optGlobalCpsDecl.toAbsSyn(), null/*cpsCmd.toAbsSyn()*/);
   }
 }

@@ -1,5 +1,6 @@
 package ch.fhnw.cpib.project.km.syntax.concrete;
 
+import ch.fhnw.cpib.project.km.syntax.abst.RoutineDecl;
 import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
@@ -17,7 +18,7 @@ public class DeclProcDecl implements IDecl {
   }
 
   @Override
-  public IAbsSyn.IExpr toAbsSyn() {
-    return null;
+  public RoutineDecl toAbsSyn() {
+    return procDecl.toAbsSyn();
   }
 }

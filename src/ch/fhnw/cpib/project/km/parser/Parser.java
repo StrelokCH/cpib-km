@@ -77,7 +77,7 @@ public class Parser {
 
 	private IDecl decl() throws GrammarError {
 		System.out.print("\"Decl ::= ");
-		if (terminal instanceof Identifier || terminal instanceof ChangeMode) {
+		if (terminal instanceof Identifier || terminal instanceof Changemode) {
 			System.out.println("<stoDecl>\"");
 			IStoDecl stoDecl = stoDecl();
 			return new DeclStoDecl(stoDecl);
@@ -97,9 +97,9 @@ public class Parser {
 
 	private IStoDecl stoDecl() throws GrammarError {
 		System.out.print("\"StoDecl ::= ");
-		if (terminal instanceof ChangeMode) {
+		if (terminal instanceof Changemode) {
 			System.out.println("CHANGEMODE <typedIdent>\"");
-			ChangeMode changemode = ((ChangeMode) consume(ChangeMode.class));
+			Changemode changemode = ((Changemode) consume(Changemode.class));
 			ITypedIdent typedIdent = typedIdent();
 			return new StoDeclChangemode(changemode, typedIdent);
 		}
@@ -181,7 +181,7 @@ public class Parser {
 
 	private IGlobImps globImps() throws GrammarError {
 		System.out.print("\"GlobImps ::= ");
-		if (terminal instanceof Identifier || terminal instanceof ChangeMode || terminal instanceof Flowmode) {
+		if (terminal instanceof Identifier || terminal instanceof Changemode || terminal instanceof Flowmode) {
 			System.out.println("<globImp> <repCommaGlobImps>\"");
 			IGlobImp globImp = globImp();
 			IRepCommaGlobImps repCommaGlobImps = repCommaGlobImps();
@@ -208,7 +208,7 @@ public class Parser {
 
 	private IGlobImp globImp() throws GrammarError {
 		System.out.print("\"GlobImp ::= ");
-		if (terminal instanceof Identifier || terminal instanceof ChangeMode || terminal instanceof Flowmode) {
+		if (terminal instanceof Identifier || terminal instanceof Changemode || terminal instanceof Flowmode) {
 			System.out.println("<optFlowmode> <optChangemode> IDENT\"");
 			IOptFlowmode optFlowmode = optFlowmode();
 			IOptChangemode optChangemode = optChangemode();
@@ -225,7 +225,7 @@ public class Parser {
 			Flowmode flowmode = ((Flowmode) consume(Flowmode.class));
 			return new OptFlowmodeFlowmode(flowmode);
 		}
-		if (terminal instanceof Mechmode || terminal instanceof Identifier || terminal instanceof ChangeMode) {
+		if (terminal instanceof Mechmode || terminal instanceof Identifier || terminal instanceof Changemode) {
 			System.out.println("\"");
 			return new OptFlowmode();
 		}
@@ -234,9 +234,9 @@ public class Parser {
 
 	private IOptChangemode optChangemode() throws GrammarError {
 		System.out.print("\"OptChangemode ::= ");
-		if (terminal instanceof ChangeMode) {
+		if (terminal instanceof Changemode) {
 			System.out.println("CHANGEMODE\"");
-			ChangeMode changemode = ((ChangeMode) consume(ChangeMode.class));
+			Changemode changemode = ((Changemode) consume(Changemode.class));
 			return new OptChangemodeChangemode(changemode);
 		}
 		if (terminal instanceof Identifier) {
@@ -253,7 +253,7 @@ public class Parser {
 			Mechmode mechmode = ((Mechmode) consume(Mechmode.class));
 			return new OptMechmodeMechmode(mechmode);
 		}
-		if (terminal instanceof Identifier || terminal instanceof ChangeMode) {
+		if (terminal instanceof Identifier || terminal instanceof Changemode) {
 			System.out.println("\"");
 			return new OptMechmode();
 		}
@@ -263,7 +263,7 @@ public class Parser {
 	private ICpsDecl cpsDecl() throws GrammarError {
 		System.out.print("\"CpsDecl ::= ");
 		if (terminal instanceof Procedure || terminal instanceof Function || terminal instanceof Identifier
-				|| terminal instanceof ChangeMode) {
+				|| terminal instanceof Changemode) {
 			System.out.println("<decl> <repSemicolonCpsDecl>\"");
 			IDecl decl = decl();
 			IRepSemicolonCpsDecl repSemicolonCpsDecl = repSemicolonCpsDecl();
@@ -289,7 +289,7 @@ public class Parser {
 
 	private ICpsStoDecl cpsStoDecl() throws GrammarError {
 		System.out.print("\"CpsStoDecl ::= ");
-		if (terminal instanceof Identifier || terminal instanceof ChangeMode) {
+		if (terminal instanceof Identifier || terminal instanceof Changemode) {
 			System.out.println("<stoDecl> <repSemicolonCpsStoDecl>\"");
 			IStoDecl stoDecl = stoDecl();
 			IRepSemicolonCpsStoDecl repSemicolonCpsStoDecl = repSemicolonCpsStoDecl();
@@ -327,7 +327,7 @@ public class Parser {
 
 	private IOptCpsProgParam optCpsProgParam() throws GrammarError {
 		System.out.print("\"OptCpsProgParam ::= ");
-		if (terminal instanceof Identifier || terminal instanceof ChangeMode || terminal instanceof Flowmode) {
+		if (terminal instanceof Identifier || terminal instanceof Changemode || terminal instanceof Flowmode) {
 			System.out.println("<cpsProgParam>\"");
 			ICpsProgParam cpsProgParam = cpsProgParam();
 			return new OptCpsProgParamCpsProgParam(cpsProgParam);
@@ -341,7 +341,7 @@ public class Parser {
 
 	private ICpsProgParam cpsProgParam() throws GrammarError {
 		System.out.print("\"CpsProgParam ::= ");
-		if (terminal instanceof Identifier || terminal instanceof ChangeMode || terminal instanceof Flowmode) {
+		if (terminal instanceof Identifier || terminal instanceof Changemode || terminal instanceof Flowmode) {
 			System.out.println("<progParam> <repCommaProgParam>\"");
 			IProgParam progParam = progParam();
 			IRepCommaProgParam repCommaProgParam = repCommaProgParam();
@@ -367,7 +367,7 @@ public class Parser {
 
 	private IProgParam progParam() throws GrammarError {
 		System.out.print("\"ProgParam ::= ");
-		if (terminal instanceof Identifier || terminal instanceof ChangeMode || terminal instanceof Flowmode) {
+		if (terminal instanceof Identifier || terminal instanceof Changemode || terminal instanceof Flowmode) {
 			System.out.println("<optFlowmode> <optChangemode> <typedIdent>\"");
 			IOptFlowmode optFlowmode = optFlowmode();
 			IOptChangemode optChangemode = optChangemode();
@@ -391,7 +391,7 @@ public class Parser {
 
 	private IOptCpsParam optCpsParam() throws GrammarError {
 		System.out.print("\"OptCpsParam ::= ");
-		if (terminal instanceof Identifier || terminal instanceof ChangeMode || terminal instanceof Mechmode
+		if (terminal instanceof Identifier || terminal instanceof Changemode || terminal instanceof Mechmode
 				|| terminal instanceof Flowmode) {
 			System.out.println("<cpsParam>\"");
 			ICpsParam cpsParam = cpsParam();
@@ -406,7 +406,7 @@ public class Parser {
 
 	private ICpsParam cpsParam() throws GrammarError {
 		System.out.print("\"CpsParam ::= ");
-		if (terminal instanceof Identifier || terminal instanceof ChangeMode || terminal instanceof Mechmode
+		if (terminal instanceof Identifier || terminal instanceof Changemode || terminal instanceof Mechmode
 				|| terminal instanceof Flowmode) {
 			System.out.println("<param> <repCommaParam>\"");
 			IParam param = param();
@@ -433,7 +433,7 @@ public class Parser {
 
 	private IParam param() throws GrammarError {
 		System.out.print("\"Param ::= ");
-		if (terminal instanceof Identifier || terminal instanceof ChangeMode || terminal instanceof Mechmode
+		if (terminal instanceof Identifier || terminal instanceof Changemode || terminal instanceof Mechmode
 				|| terminal instanceof Flowmode) {
 			System.out.println("<optFlowmode> <optMechmode> <optChangemode> <typedIdent>\"");
 			IOptFlowmode optFlowmode = optFlowmode();

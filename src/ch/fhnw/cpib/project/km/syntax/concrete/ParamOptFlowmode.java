@@ -1,5 +1,6 @@
 package ch.fhnw.cpib.project.km.syntax.concrete;
 
+import ch.fhnw.cpib.project.km.syntax.abst.FullIdentifier;
 import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
@@ -30,7 +31,8 @@ public class ParamOptFlowmode implements IParam {
   }
 
   @Override
-  public IAbsSyn.IExpr toAbsSyn() {
-    return null;
+  public FullIdentifier toAbsSyn() {
+    return typedIdent.toAbsSyn
+    		(optFlowmode.toAbsSyn(), optMechmode.toAbsSyn(), optChangemode.toAbsSyn());
   }
 }
