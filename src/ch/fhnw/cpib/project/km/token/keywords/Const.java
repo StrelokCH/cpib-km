@@ -2,7 +2,7 @@ package ch.fhnw.cpib.project.km.token.keywords;
 
 import ch.fhnw.cpib.project.km.token.BaseToken;
 
-public class Const extends ChangeMode {
+public class Const extends Changemode {
 
 	public Const() {
 		super("const");

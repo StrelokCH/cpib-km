@@ -2,7 +2,7 @@ package ch.fhnw.cpib.project.km.token.keywords;
 
 import ch.fhnw.cpib.project.km.token.BaseToken;
 
-public class Var extends ChangeMode {
+public class Var extends Changemode {
 
 	public Var() {
 		super("var");
