@@ -43,6 +43,7 @@ public class ProgramProgram implements IProgram {
 
   @Override
   public ch.fhnw.cpib.project.km.syntax.abst.Program toAbsSyn() {
+	  // TODO command
     return new ch.fhnw.cpib.project.km.syntax.abst.Program
     		(ident, progParamList.toAbsSyn(), optGlobalCpsDecl.toAbsSyn(), null/*cpsCmd.toAbsSyn()*/);
   }
