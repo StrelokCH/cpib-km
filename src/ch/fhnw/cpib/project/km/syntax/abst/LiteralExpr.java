@@ -2,10 +2,10 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 
 import ch.fhnw.cpib.project.km.token.various.Literal;
 
-public class LiteralExpression implements IExpression {
+public class LiteralExpr implements IExpression {
 	private final Literal literal;
 
-	public LiteralExpression(Literal literal) {
+	public LiteralExpr(Literal literal) {
 		this.literal = literal;
 	}
 

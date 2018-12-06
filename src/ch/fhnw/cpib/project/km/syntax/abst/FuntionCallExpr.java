@@ -4,11 +4,11 @@ import org.openjdk.tools.javac.util.List;
 
 import ch.fhnw.cpib.project.km.token.various.Identifier;
 
-public class FuntionCallExpression implements IExpression {
+public class FuntionCallExpr implements IExpression {
 	private final Identifier identifier;
 	private final List<IExpression> expressions;
 
-	public FuntionCallExpression(Identifier identifier, List<IExpression> expressions) {
+	public FuntionCallExpr(Identifier identifier, List<IExpression> expressions) {
 		this.identifier = identifier;
 		this.expressions = expressions;
 	}
