@@ -1,6 +1,6 @@
 package ch.fhnw.cpib.project.km.syntax.abst;
 
-import org.openjdk.tools.javac.util.List;
+import java.util.List;
 
 import ch.fhnw.cpib.project.km.token.various.Identifier;
 

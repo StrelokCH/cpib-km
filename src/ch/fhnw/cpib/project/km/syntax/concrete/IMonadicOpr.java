@@ -6,6 +6,6 @@ import ch.fhnw.cpib.project.km.token.various.*;
 
 public interface IMonadicOpr
 {
-    IAbsSyn.IExpr toAbsSyn();
+	Operator toAbsSyn();
     void print(String indent);
 }
