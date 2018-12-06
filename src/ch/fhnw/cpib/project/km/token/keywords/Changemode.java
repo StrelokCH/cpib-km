@@ -2,9 +2,9 @@ package ch.fhnw.cpib.project.km.token.keywords;
 
 import ch.fhnw.cpib.project.km.token.BaseToken;
 
-public abstract class ChangeMode extends BaseToken {
+public abstract class Changemode extends BaseToken {
 
-	public ChangeMode(String regex) {
+	public Changemode(String regex) {
 		super(regex);
 	}
 
