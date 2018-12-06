@@ -14,6 +14,6 @@ public class MonadicExpr implements IExpression {
 	@Override
 	public String toString(String indent) {
 		return indent + "(" + this.getClass().getSimpleName() + ", " + operator.toString() + ")\n"
-				+ expression.toString(indent + "    \n");
+				+ expression.toString(indent + "    ");
 	}
 }

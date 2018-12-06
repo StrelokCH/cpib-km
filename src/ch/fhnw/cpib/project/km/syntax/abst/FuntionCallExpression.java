@@ -17,7 +17,7 @@ public class FuntionCallExpression implements IExpression {
 	public String toString(String indent) {
 		String ret = indent + "(" + this.getClass().getSimpleName() + ", " + identifier.toString() + ")\n";
 		for (IExpression expr : expressions) {
-			ret += expr.toString(indent + "    \n");
+			ret += expr.toString(indent + "    ") + "\n";
 		}
 		return ret;
 	}
