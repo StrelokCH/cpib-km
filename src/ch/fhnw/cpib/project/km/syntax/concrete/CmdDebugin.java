@@ -1,4 +1,7 @@
 package ch.fhnw.cpib.project.km.syntax.concrete;
+import ch.fhnw.cpib.project.km.syntax.abst.IExpression;
+
+import java.util.List;
 
 import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
@@ -20,7 +23,7 @@ public class CmdDebugin implements ICmd {
   }
 
   @Override
-  public IAbsSyn.IExpr toAbsSyn() {
+  public List<IExpression> toAbsSyn() {
     return null;
   }
 }
