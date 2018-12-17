@@ -30,6 +30,6 @@ public class RepCommaGlobImpsComma implements IRepCommaGlobImps {
   public List<FullIdentifier> toAbsSyn() {
 	  List<FullIdentifier> ret = repCommaGlobImps.toAbsSyn();
 	  ret.add(0, globImp.toAbsSyn());
-    return null;
+    return ret;
   }
 }

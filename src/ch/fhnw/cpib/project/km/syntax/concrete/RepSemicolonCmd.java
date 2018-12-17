@@ -4,15 +4,20 @@ import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import ch.fhnw.cpib.project.km.syntax.abst.IExpression;
+
 public class RepSemicolonCmd implements IRepSemicolonCmd {
-  public RepSemicolonCmd() {}
+	public RepSemicolonCmd() {}
 
-  public void print(String indent) {
-    System.out.println(indent + this.getClass().getSimpleName());
-  }
+	public void print(String indent) {
+		System.out.println(indent + this.getClass().getSimpleName());
+	}
 
-  @Override
-  public IAbsSyn.IExpr toAbsSyn() {
-    return null;
-  }
+	@Override
+	public List<IExpression> toAbsSyn() {
+		return new ArrayList<IExpression>();
+	}
 }

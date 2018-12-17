@@ -15,15 +15,15 @@ public class CmdCall implements ICmd {
 	private final IOptGlobInits optGlobInits;
 
 	public CmdCall(
-		final Call call,
-		final Identifier ident,
-		final IExprList exprList,
-		final IOptGlobInits optGlobInits) {
+			final Call call,
+			final Identifier ident,
+			final IExprList exprList,
+			final IOptGlobInits optGlobInits) {
 		this.call = call;
 		this.ident = ident;
 		this.exprList = exprList;
 		this.optGlobInits = optGlobInits;
-  }
+	}
 
 	public void print(String indent) {
 		System.out.println(indent + this.getClass().getSimpleName());
@@ -35,6 +35,8 @@ public class CmdCall implements ICmd {
 
 	@Override
 	public List<IExpression> toAbsSyn() {
-		return null;
+		List<IExpression> l = exprList.toAbsSyn();
+		//TO-DO : ident and optGlobInits
+		return l;
 	}
 }
