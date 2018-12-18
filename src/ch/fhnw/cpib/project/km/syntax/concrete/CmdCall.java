@@ -1,12 +1,12 @@
 package ch.fhnw.cpib.project.km.syntax.concrete;
 
 import ch.fhnw.cpib.project.km.token.keywords.*;
-import ch.fhnw.cpib.project.km.token.symbols.*;
-import ch.fhnw.cpib.project.km.token.various.*;
-import ch.fhnw.cpib.project.km.syntax.abst.IExpression;
+import ch.fhnw.cpib.project.km.token.various.Identifier;
+import ch.fhnw.cpib.project.km.syntax.abst.*;
 
-import java.util.ArrayList;
 import java.util.List;
+
+
 
 public class CmdCall implements ICmd {
 	private final Call call;
@@ -34,9 +34,7 @@ public class CmdCall implements ICmd {
 	}
 
 	@Override
-	public List<IExpression> toAbsSyn() {
-		List<IExpression> l = exprList.toAbsSyn();
-		//TO-DO : ident and optGlobInits
-		return l;
+	public ICommand toAbsSyn() {
+		return new ProcCallCmd(ident, exprList.toAbsSyn(), optGlobInits.toAbsSyn());
 	}
 }

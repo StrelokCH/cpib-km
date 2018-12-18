@@ -1,13 +1,12 @@
 package ch.fhnw.cpib.project.km.syntax.concrete;
 
 import ch.fhnw.cpib.project.km.token.keywords.*;
+import ch.fhnw.cpib.project.km.syntax.abst.*;
+import ch.fhnw.cpib.project.km.token.symbols.*;
+import ch.fhnw.cpib.project.km.token.various.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import ch.fhnw.cpib.project.km.syntax.abst.IExpression;
-import ch.fhnw.cpib.project.km.token.symbols.*;
-import ch.fhnw.cpib.project.km.token.various.*;
 
 public class CmdSkip implements ICmd {
 	private final Skip skip;
@@ -22,7 +21,7 @@ public class CmdSkip implements ICmd {
 	}
 
 	@Override
-	public List<IExpression> toAbsSyn() {
-		return new ArrayList<IExpression>();
+	public ICommand toAbsSyn() {
+		return new SkipCmd();
 	}
 }

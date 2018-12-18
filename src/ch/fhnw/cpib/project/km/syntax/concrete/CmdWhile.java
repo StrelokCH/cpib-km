@@ -8,6 +8,7 @@ import java.util.List;
 import ch.fhnw.cpib.project.km.syntax.abst.IExpression;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
+import ch.fhnw.cpib.project.km.syntax.abst.*;
 
 public class CmdWhile implements ICmd {
 	private final While aWhile;
@@ -39,10 +40,7 @@ public class CmdWhile implements ICmd {
 	}
 
 	@Override
-	public List<IExpression> toAbsSyn() {
-		List<IExpression> l = new ArrayList<IExpression>();
-		l.add(expr.toAbsSyn());
-		l.addAll(cpsCmd.toAbsSyn());
-		return l;
+	public ICommand toAbsSyn() {
+		return new whileCmd(expr.toAbsSyn(), cpsCmd.toAbsSyn());
 	}
 }

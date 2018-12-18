@@ -1,6 +1,6 @@
 package ch.fhnw.cpib.project.km.syntax.abst;
 
-public class SkipCmd implements IExpression {
+public class SkipCmd implements ICommand {
 
 	@Override
 	public String toString(String indent) {

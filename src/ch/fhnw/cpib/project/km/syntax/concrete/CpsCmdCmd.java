@@ -3,10 +3,11 @@ package ch.fhnw.cpib.project.km.syntax.concrete;
 import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
+import ch.fhnw.cpib.project.km.syntax.abst.*;
 
 import java.util.List;
 
-import ch.fhnw.cpib.project.km.syntax.abst.IExpression;
+
 
 public class CpsCmdCmd implements ICpsCmd {
 	private final ICmd cmd;
@@ -24,10 +25,9 @@ public class CpsCmdCmd implements ICpsCmd {
 	}
 
 	@Override
-	public List<IExpression> toAbsSyn() {
-		List<IExpression> l = cmd.toAbsSyn();
-		l.addAll(repSemicolonCmd.toAbsSyn());
-
-		return l;
+	public ICommand toAbsSyn() {
+		List<ICommand> list = repSemicolonCmd.toAbsSyn();
+		list.add(0, cmd.toAbsSyn());
+		return new CpsCmd(list);
 	}
 }
