@@ -4,17 +4,21 @@ import java.util.List;
 
 public class CpsCmd implements ICommand {
 
-	private List<ICommand> iComm;
+	private List<ICommand> commands;
 		
-	public CpsCmd(List<ICommand> iComm) {
+	public CpsCmd(List<ICommand> commands) {
 		super();
-		this.iComm = iComm;
+		this.commands = commands;
+	}
+	
+	public List<ICommand> getCommands(){
+		return commands;
 	}
 
 	@Override
 	public String toString(String indent) {
 		String ret = indent + "(" + this.getClass().getSimpleName() + ")\n";	
-		for (ICommand cmd : iComm) {
+		for (ICommand cmd : commands) {
 			ret += cmd.toString(indent + "    ");
 		}
 		return ret;

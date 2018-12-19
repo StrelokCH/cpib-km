@@ -26,6 +26,7 @@ public class RepSemicolonCmdSemicolon implements IRepSemicolonCmd {
 
 	@Override
 	public List<ICommand> toAbsSyn() {
-		return cpsCmd.toAbsSyn();
+		CpsCmd ret = (CpsCmd) cpsCmd.toAbsSyn();
+		return ret.getCommands();
 	}
 }
