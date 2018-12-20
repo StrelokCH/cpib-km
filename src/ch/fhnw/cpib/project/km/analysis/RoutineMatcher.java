@@ -114,8 +114,28 @@ public class RoutineMatcher {
 		});
 
 		if (candidates.isEmpty()) {
-			throw new RoutineMatchError("No matching routine with identifier " + call.routineName.getIdentifier()
-					+ " found that has the right " + call.parameterTypes.size() + " parameters.");
+			throw new RoutineMatchError("No routine with identifier " + call.routineName.getIdentifier()
+					+ " found that has the matching " + call.parameterTypes.size() + " parameters.");
+		}
+
+		// check global imports
+		candidates.removeIf(c -> {
+			List<FullIdentifier> globalImps = c.getGlobImps();
+			if (globalImps.size() != call.globImps.size()) {
+				return true;
+			}
+			for (int i = 0; i < globalImps.size(); i++) {
+				if (!globalImps.get(i).getIdentifierName().equals(call.globImps.get(i).getIdentifier())) {
+					// different import
+					return true;
+				}
+			}
+			return false;
+		});
+
+		if (candidates.isEmpty()) {
+			throw new RoutineMatchError("No routine with identifier " + call.routineName.getIdentifier()
+					+ " found that has the matching " + call.globImps.size() + " global imports.");
 		}
 		
 		// check for ambiguity

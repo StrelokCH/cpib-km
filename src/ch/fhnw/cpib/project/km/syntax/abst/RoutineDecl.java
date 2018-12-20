@@ -1,5 +1,6 @@
 package ch.fhnw.cpib.project.km.syntax.abst;
 
+import java.sql.Blob;
 import java.util.List;
 
 import ch.fhnw.cpib.project.km.analysis.Context;
@@ -53,6 +54,10 @@ public class RoutineDecl implements IDecl {
 	
 	public List<FullIdentifier> getParamList(){
 		return paramList;
+	}
+	
+	public List<FullIdentifier> getGlobImps(){
+		return globImps;
 	}
 
 	public String toString(String indent) {
