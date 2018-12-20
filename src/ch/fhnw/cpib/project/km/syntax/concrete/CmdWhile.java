@@ -41,6 +41,6 @@ public class CmdWhile implements ICmd {
 
 	@Override
 	public ICommand toAbsSyn() {
-		return new whileCmd(expr.toAbsSyn(), cpsCmd.toAbsSyn());
+		return new WhileCmd(expr.toAbsSyn(), cpsCmd.toAbsSyn());
 	}
 }

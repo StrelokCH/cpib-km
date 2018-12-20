@@ -1,5 +1,8 @@
 package ch.fhnw.cpib.project.km.syntax.abst;
 
+import ch.fhnw.cpib.project.km.analysis.Context;
+import ch.fhnw.cpib.project.km.analysis.Environment;
+
 public class AssiCmd implements ICommand{
 
 	private final IExpression expression1;
@@ -18,4 +21,10 @@ public class AssiCmd implements ICommand{
 				+ expression2.toString(indent + "    \n");
 	}
 
+	@Override
+	public void addToEnvironment(Environment env, Context context) {
+		env.contextMapping.put(this, context);
+		expression1.addToEnvironment(env,context);
+		expression2.addToEnvironment(env,context);
+	}
 }

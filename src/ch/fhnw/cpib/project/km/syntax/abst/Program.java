@@ -2,6 +2,10 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 
 import java.util.List;
 
+import ch.fhnw.cpib.project.km.analysis.Context;
+import ch.fhnw.cpib.project.km.analysis.Environment;
+import ch.fhnw.cpib.project.km.analysis.SymbolTable;
+import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
 
 public class Program {
@@ -32,5 +36,28 @@ public class Program {
 			ret += cmd.toString(indent + "    ") + "\n";
 		}
 		return ret;
+	}
+
+	public Environment createEnvironment() throws ScopeCheckingError {
+		// Create root symbolTable
+		SymbolTable symbolTable = new SymbolTable();
+		for (FullIdentifier progParam : progParamList) {
+			// Program Parameters are handled as local variables
+			symbolTable.addVariable(progParam,true);
+		}
+		for (IDecl decl : cpsDecl) {
+			decl.appendSymbol(symbolTable, false);
+		}
+		
+		Context rootContext = new Context(symbolTable);
+		Environment env = new Environment();
+		env.rootContext = rootContext;
+
+		for (IDecl decl : cpsDecl) {
+			decl.addToEnvironment(env, rootContext);
+		}
+		
+		
+		return null;
 	}
 }

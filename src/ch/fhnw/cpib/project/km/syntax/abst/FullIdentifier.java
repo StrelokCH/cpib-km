@@ -33,4 +33,8 @@ public class FullIdentifier {
 		ret += ")\n";
 		return ret;
 	}
+	
+	public String getIdentifierName() {
+		return identifier.getIdentifier();
+	}
 }

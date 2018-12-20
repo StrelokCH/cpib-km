@@ -2,6 +2,9 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 
 import java.util.List;
 
+import ch.fhnw.cpib.project.km.analysis.Context;
+import ch.fhnw.cpib.project.km.analysis.Environment;
+
 public class CpsCmd implements ICommand {
 
 	private List<ICommand> commands;
@@ -22,5 +25,13 @@ public class CpsCmd implements ICommand {
 			ret += cmd.toString(indent + "    ");
 		}
 		return ret;
+	}
+
+	@Override
+	public void addToEnvironment(Environment env, Context context) {
+		env.contextMapping.put(this, context);
+		for (ICommand command : commands) {
+			command.addToEnvironment(env, context);
+		}
 	}
 }

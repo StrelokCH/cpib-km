@@ -1,5 +1,7 @@
 package ch.fhnw.cpib.project.km.syntax.abst;
 
+import ch.fhnw.cpib.project.km.analysis.Context;
+import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.token.various.Literal;
 
 public class LiteralExpr implements IExpression {
@@ -13,4 +15,9 @@ public class LiteralExpr implements IExpression {
 	public String toString(String indent) {
 		return indent + "(" + this.getClass().getSimpleName() + ", " + literal.toString() + ")\n";
 	} 
+	
+	@Override
+	public void addToEnvironment(Environment env, Context context) {
+		env.contextMapping.put(this, context);
+	}
 }

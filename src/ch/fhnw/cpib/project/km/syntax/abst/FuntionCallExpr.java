@@ -2,6 +2,8 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 
 import java.util.List;
 
+import ch.fhnw.cpib.project.km.analysis.Context;
+import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
 
 public class FuntionCallExpr implements IExpression {
@@ -20,5 +22,13 @@ public class FuntionCallExpr implements IExpression {
 			ret += expr.toString(indent + "    ") + "\n";
 		}
 		return ret;
+	}
+	
+	@Override
+	public void addToEnvironment(Environment env, Context context) {
+		env.contextMapping.put(this, context);
+		for (IExpression expression : expressions) {
+			expression.addToEnvironment(env, context);
+		}
 	}
 }
