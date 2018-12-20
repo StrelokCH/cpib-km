@@ -140,4 +140,10 @@ public class RoutineDecl implements IDecl {
 		}
 	}
 
+	public void checkFlow(Environment env) {
+		// Todo
+		// flowMode in functions must be InFlow
+		// changeMode in routines for InFlow RefMech must be Const
+		// changeMode in routines for InoutFlow must be Var
+	}
 }
