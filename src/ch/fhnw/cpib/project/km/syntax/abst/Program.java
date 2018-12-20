@@ -40,8 +40,10 @@ public class Program {
 	}
 
 	public Environment createEnvironment() throws ScopeCheckingError {
+		Environment env = new Environment();
+		
 		// Create root symbolTable
-		SymbolTable symbolTable = new SymbolTable();
+		SymbolTable symbolTable = new SymbolTable(env);
 		for (FullIdentifier progParam : progParamList) {
 			// Program Parameters are handled as local variables
 			symbolTable.addVariable(progParam,true);
@@ -51,7 +53,6 @@ public class Program {
 		}
 		
 		Context rootContext = new Context(symbolTable);
-		Environment env = new Environment();
 		env.rootContext = rootContext;
 
 		for (IDecl decl : cpsDecl) {

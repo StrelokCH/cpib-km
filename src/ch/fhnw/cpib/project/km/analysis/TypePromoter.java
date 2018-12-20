@@ -1,5 +1,6 @@
 package ch.fhnw.cpib.project.km.analysis;
 
+import ch.fhnw.cpib.project.km.token.keywords.Bool;
 import ch.fhnw.cpib.project.km.token.keywords.Int32;
 import ch.fhnw.cpib.project.km.token.keywords.Int64;
 import ch.fhnw.cpib.project.km.token.keywords.IntegerType;
@@ -49,5 +50,15 @@ public class TypePromoter {
 			return t1;
 		}
 		return null;
+	}
+	
+	/**
+	 * Returns true, if the 
+	 * @param t1
+	 * @param t2
+	 * @return
+	 */
+	public static boolean isSameType(Type t1, Type t2) {
+		return t1.getClass().equals(t2.getClass());
 	}
 }

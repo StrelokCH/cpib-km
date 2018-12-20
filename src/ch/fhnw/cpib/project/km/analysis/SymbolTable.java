@@ -13,11 +13,16 @@ import ch.fhnw.cpib.project.km.syntax.abst.ProcCallCmd;
 import ch.fhnw.cpib.project.km.syntax.abst.RoutineDecl;
 
 public class SymbolTable {
+	private final Environment env;
 	private final Map<String, FullIdentifier> localVariables = new HashMap<>();
 	private final Map<String, FullIdentifier> globalVariables = new HashMap<>();
 	private final List<RoutineDecl> procedures = new ArrayList<>();
 	private final List<RoutineDecl> functions = new ArrayList<>();
 
+	public SymbolTable(Environment env) {
+		this.env = env;
+	}
+	
 	public void addRoutine(RoutineDecl routine) {
 		if (routine.isProcedure()) {
 			procedures.add(routine);
@@ -25,22 +30,22 @@ public class SymbolTable {
 			functions.add(routine);
 		}
 	}
-	
+
 	public boolean contains(FullIdentifier fullIdentifier) {
 		return containsLocal(fullIdentifier) || containsGlobal(fullIdentifier);
 	}
-	
+
 	public boolean containsLocal(FullIdentifier fullIdentifier) {
 		return localVariables.containsKey(fullIdentifier.getIdentifierName());
 	}
-	
+
 	public boolean containsGlobal(FullIdentifier fullIdentifier) {
 		return globalVariables.containsKey(fullIdentifier.getIdentifierName());
 	}
-	
+
 	public void addVariable(FullIdentifier fullIdentifier, boolean local) throws ScopeCheckingError {
 		String identifier = fullIdentifier.getIdentifierName();
-		
+
 		if (localVariables.containsKey(identifier) || globalVariables.containsKey(identifier)) {
 			throw new ScopeCheckingError("identifier " + identifier + " is declared more than once");
 		}
@@ -58,21 +63,19 @@ public class SymbolTable {
 	}
 
 	public SymbolTable clone() {
-		SymbolTable ret = new SymbolTable();
+		SymbolTable ret = new SymbolTable(env);
 		ret.localVariables.putAll(localVariables);
 		ret.globalVariables.putAll(globalVariables);
 		ret.procedures.addAll(procedures);
 		ret.functions.addAll(functions);
 		return ret;
 	}
-	
+
 	public RoutineDecl findMatch(ProcCallCmd procCallCmd) throws RoutineMatchError {
-		// Todo: implement matching functionality
-		return null;
+		return new RoutineMatcher(env).findMatch(procedures, procCallCmd);
 	}
-	
+
 	public RoutineDecl findMatch(FunctionCallExpr functionCallExpr) throws RoutineMatchError {
-		// Todo: implement matching functionality
-		return null;
+		return new RoutineMatcher(env).findMatch(functions, functionCallExpr);
 	}
 }

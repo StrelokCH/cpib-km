@@ -14,6 +14,7 @@ import ch.fhnw.cpib.project.km.token.keywords.Type;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
 
 public class FunctionCallExpr implements IExpression {
+
 	private final Identifier identifier;
 	private final List<IExpression> expressions;
 
@@ -22,6 +23,14 @@ public class FunctionCallExpr implements IExpression {
 		this.expressions = expressions;
 	}
 
+	public Identifier getIdentifier() {
+		return identifier;
+	}
+
+	public List<IExpression> getParameters() {
+		return expressions;
+	}
+	
 	@Override
 	public String toString(String indent) {
 		String ret = indent + "(" + this.getClass().getSimpleName() + ", " + identifier.toString() + ")\n";

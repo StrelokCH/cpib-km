@@ -25,6 +25,18 @@ public class ProcCallCmd implements ICommand {
 		this.identifiers = identifiers;
 	}
 
+	public Identifier getIdentifierProc() {
+		return identifierProc;
+	}
+
+	public List<IExpression> getParameters() {
+		return parameters;
+	}
+
+	public List<Identifier> getGlobImps() {
+		return identifiers;
+	}
+
 	@Override
 	public String toString(String indent) {
 		String ret = indent + "(" + this.getClass().getSimpleName() + ", " + identifierProc.toString() + ")\n";

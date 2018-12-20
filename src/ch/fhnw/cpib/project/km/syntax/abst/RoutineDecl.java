@@ -47,6 +47,10 @@ public class RoutineDecl implements IDecl {
 		return stoDecl.getFullIdentifier().getType();
 	}
 	
+	public Identifier getIdentifier() {
+		return identifier;
+	}
+	
 	public List<FullIdentifier> getParamList(){
 		return paramList;
 	}
