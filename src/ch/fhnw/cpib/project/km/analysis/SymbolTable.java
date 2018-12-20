@@ -19,7 +19,7 @@ public class SymbolTable {
 	private final List<RoutineDecl> functions = new ArrayList<>();
 
 	public void addRoutine(RoutineDecl routine) {
-		if (routine.IsProcedure()) {
+		if (routine.isProcedure()) {
 			procedures.add(routine);
 		} else {
 			functions.add(routine);

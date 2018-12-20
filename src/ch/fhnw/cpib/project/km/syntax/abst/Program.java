@@ -6,6 +6,7 @@ import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.analysis.SymbolTable;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
+import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
 
 public class Program {
@@ -71,6 +72,17 @@ public class Program {
 
 		for (ICommand command : cpsCmd) {
 			command.checkScope(env);
+		}
+	}
+
+	public void checkType(Environment env) throws TypeCheckingError {
+
+		for (IDecl decl : cpsDecl) {
+			decl.checkType(env);
+		}
+
+		for (ICommand command : cpsCmd) {
+			command.checkType(env);
 		}
 	}
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
+import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
 import ch.fhnw.cpib.project.km.token.keywords.FlowmodeInOut;
 import ch.fhnw.cpib.project.km.token.keywords.FlowmodeOut;
 import ch.fhnw.cpib.project.km.token.keywords.MechmodeReference;
@@ -54,6 +55,14 @@ public class ProcCallCmd implements ICommand {
 		for (IExpression expr : parameters) {
 			expr.checkScope(env);
 		}
+		
+		for (Identifier identifier : identifiers) {
+			Context context = env.contextMapping.get(this);
+			FullIdentifier fullIdentifier = new FullIdentifier(null, null, null, identifier,null);
+			if (!context.symbolTable.containsGlobal(fullIdentifier)) {
+				throw new ScopeCheckingError("global identifier " + fullIdentifier.getIdentifierName() + " does not exist in current scope");
+			}
+		}
 
 		// Check for params that must be L-Values
 		List<FullIdentifier> declParameters = routineDecl.getParamList();
@@ -69,5 +78,10 @@ public class ProcCallCmd implements ICommand {
 				}
 			}
 		}
+	}
+
+	@Override
+	public void checkType(Environment env) throws TypeCheckingError {
+		// type checks of parameters were already made in checkScope
 	}
 }

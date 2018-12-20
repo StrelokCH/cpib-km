@@ -3,6 +3,7 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
+import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
 
 public class InputCmd implements ICommand {
 
@@ -29,5 +30,14 @@ public class InputCmd implements ICommand {
 	@Override
 	public void checkScope(Environment env) throws ScopeCheckingError {
 		expression.checkScope(env);
+		
+		if (!expression.isLValue()) {
+			throw new ScopeCheckingError("expression " + expression.toString("") + "should be an L-Value");
+		}
+	}
+
+	@Override
+	public void checkType(Environment env) throws TypeCheckingError {
+		// not necessary as expression must be a L-Value
 	}
 }

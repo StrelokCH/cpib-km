@@ -3,6 +3,8 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
+import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
+import ch.fhnw.cpib.project.km.token.keywords.Type;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
 
 public class StoreExpr implements IExpression {
@@ -36,5 +38,10 @@ public class StoreExpr implements IExpression {
 	@Override
 	public boolean isLValue() {
 		return true;
+	}
+
+	@Override
+	public Type checkType(Environment env) throws TypeCheckingError {
+		return identifier.getType();
 	}
 }

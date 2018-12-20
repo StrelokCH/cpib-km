@@ -37,4 +37,9 @@ public class FullIdentifier {
 	public String getIdentifierName() {
 		return identifier.getIdentifier();
 	}
+
+	public Type getType() {
+		// TODO Auto-generated method stub
+		return type;
+	}
 }

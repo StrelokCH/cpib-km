@@ -2,7 +2,11 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
+import ch.fhnw.cpib.project.km.analysis.TypePromoter;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
+import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
+import ch.fhnw.cpib.project.km.token.keywords.Bool;
+import ch.fhnw.cpib.project.km.token.keywords.Type;
 
 public class CondCmd implements ICommand {
 
@@ -38,5 +42,14 @@ public class CondCmd implements ICommand {
 		expression.checkScope(env);
 		ifCase.checkScope(env);
 		elseCase.checkScope(env);
+	}
+
+	@Override
+	public void checkType(Environment env) throws TypeCheckingError {
+		if (!(expression.checkType(env) instanceof Bool)){
+			throw new TypeCheckingError("condition " + expression.toString("") + " must be of type Bool");
+		}
+		ifCase.checkType(env);
+		elseCase.checkType(env);
 	}
 }

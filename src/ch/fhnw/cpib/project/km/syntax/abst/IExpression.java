@@ -4,6 +4,8 @@ import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.exceptions.RoutineMatchError;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
+import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
+import ch.fhnw.cpib.project.km.token.keywords.Type;
 
 public interface IExpression {
 	public String toString(String indent);
@@ -15,4 +17,6 @@ public interface IExpression {
 	public default boolean isLValue() {
 		return false;
 	}
+
+	public Type checkType(Environment env) throws TypeCheckingError;
 }

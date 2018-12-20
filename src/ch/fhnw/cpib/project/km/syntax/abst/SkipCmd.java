@@ -3,6 +3,7 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
+import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
 
 public class SkipCmd implements ICommand {
 
@@ -18,6 +19,11 @@ public class SkipCmd implements ICommand {
 
 	@Override
 	public void checkScope(Environment env) throws ScopeCheckingError {
+		// not needed
+	}
+
+	@Override
+	public void checkType(Environment env) throws TypeCheckingError {
 		// not needed
 	}
 }

@@ -6,9 +6,11 @@ import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.exceptions.RoutineMatchError;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
+import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
 import ch.fhnw.cpib.project.km.token.keywords.FlowmodeInOut;
 import ch.fhnw.cpib.project.km.token.keywords.FlowmodeOut;
 import ch.fhnw.cpib.project.km.token.keywords.MechmodeReference;
+import ch.fhnw.cpib.project.km.token.keywords.Type;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
 
 public class FunctionCallExpr implements IExpression {
@@ -60,6 +62,17 @@ public class FunctionCallExpr implements IExpression {
 					throw new ScopeCheckingError("expression " + expression.toString("") + "should be an L-Value");
 				}
 			}
+		}
+	}
+
+	@Override
+	public Type checkType(Environment env) throws TypeCheckingError {
+		// type checks of parameters were already made in checkScope
+		try {
+			RoutineDecl routineDecl = env.rootContext.symbolTable.findMatch(this);
+			return routineDecl.getReturnType();
+		} catch (RoutineMatchError e) {
+			throw new RuntimeException("RoutineMatchError in FunctionCallExpr.checkType.");
 		}
 	}
 }

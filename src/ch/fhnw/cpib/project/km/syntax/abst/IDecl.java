@@ -4,6 +4,7 @@ import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.analysis.SymbolTable;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
+import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
 
 public interface IDecl {
 	public String toString(String indent);
@@ -13,4 +14,6 @@ public interface IDecl {
 	public void addToEnvironment(Environment env, Context context) throws ScopeCheckingError;
 
 	public void checkScope(Environment env) throws ScopeCheckingError;
+
+	public void checkType(Environment env) throws TypeCheckingError;
 }
