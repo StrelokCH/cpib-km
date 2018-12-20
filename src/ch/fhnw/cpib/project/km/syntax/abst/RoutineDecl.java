@@ -6,7 +6,6 @@ import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.analysis.SymbolTable;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
-import ch.fhnw.cpib.project.km.token.keywords.Changemode;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
 
 /**
@@ -36,6 +35,10 @@ public class RoutineDecl implements IDecl {
 
 	public boolean IsProcedure() {
 		return stoDecl == null;
+	}
+	
+	public List<FullIdentifier> getParamList(){
+		return paramList;
 	}
 
 	public String toString(String indent) {
@@ -67,11 +70,7 @@ public class RoutineDecl implements IDecl {
 
 	@Override
 	public void appendSymbol(SymbolTable symbolTable, boolean localScope) {
-		if (IsProcedure()) {
-			symbolTable.procedures.add(this);
-		} else {
-			symbolTable.functions.add(this);
-		}
+		symbolTable.addRoutine(this);
 	}
 
 	@Override
@@ -98,6 +97,20 @@ public class RoutineDecl implements IDecl {
 		
 		for (ICommand command : cpsCmd) {
 			command.addToEnvironment(env,newContext);
+		}
+	}
+
+	@Override
+	public void checkScope(Environment env) throws ScopeCheckingError {
+		// check if globalImports really exist
+		for (FullIdentifier globImp : globImps) {
+			if (!env.rootContext.symbolTable.containsGlobal(globImp)) {
+				throw new ScopeCheckingError("global import not found (" + globImp.getIdentifierName()+ ")");
+			}
+		}
+		
+		for (ICommand command : cpsCmd) {
+			command.checkScope(env);
 		}
 	}
 

@@ -8,9 +8,9 @@ import ch.fhnw.cpib.project.km.token.various.Identifier;
 
 public class FullIdentifier {
 
-	private final Flowmode flowmode;
-	private final Mechmode mechmode;
-	private final Changemode changemode;
+	public final Flowmode flowmode;
+	public final Mechmode mechmode;
+	public final Changemode changemode;
 	private final Identifier identifier;
 	private final Type type;
 

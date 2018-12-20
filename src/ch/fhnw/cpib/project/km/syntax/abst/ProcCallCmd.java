@@ -5,6 +5,10 @@ import java.util.List;
 
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
+import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
+import ch.fhnw.cpib.project.km.token.keywords.FlowmodeInOut;
+import ch.fhnw.cpib.project.km.token.keywords.FlowmodeOut;
+import ch.fhnw.cpib.project.km.token.keywords.MechmodeReference;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
 
 public class ProcCallCmd implements ICommand {
@@ -38,6 +42,32 @@ public class ProcCallCmd implements ICommand {
 		env.contextMapping.put(this, context);
 		for (IExpression expr : parameters) {
 			expr.addToEnvironment(env, context);
+		}
+	}
+
+	@Override
+	public void checkScope(Environment env) throws ScopeCheckingError {
+		// check if called procedure exists
+		// throws exception in case no match
+		RoutineDecl routineDecl = env.rootContext.symbolTable.findMatch(this);
+		
+		for (IExpression expr : parameters) {
+			expr.checkScope(env);
+		}
+
+		// Check for params that must be L-Values
+		List<FullIdentifier> declParameters = routineDecl.getParamList();
+		for (int i = 0; i < declParameters.size(); i++) {
+			FullIdentifier param = declParameters.get(i);
+			if (param.flowmode instanceof FlowmodeOut
+					|| param.flowmode instanceof FlowmodeInOut
+					|| param.mechmode instanceof MechmodeReference) {
+				// must be an L-Value in call
+				IExpression expression = parameters.get(i);
+				if (!expression.isLValue()) {
+					throw new ScopeCheckingError("expression " + expression.toString("") + "should be an L-Value");
+				}
+			}
 		}
 	}
 }

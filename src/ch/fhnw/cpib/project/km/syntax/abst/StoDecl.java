@@ -32,4 +32,9 @@ public class StoDecl implements IDecl {
 		// not needed
 	}
 
+	@Override
+	public void checkScope(Environment env) throws ScopeCheckingError {
+		// not needed
+	}
+
 }

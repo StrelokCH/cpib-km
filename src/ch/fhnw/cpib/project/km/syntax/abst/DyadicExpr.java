@@ -2,6 +2,7 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
+import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
 import ch.fhnw.cpib.project.km.token.various.Operator;
 
 public class DyadicExpr implements IExpression {
@@ -18,8 +19,7 @@ public class DyadicExpr implements IExpression {
 	@Override
 	public String toString(String indent) {
 		return indent + "(" + this.getClass().getSimpleName() + ", " + operator.toString() + ")\n"
-				+ expression1.toString(indent + "    ")
-				+ expression2.toString(indent + "    ");
+				+ expression1.toString(indent + "    ") + expression2.toString(indent + "    ");
 	}
 
 	@Override
@@ -27,5 +27,11 @@ public class DyadicExpr implements IExpression {
 		env.contextMapping.put(this, context);
 		expression1.addToEnvironment(env, context);
 		expression2.addToEnvironment(env, context);
+	}
+
+	@Override
+	public void checkScope(Environment env) throws ScopeCheckingError {
+		expression1.checkScope(env);
+		expression2.checkScope(env);
 	}
 }

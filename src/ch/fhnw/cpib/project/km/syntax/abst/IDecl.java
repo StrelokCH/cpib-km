@@ -11,4 +11,6 @@ public interface IDecl {
 	public void appendSymbol(SymbolTable symbolTable, boolean localScope) throws ScopeCheckingError;
 
 	public void addToEnvironment(Environment env, Context context) throws ScopeCheckingError;
+
+	public void checkScope(Environment env) throws ScopeCheckingError;
 }

@@ -2,7 +2,7 @@ package ch.fhnw.cpib.project.km.syntax.concrete;
 
 import org.openjdk.tools.javac.util.List;
 
-import ch.fhnw.cpib.project.km.syntax.abst.FuntionCallExpr;
+import ch.fhnw.cpib.project.km.syntax.abst.FunctionCallExpr;
 import ch.fhnw.cpib.project.km.syntax.abst.IExpression;
 import ch.fhnw.cpib.project.km.syntax.abst.StoreExpr;
 import ch.fhnw.cpib.project.km.token.keywords.*;
@@ -23,6 +23,6 @@ public class Ident1ExprList implements IIdent1 {
 
 	@Override
 	public IExpression toAbsSyn(Identifier ident) {
-		return new FuntionCallExpr(ident, exprList.toAbsSyn());
+		return new FunctionCallExpr(ident, exprList.toAbsSyn());
 	}
 }

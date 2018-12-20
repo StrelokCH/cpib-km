@@ -56,8 +56,21 @@ public class Program {
 		for (IDecl decl : cpsDecl) {
 			decl.addToEnvironment(env, rootContext);
 		}
+		for (ICommand command : cpsCmd) {
+			command.addToEnvironment(env, rootContext);
+		}
 		
-		
-		return null;
+		return env;
+	}
+
+	public void checkScope(Environment env) throws ScopeCheckingError {
+
+		for (IDecl decl : cpsDecl) {
+			decl.checkScope(env);
+		}
+
+		for (ICommand command : cpsCmd) {
+			command.checkScope(env);
+		}
 	}
 }

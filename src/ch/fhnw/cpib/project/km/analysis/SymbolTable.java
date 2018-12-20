@@ -5,16 +5,39 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ch.fhnw.cpib.project.km.exceptions.RoutineMatchError;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
 import ch.fhnw.cpib.project.km.syntax.abst.FullIdentifier;
+import ch.fhnw.cpib.project.km.syntax.abst.FunctionCallExpr;
+import ch.fhnw.cpib.project.km.syntax.abst.ProcCallCmd;
 import ch.fhnw.cpib.project.km.syntax.abst.RoutineDecl;
 
 public class SymbolTable {
 	private final Map<String, FullIdentifier> localVariables = new HashMap<>();
 	private final Map<String, FullIdentifier> globalVariables = new HashMap<>();
-	public final List<RoutineDecl> procedures = new ArrayList<>();
-	public final List<RoutineDecl> functions = new ArrayList<>();
+	private final List<RoutineDecl> procedures = new ArrayList<>();
+	private final List<RoutineDecl> functions = new ArrayList<>();
 
+	public void addRoutine(RoutineDecl routine) {
+		if (routine.IsProcedure()) {
+			procedures.add(routine);
+		} else {
+			functions.add(routine);
+		}
+	}
+	
+	public boolean contains(FullIdentifier fullIdentifier) {
+		return containsLocal(fullIdentifier) || containsGlobal(fullIdentifier);
+	}
+	
+	public boolean containsLocal(FullIdentifier fullIdentifier) {
+		return localVariables.containsKey(fullIdentifier.getIdentifierName());
+	}
+	
+	public boolean containsGlobal(FullIdentifier fullIdentifier) {
+		return globalVariables.containsKey(fullIdentifier.getIdentifierName());
+	}
+	
 	public void addVariable(FullIdentifier fullIdentifier, boolean local) throws ScopeCheckingError {
 		String identifier = fullIdentifier.getIdentifierName();
 		
@@ -41,5 +64,15 @@ public class SymbolTable {
 		ret.procedures.addAll(procedures);
 		ret.functions.addAll(functions);
 		return ret;
+	}
+	
+	public RoutineDecl findMatch(ProcCallCmd procCallCmd) throws RoutineMatchError {
+		// Todo: implement matching functionality
+		return null;
+	}
+	
+	public RoutineDecl findMatch(FunctionCallExpr functionCallExpr) throws RoutineMatchError {
+		// Todo: implement matching functionality
+		return null;
 	}
 }

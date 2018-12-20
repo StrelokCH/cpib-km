@@ -12,6 +12,7 @@ public class StaticAnalyser {
 
 	public boolean check() throws ScopeCheckingError {
 		Environment env = program.createEnvironment();
+		program.checkScope(env);
 		//return program.check();
 		return true;
 	}

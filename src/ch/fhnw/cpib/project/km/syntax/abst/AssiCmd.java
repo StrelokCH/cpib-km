@@ -2,6 +2,7 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
+import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
 
 public class AssiCmd implements ICommand{
 
@@ -26,5 +27,15 @@ public class AssiCmd implements ICommand{
 		env.contextMapping.put(this, context);
 		expression1.addToEnvironment(env,context);
 		expression2.addToEnvironment(env,context);
+	}
+
+	@Override
+	public void checkScope(Environment env) throws ScopeCheckingError {
+		expression1.checkScope(env);
+		expression2.checkScope(env);
+		
+		if (!expression1.isLValue()) {
+			throw new ScopeCheckingError("expression " + expression1.toString("") + "should be an L-Value");
+		}
 	}
 }

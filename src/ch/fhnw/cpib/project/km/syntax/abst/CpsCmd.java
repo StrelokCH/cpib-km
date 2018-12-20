@@ -4,6 +4,7 @@ import java.util.List;
 
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
+import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
 
 public class CpsCmd implements ICommand {
 
@@ -32,6 +33,13 @@ public class CpsCmd implements ICommand {
 		env.contextMapping.put(this, context);
 		for (ICommand command : commands) {
 			command.addToEnvironment(env, context);
+		}
+	}
+
+	@Override
+	public void checkScope(Environment env) throws ScopeCheckingError {
+		for (ICommand command : commands) {
+			command.checkScope(env);
 		}
 	}
 }

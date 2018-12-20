@@ -2,6 +2,7 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
+import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
 
 public class CondCmd implements ICommand {
 
@@ -30,5 +31,12 @@ public class CondCmd implements ICommand {
 		expression.addToEnvironment(env,context);
 		ifCase.addToEnvironment(env, context);
 		elseCase.addToEnvironment(env, context);
+	}
+
+	@Override
+	public void checkScope(Environment env) throws ScopeCheckingError {
+		expression.checkScope(env);
+		ifCase.checkScope(env);
+		elseCase.checkScope(env);
 	}
 }
