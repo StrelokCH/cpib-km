@@ -2,7 +2,10 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 
 import ch.fhnw.cpib.project.km.token.keywords.Changemode;
 import ch.fhnw.cpib.project.km.token.keywords.Flowmode;
+import ch.fhnw.cpib.project.km.token.keywords.FlowmodeInOut;
+import ch.fhnw.cpib.project.km.token.keywords.FlowmodeOut;
 import ch.fhnw.cpib.project.km.token.keywords.Mechmode;
+import ch.fhnw.cpib.project.km.token.keywords.MechmodeReference;
 import ch.fhnw.cpib.project.km.token.keywords.Type;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
 
@@ -33,13 +36,23 @@ public class FullIdentifier {
 		ret += ")\n";
 		return ret;
 	}
-	
+
 	public String getIdentifierName() {
 		return identifier.getIdentifier();
 	}
 
 	public Type getType() {
-		// TODO Auto-generated method stub
 		return type;
+	}
+
+	/**
+	 * Returns true if one of the following modes are present: FlowmodeOut,
+	 * FlowmodeInOut, MechmodeReference
+	 * 
+	 * @return
+	 */
+	public boolean needsLValue() {
+		return flowmode instanceof FlowmodeOut || flowmode instanceof FlowmodeInOut
+				|| mechmode instanceof MechmodeReference;
 	}
 }

@@ -53,9 +53,7 @@ public class FunctionCallExpr implements IExpression {
 		List<FullIdentifier> parameters = routineDecl.getParamList();
 		for (int i = 0; i < parameters.size(); i++) {
 			FullIdentifier param = parameters.get(i);
-			if (param.flowmode instanceof FlowmodeOut
-					|| param.flowmode instanceof FlowmodeInOut
-					|| param.mechmode instanceof MechmodeReference) {
+			if (param.needsLValue()) {
 				// must be an L-Value in call
 				IExpression expression = expressions.get(i);
 				if (!expression.isLValue()) {

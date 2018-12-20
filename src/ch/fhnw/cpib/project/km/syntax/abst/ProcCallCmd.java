@@ -68,9 +68,7 @@ public class ProcCallCmd implements ICommand {
 		List<FullIdentifier> declParameters = routineDecl.getParamList();
 		for (int i = 0; i < declParameters.size(); i++) {
 			FullIdentifier param = declParameters.get(i);
-			if (param.flowmode instanceof FlowmodeOut
-					|| param.flowmode instanceof FlowmodeInOut
-					|| param.mechmode instanceof MechmodeReference) {
+			if (param.needsLValue()) {
 				// must be an L-Value in call
 				IExpression expression = parameters.get(i);
 				if (!expression.isLValue()) {
