@@ -71,7 +71,7 @@ public class DyadicExpr implements IExpression {
 				throw new TypeCheckingError("Cannot use relational operators on two Bools. Expressions are "
 						+ expression1.toString("") + " and " + expression2.toString(""));
 			}
-			return finalType;
+			return new Bool();
 		}
 		throw new RuntimeException("missing operator " + operator + " in DyadicExpr.checkType");
 	}
