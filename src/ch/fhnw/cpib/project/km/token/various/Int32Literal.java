@@ -49,7 +49,6 @@ public class Int32Literal extends Literal {
 
 	@Override
 	protected BaseToken internalCreateToken(String s) {
-		// TODO check if signed/unsigned
 		return new Int32Literal(Integer.parseInt(s));
 	}
 }

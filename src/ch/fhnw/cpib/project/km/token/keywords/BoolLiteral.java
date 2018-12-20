@@ -28,7 +28,6 @@ public class BoolLiteral extends Literal {
 
 	@Override
 	protected BaseToken internalCreateToken(String s) {
-		// TODO Auto-generated method stub
 		return new BoolLiteral(Boolean.parseBoolean(s));
 	}
 }

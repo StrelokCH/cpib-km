@@ -1,5 +1,6 @@
 package ch.fhnw.cpib.project.km.syntax.concrete;
 
+import ch.fhnw.cpib.project.km.syntax.abst.CpsCmd;
 import ch.fhnw.cpib.project.km.syntax.abst.RoutineDecl;
 import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
@@ -48,8 +49,7 @@ public class FunDeclFun implements IFunDecl {
 
 	@Override
 	public RoutineDecl toAbsSyn() {
-		// TODO command
 		return new RoutineDecl(ident, paramList.toAbsSyn(), stoDecl.toAbsSyn(), globalGlobImps.toAbsSyn(),
-				optLocalCpsStoDecl.toAbsSyn(), null/*cpsCmd.toAbsSyn()*/);
+				optLocalCpsStoDecl.toAbsSyn(), ((CpsCmd)cpsCmd.toAbsSyn()).getCommands());
 	}
 }
