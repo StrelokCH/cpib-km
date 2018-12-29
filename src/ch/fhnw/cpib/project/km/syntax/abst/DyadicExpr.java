@@ -3,6 +3,7 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.analysis.TypePromoter;
+import ch.fhnw.cpib.project.km.exceptions.ConstCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
 import ch.fhnw.cpib.project.km.token.keywords.*;
@@ -75,4 +76,10 @@ public class DyadicExpr implements IExpression {
 		}
 		throw new RuntimeException("missing operator " + operator + " in DyadicExpr.checkType");
 	}
+
+	@Override
+	public void checkConst(Environment env) throws ConstCheckingError {
+		// Not needed?
+	}
+
 }

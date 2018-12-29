@@ -3,6 +3,7 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.analysis.TypePromoter;
+import ch.fhnw.cpib.project.km.exceptions.ConstCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
 import ch.fhnw.cpib.project.km.token.keywords.Type;
@@ -49,5 +50,11 @@ public class AssiCmd implements ICommand{
 		if (!TypePromoter.canPromote(type2, type1)) {
 			throw new TypeCheckingError("can't assign " + expression2.toString("") + " to " + expression1.toString(""));
 		}
+	}
+
+	@Override
+	public void checkConst(Environment env) throws ConstCheckingError {
+		//Checks if expression1 is not const
+		expression1.checkConst(env);
 	}
 }

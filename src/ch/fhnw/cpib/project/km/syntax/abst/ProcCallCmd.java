@@ -5,6 +5,7 @@ import java.util.List;
 
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
+import ch.fhnw.cpib.project.km.exceptions.ConstCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
 import ch.fhnw.cpib.project.km.token.keywords.FlowmodeInOut;
@@ -93,5 +94,10 @@ public class ProcCallCmd implements ICommand {
 	@Override
 	public void checkType(Environment env) throws TypeCheckingError {
 		// type checks of parameters were already made in checkScope
+	}
+
+	@Override
+	public void checkConst(Environment env) throws ConstCheckingError {
+		// Not needed??		
 	}
 }

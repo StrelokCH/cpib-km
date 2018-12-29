@@ -4,6 +4,7 @@ import java.util.List;
 
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
+import ch.fhnw.cpib.project.km.exceptions.ConstCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.RoutineMatchError;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
@@ -81,5 +82,11 @@ public class FunctionCallExpr implements IExpression {
 		} catch (RoutineMatchError e) {
 			throw new RuntimeException("RoutineMatchError in FunctionCallExpr.checkType.");
 		}
+	}
+
+	@Override
+	public void checkConst(Environment env) throws ConstCheckingError {
+		//Is always const ??
+		throw new ConstCheckingError("Function's return is const");
 	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
+import ch.fhnw.cpib.project.km.exceptions.ConstCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
 
@@ -48,6 +49,13 @@ public class CpsCmd implements ICommand {
 	public void checkType(Environment env) throws TypeCheckingError {
 		for (ICommand command : commands) {
 			command.checkType(env);
+		}
+	}
+
+	@Override
+	public void checkConst(Environment env) throws ConstCheckingError {
+		for (ICommand command : commands) {
+			command.checkConst(env);
 		}
 	}
 }

@@ -3,6 +3,7 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.analysis.SymbolTable;
+import ch.fhnw.cpib.project.km.exceptions.ConstCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
 
@@ -16,4 +17,5 @@ public interface IDecl {
 	public void checkScope(Environment env) throws ScopeCheckingError;
 
 	public void checkType(Environment env) throws TypeCheckingError;
+	
 }

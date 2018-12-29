@@ -2,6 +2,7 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
+import ch.fhnw.cpib.project.km.exceptions.ConstCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
 import ch.fhnw.cpib.project.km.token.keywords.Bool;
@@ -42,5 +43,10 @@ public class WhileCmd implements ICommand {
 			throw new TypeCheckingError("condition " + expression.toString("") + " must be of type Bool");
 		}
 		command.checkType(env);
+	}
+
+	@Override
+	public void checkConst(Environment env) throws ConstCheckingError {
+		command.checkConst(env);
 	}
 }

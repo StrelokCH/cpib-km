@@ -2,10 +2,14 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
+import ch.fhnw.cpib.project.km.exceptions.ConstCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
+import ch.fhnw.cpib.project.km.token.keywords.FlowmodeIn;
 import ch.fhnw.cpib.project.km.token.keywords.Type;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
+import ch.fhnw.cpib.project.km.token.keywords.Changemode;
+import ch.fhnw.cpib.project.km.token.keywords.Const;
 
 public class StoreExpr implements IExpression {
 	private final FullIdentifier identifier;
@@ -43,5 +47,12 @@ public class StoreExpr implements IExpression {
 	@Override
 	public Type checkType(Environment env) throws TypeCheckingError {
 		return identifier.getType();
+	}
+
+	@Override
+	public void checkConst(Environment env) throws ConstCheckingError {
+		if(identifier.changemode instanceof Const) {
+			throw new ConstCheckingError("identifier " + identifier.getIdentifierName() + " is const");
+		}
 	}
 }
