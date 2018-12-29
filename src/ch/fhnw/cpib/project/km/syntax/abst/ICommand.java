@@ -5,6 +5,7 @@ import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.ConstCheckingError;
+import ch.fhnw.cpib.project.km.exceptions.InitCheckingError;
 
 public interface ICommand {
 	public String toString(String indent);
@@ -16,4 +17,6 @@ public interface ICommand {
 	public void checkType(Environment env) throws TypeCheckingError;
 	
 	public void checkConst(Environment env) throws ConstCheckingError;
+	
+	public void checkInit(Environment env) throws InitCheckingError;
 }

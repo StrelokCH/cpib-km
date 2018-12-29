@@ -3,6 +3,7 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.exceptions.ConstCheckingError;
+import ch.fhnw.cpib.project.km.exceptions.InitCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
 import ch.fhnw.cpib.project.km.token.keywords.Bool;
@@ -56,5 +57,12 @@ public class CondCmd implements ICommand {
 	public void checkConst(Environment env) throws ConstCheckingError {
 		ifCase.checkConst(env);
 		elseCase.checkConst(env);
+	}
+
+	@Override
+	public void checkInit(Environment env) throws InitCheckingError {
+		expression.checkInit(env);
+		ifCase.checkInit(env);
+		elseCase.checkInit(env);
 	}
 }

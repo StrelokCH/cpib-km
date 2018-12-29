@@ -3,6 +3,7 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.exceptions.ConstCheckingError;
+import ch.fhnw.cpib.project.km.exceptions.InitCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
 import ch.fhnw.cpib.project.km.token.keywords.FlowmodeIn;
@@ -53,6 +54,16 @@ public class StoreExpr implements IExpression {
 	public void checkConst(Environment env) throws ConstCheckingError {
 		if(identifier.changemode instanceof Const) {
 			throw new ConstCheckingError("identifier " + identifier.getIdentifierName() + " is const");
+		}
+	}
+
+	@Override
+	public void checkInit(Environment env) throws InitCheckingError {
+		//To-Do...
+		// check if store is initialized before it is read or assigned to
+		//check if only initializations of uninitialized stores
+		if(!isInitialization) {
+			throw new InitCheckingError(identifier + " is not initialized");
 		}
 	}
 }

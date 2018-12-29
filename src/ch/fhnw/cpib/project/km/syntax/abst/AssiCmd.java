@@ -4,6 +4,7 @@ import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.analysis.TypePromoter;
 import ch.fhnw.cpib.project.km.exceptions.ConstCheckingError;
+import ch.fhnw.cpib.project.km.exceptions.InitCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
 import ch.fhnw.cpib.project.km.token.keywords.Type;
@@ -56,5 +57,10 @@ public class AssiCmd implements ICommand{
 	public void checkConst(Environment env) throws ConstCheckingError {
 		//Checks if expression1 is not const
 		expression1.checkConst(env);
+	}
+
+	@Override
+	public void checkInit(Environment env) throws InitCheckingError {
+		expression2.checkInit(env);		
 	}
 }

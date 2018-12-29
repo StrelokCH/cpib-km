@@ -6,7 +6,7 @@ import ch.fhnw.cpib.project.km.exceptions.ConstCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.RoutineMatchError;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.ConstCheckingError;
+import ch.fhnw.cpib.project.km.exceptions.InitCheckingError;
 import ch.fhnw.cpib.project.km.token.keywords.Type;
 
 public interface IExpression {
@@ -21,5 +21,6 @@ public interface IExpression {
 	}
 	public Type checkType(Environment env) throws TypeCheckingError;
 	public void checkConst(Environment env) throws ConstCheckingError;
+	public void checkInit(Environment env) throws InitCheckingError;
 	
 }

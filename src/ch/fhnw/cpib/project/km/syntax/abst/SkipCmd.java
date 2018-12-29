@@ -3,6 +3,7 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.exceptions.ConstCheckingError;
+import ch.fhnw.cpib.project.km.exceptions.InitCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
 
@@ -32,5 +33,10 @@ public class SkipCmd implements ICommand {
 	public void checkConst(Environment env) throws ConstCheckingError {
 		// not needed
 		
+	}
+
+	@Override
+	public void checkInit(Environment env) throws InitCheckingError {
+		//Not needed
 	}
 }
