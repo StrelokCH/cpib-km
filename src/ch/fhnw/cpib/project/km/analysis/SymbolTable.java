@@ -11,6 +11,7 @@ import ch.fhnw.cpib.project.km.syntax.abst.FullIdentifier;
 import ch.fhnw.cpib.project.km.syntax.abst.FunctionCallExpr;
 import ch.fhnw.cpib.project.km.syntax.abst.ProcCallCmd;
 import ch.fhnw.cpib.project.km.syntax.abst.RoutineDecl;
+import ch.fhnw.cpib.project.km.token.keywords.Type;
 
 public class SymbolTable {
 	private final Environment env;
@@ -55,6 +56,10 @@ public class SymbolTable {
 		} else {
 			globalVariables.put(identifier, fullIdentifier);
 		}
+	}
+	
+	public Type getTypeForLocalVariable(String key) {
+		return localVariables.get(key).getType();
 	}
 
 	public void clearVariables() {

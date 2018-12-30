@@ -6,11 +6,9 @@ import ch.fhnw.cpib.project.km.exceptions.ConstCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.InitCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
-import ch.fhnw.cpib.project.km.token.keywords.FlowmodeIn;
+import ch.fhnw.cpib.project.km.token.keywords.Const;
 import ch.fhnw.cpib.project.km.token.keywords.Type;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
-import ch.fhnw.cpib.project.km.token.keywords.Changemode;
-import ch.fhnw.cpib.project.km.token.keywords.Const;
 
 public class StoreExpr implements IExpression {
 	private final FullIdentifier identifier;
@@ -44,10 +42,12 @@ public class StoreExpr implements IExpression {
 	public boolean isLValue() {
 		return true;
 	}
-
+	
 	@Override
 	public Type checkType(Environment env) throws TypeCheckingError {
-		return identifier.getType();
+		Context c = env.contextMapping.get(this);
+		Type t = c.symbolTable.getTypeForLocalVariable(identifier.getIdentifierName());
+		return t;
 	}
 
 	@Override
