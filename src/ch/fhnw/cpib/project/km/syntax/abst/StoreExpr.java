@@ -45,9 +45,13 @@ public class StoreExpr implements IExpression {
 	
 	@Override
 	public Type checkType(Environment env) throws TypeCheckingError {
-		Context c = env.contextMapping.get(this);
-		Type t = c.symbolTable.getTypeForLocalVariable(identifier.getIdentifierName());
-		return t;
+		Type type = identifier.getType();
+		if (type == null) {
+			Context c = env.contextMapping.get(this);
+			type = c.symbolTable.getTypeForLocalVariable(identifier.getIdentifierName());
+			this.identifier.setType(type);
+		}
+		return type;
 	}
 
 	@Override
