@@ -3,6 +3,7 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.analysis.SymbolTable;
+import ch.fhnw.cpib.project.km.exceptions.ConstCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
 
@@ -42,5 +43,12 @@ public class StoDecl implements IDecl {
 	public void checkType(Environment env) throws TypeCheckingError {
 		// not needed
 	}
+
+	@Override
+	public void checkConst(Environment env) throws ConstCheckingError {
+		// not needed
+	}
+	
+	
 
 }

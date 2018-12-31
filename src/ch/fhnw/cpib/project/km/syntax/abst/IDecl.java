@@ -17,5 +17,7 @@ public interface IDecl {
 	public void checkScope(Environment env) throws ScopeCheckingError;
 
 	public void checkType(Environment env) throws TypeCheckingError;
+
+	public void checkConst(Environment env) throws ConstCheckingError;
 	
 }

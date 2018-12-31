@@ -5,12 +5,13 @@ import java.util.List;
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.analysis.SymbolTable;
+import ch.fhnw.cpib.project.km.exceptions.ConstCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
 
 public class Program {
-	
+
 	private final Identifier identifier;
 	private final List<FullIdentifier> progParamList;
 	private final List<IDecl> cpsDecl;
@@ -41,17 +42,17 @@ public class Program {
 
 	public Environment createEnvironment() throws ScopeCheckingError {
 		Environment env = new Environment();
-		
+
 		// Create root symbolTable
 		SymbolTable symbolTable = new SymbolTable(env);
 		for (FullIdentifier progParam : progParamList) {
 			// Program Parameters are handled as local variables
-			symbolTable.addVariable(progParam,true);
+			symbolTable.addVariable(progParam, true);
 		}
 		for (IDecl decl : cpsDecl) {
 			decl.appendSymbol(symbolTable, false);
 		}
-		
+
 		Context rootContext = new Context(symbolTable);
 		env.rootContext = rootContext;
 
@@ -61,7 +62,7 @@ public class Program {
 		for (ICommand command : cpsCmd) {
 			command.addToEnvironment(env, rootContext);
 		}
-		
+
 		return env;
 	}
 
@@ -84,6 +85,16 @@ public class Program {
 
 		for (ICommand command : cpsCmd) {
 			command.checkType(env);
+		}
+	}
+
+	public void checkConst(Environment env) throws ConstCheckingError {
+		for (IDecl decl : cpsDecl) {
+			decl.checkConst(env);
+		}
+
+		for (ICommand command : cpsCmd) {
+			command.checkConst(env);
 		}
 	}
 }
