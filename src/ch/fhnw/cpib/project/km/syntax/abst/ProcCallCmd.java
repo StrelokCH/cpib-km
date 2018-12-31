@@ -86,7 +86,11 @@ public class ProcCallCmd implements ICommand {
 				// must be an L-Value in call
 				IExpression expression = parameters.get(i);
 				if (!expression.isLValue()) {
-					throw new ScopeCheckingError("expression " + expression.toString("") + "should be an L-Value");
+					throw new ScopeCheckingError("expression " + expression.toString("") + " should be an L-Value");
+				}
+				// check if non const is needed
+				if (!param.isConst() && expression.isConst(env)) {
+					throw new ScopeCheckingError("expression " + expression.toString("") + " must not be const");
 				}
 			}
 		}
@@ -99,7 +103,7 @@ public class ProcCallCmd implements ICommand {
 
 	@Override
 	public void checkConst(Environment env) throws ConstCheckingError {
-		// Not needed??		
+		// const checking of parameters is performed in checkScope
 	}
 
 	@Override
