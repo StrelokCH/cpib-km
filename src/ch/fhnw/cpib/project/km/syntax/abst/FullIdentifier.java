@@ -19,7 +19,7 @@ public class FullIdentifier {
 	public final Mechmode mechmode;
 	public final Changemode changemode;
 	private final Identifier identifier;
-	private final Type type;
+	private Type type;
 
 	public FullIdentifier(Flowmode flowmode, Mechmode mechmode, Changemode changemode, Identifier identifier,
 			Type type) {
@@ -69,6 +69,10 @@ public class FullIdentifier {
 
 	public Type getType() {
 		return type;
+	}
+	
+	public void setType(Type type) {
+		this.type = type;
 	}
 
 	/**
