@@ -23,21 +23,21 @@ public class FullIdentifier {
 
 	public FullIdentifier(Flowmode flowmode, Mechmode mechmode, Changemode changemode, Identifier identifier,
 			Type type) {
-		this.flowmode = getFlowmode(flowmode,mechmode,changemode);
-		this.mechmode = getMechmode(this.flowmode,mechmode,changemode);
-		this.changemode = getChangemode(this.flowmode,this.mechmode,changemode);
+		this.flowmode = getFlowmode(flowmode, mechmode, changemode);
+		this.mechmode = getMechmode(this.flowmode, mechmode, changemode);
+		this.changemode = getChangemode(this.flowmode, this.mechmode, changemode);
 		this.identifier = identifier;
 		this.type = type;
 	}
-	
+
 	public static Flowmode getFlowmode(Flowmode flowmode, Mechmode mechmode, Changemode changemode) {
 		return flowmode == null ? new FlowmodeIn() : flowmode;
 	}
-	
+
 	public static Mechmode getMechmode(Flowmode flowmode, Mechmode mechmode, Changemode changemode) {
 		return mechmode == null ? new MechmodeCopy() : mechmode;
 	}
-	
+
 	public static Changemode getChangemode(Flowmode flowmode, Mechmode mechmode, Changemode changemode) {
 		if (changemode != null) {
 			return changemode;
@@ -70,9 +70,9 @@ public class FullIdentifier {
 	public Type getType() {
 		return type;
 	}
-	
-	public void setType(Type type) {
-		this.type = type;
+
+	public boolean isConst() {
+		return !(changemode instanceof Const);
 	}
 
 	/**

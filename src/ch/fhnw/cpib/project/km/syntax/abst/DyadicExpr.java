@@ -79,14 +79,9 @@ public class DyadicExpr implements IExpression {
 	}
 
 	@Override
-	public void checkConst(Environment env) throws ConstCheckingError {
-		// Not needed?
-	}
-
-	@Override
 	public void checkInit(Environment env) throws InitCheckingError {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

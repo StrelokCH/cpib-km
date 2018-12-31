@@ -34,7 +34,8 @@ public class StoreExpr implements IExpression {
 	public void checkScope(Environment env) throws ScopeCheckingError {
 		Context context = env.contextMapping.get(this);
 		if (!context.symbolTable.contains(identifier)) {
-			throw new ScopeCheckingError("identifier " + identifier.getIdentifierName() + " does not exist in current scope");
+			throw new ScopeCheckingError(
+					"identifier " + identifier.getIdentifierName() + " does not exist in current scope");
 		}
 	}
 
@@ -42,31 +43,35 @@ public class StoreExpr implements IExpression {
 	public boolean isLValue() {
 		return true;
 	}
-	
+
 	@Override
-	public Type checkType(Environment env) throws TypeCheckingError {
-		Type type = identifier.getType();
-		if (type == null) {
-			Context c = env.contextMapping.get(this);
-			type = c.symbolTable.getTypeForLocalVariable(identifier.getIdentifierName());
-			this.identifier.setType(type);
+	public boolean isConst(Environment env) {
+		if (isInitialization) {
+			// constants can once be set with init
+			// see example in Slides_IML page 35
+			// multiple inits should be detected in checkInit
+			return false;
 		}
-		return type;
+
+		// check if declaration is not const
+		Context c = env.contextMapping.get(this);
+		FullIdentifier declaration = c.symbolTable.getDeclaration(identifier);
+		return declaration.isConst();
 	}
 
 	@Override
-	public void checkConst(Environment env) throws ConstCheckingError {
-		if(identifier.changemode instanceof Const) {
-			throw new ConstCheckingError("identifier " + identifier.getIdentifierName() + " is const");
-		}
+	public Type checkType(Environment env) throws TypeCheckingError {
+		Context c = env.contextMapping.get(this);
+		FullIdentifier declaration = c.symbolTable.getDeclaration(identifier);
+		return declaration.getType();
 	}
 
 	@Override
 	public void checkInit(Environment env) throws InitCheckingError {
-		//To-Do...
+		// To-Do...
 		// check if store is initialized before it is read or assigned to
-		//check if only initializations of uninitialized stores
-		if(!isInitialization) {
+		// check if only initializations of uninitialized stores
+		if (!isInitialization) {
 			throw new InitCheckingError(identifier + " is not initialized");
 		}
 	}

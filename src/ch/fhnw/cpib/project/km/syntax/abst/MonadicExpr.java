@@ -43,15 +43,15 @@ public class MonadicExpr implements IExpression {
 		Type type = expression.checkType(env);
 		if (operator instanceof AddOperator) {
 			if (!(type instanceof IntegerType)) {
-				throw new TypeCheckingError("Cannot use minus/plus operators on a Bool. Expression is "
-						+ expression.toString(""));
+				throw new TypeCheckingError(
+						"Cannot use minus/plus operators on a Bool. Expression is " + expression.toString(""));
 			}
 			return type;
 		}
 		if (operator instanceof NotOperator) {
 			if (!(type instanceof IntegerType)) {
-				throw new TypeCheckingError("Cannot use not operator on a Integer. Expression is "
-						+ expression.toString(""));
+				throw new TypeCheckingError(
+						"Cannot use not operator on a Integer. Expression is " + expression.toString(""));
 			}
 			return type;
 		}
@@ -59,16 +59,9 @@ public class MonadicExpr implements IExpression {
 	}
 
 	@Override
-	public void checkConst(Environment env) throws ConstCheckingError {
-		// Not needed?
-		
-	}
-
-	@Override
 	public void checkInit(Environment env) throws InitCheckingError {
 		// TODO Auto-generated method stub
-		
-	}
 
+	}
 
 }

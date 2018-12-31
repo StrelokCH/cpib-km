@@ -32,7 +32,7 @@ public class FunctionCallExpr implements IExpression {
 	public List<IExpression> getParameters() {
 		return expressions;
 	}
-	
+
 	@Override
 	public String toString(String indent) {
 		String ret = indent + "(" + this.getClass().getSimpleName() + ", " + identifier.toString() + ")\n";
@@ -86,14 +86,8 @@ public class FunctionCallExpr implements IExpression {
 	}
 
 	@Override
-	public void checkConst(Environment env) throws ConstCheckingError {
-		//Is always const ??
-		throw new ConstCheckingError("Function's return is const");
-	}
-
-	@Override
 	public void checkInit(Environment env) throws InitCheckingError {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

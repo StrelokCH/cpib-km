@@ -15,12 +15,17 @@ public interface IExpression {
 	public void addToEnvironment(Environment env, Context context);
 
 	public void checkScope(Environment env) throws ScopeCheckingError;
-	
+
 	public default boolean isLValue() {
 		return false;
 	}
+
+	public default boolean isConst(Environment env) {
+		return true;
+	}
+
 	public Type checkType(Environment env) throws TypeCheckingError;
-	public void checkConst(Environment env) throws ConstCheckingError;
+
 	public void checkInit(Environment env) throws InitCheckingError;
-	
+
 }

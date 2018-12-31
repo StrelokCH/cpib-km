@@ -25,8 +25,8 @@ public class LiteralExpr implements IExpression {
 	@Override
 	public String toString(String indent) {
 		return indent + "(" + this.getClass().getSimpleName() + ", " + literal.toString() + ")\n";
-	} 
-	
+	}
+
 	@Override
 	public void addToEnvironment(Environment env, Context context) {
 		env.contextMapping.put(this, context);
@@ -52,15 +52,9 @@ public class LiteralExpr implements IExpression {
 	}
 
 	@Override
-	public void checkConst(Environment env) throws ConstCheckingError {
-		// Not needed
-		
-	}
-
-	@Override
 	public void checkInit(Environment env) throws InitCheckingError {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
