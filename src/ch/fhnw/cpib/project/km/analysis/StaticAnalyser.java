@@ -15,6 +15,7 @@ public class StaticAnalyser {
 		program.checkScope(env);
 		program.checkType(env);
 		program.checkConst(env);
+		program.checkAliasing(env);
 		// return program.check();
 		return true;
 	}
