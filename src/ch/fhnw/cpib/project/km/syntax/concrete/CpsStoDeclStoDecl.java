@@ -27,6 +27,6 @@ public class CpsStoDeclStoDecl implements ICpsStoDecl {
 	public List<StoDecl> toAbsSyn() {
 		List<StoDecl> ret = repSemicolonCpsStoDecl.toAbsSyn();
 		ret.add(0, stoDecl.toAbsSyn());
-		return null;
+		return ret;
 	}
 }
