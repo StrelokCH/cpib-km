@@ -78,6 +78,7 @@ public class Scanner {
 		List<BaseToken> ret = new ArrayList<>();
 		// don't add Identifier/Sentinel here, as it is a special case
 		ret.add(new Ignore());
+		ret.add(new Comment());
 		ret.add(new Int32Literal(0));
 		ret.add(new Int64Literal(0));
 		return ret;
@@ -151,7 +152,7 @@ public class Scanner {
 				throw new LexicalErrorException("lexical error at position " + start);
 			}
 
-			if (!(matchedToken instanceof Ignore)) {
+			if (!(matchedToken instanceof Ignore) && !(matchedToken instanceof Comment)) {
 				l.add(matchedToken.createToken(currentCharSequence));
 			}
 			start += longestMatch;
