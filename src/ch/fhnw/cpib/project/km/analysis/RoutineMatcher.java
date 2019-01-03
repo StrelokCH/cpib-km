@@ -118,26 +118,6 @@ public class RoutineMatcher {
 					+ " found that has the matching " + call.parameterTypes.size() + " parameters.");
 		}
 
-		// check global imports
-		candidates.removeIf(c -> {
-			List<FullIdentifier> globalImps = c.getGlobImps();
-			if (globalImps.size() != call.globImps.size()) {
-				return true;
-			}
-			for (int i = 0; i < globalImps.size(); i++) {
-				if (!globalImps.get(i).getIdentifierName().equals(call.globImps.get(i).getIdentifier())) {
-					// different import
-					return true;
-				}
-			}
-			return false;
-		});
-
-		if (candidates.isEmpty()) {
-			throw new RoutineMatchException("No routine with identifier " + call.routineName.getIdentifier()
-					+ " found that has the matching " + call.globImps.size() + " global imports.");
-		}
-
 		// check for ambiguity
 		if (candidates.size() > 1) {
 
