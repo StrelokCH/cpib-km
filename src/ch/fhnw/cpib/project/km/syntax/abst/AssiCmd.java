@@ -48,7 +48,8 @@ public class AssiCmd implements ICommand {
 		Type type1 = expression1.checkType(env);
 		Type type2 = expression2.checkType(env);
 		if (!TypePromoter.canPromote(type2, type1)) {
-			throw new TypeCheckingException("can't assign " + expression2.toString("") + " to " + expression1.toString(""));
+			throw new TypeCheckingException("can't assign " + expression2.toString("") + " with type="
+					+ type2.toString() + " to " + expression1.toString("") + " with type=" + type1);
 		}
 	}
 
