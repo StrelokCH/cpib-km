@@ -127,7 +127,7 @@ public class ProcCallCmd implements ICommand {
 			FullIdentifier param = declParameters.get(i);
 			for(int j = i+1; j < declParameters.size(); ++j) {
 				FullIdentifier comparedParam = declParameters.get(j);
-				
+
 				if(param.equals(comparedParam)) {
 					throw new AliasingCheckingException(param.toString("") + " and" + comparedParam.toString("") + " are the same Parameter");
 				}

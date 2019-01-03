@@ -98,7 +98,7 @@ public class Program {
 			command.checkConst(env);
 		}
 	}
-	
+
 	public void checkAliasing(Environment env) throws AliasingCheckingException {
 
 		for (ICommand command : cpsCmd) {
