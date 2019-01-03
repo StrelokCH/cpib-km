@@ -108,7 +108,9 @@ public class RoutineDecl implements IDecl {
 			for (FullIdentifier param : paramList) {
 				symbolTable.addVariable(param, true);
 			}
-			symbolTable.addVariable(stoDecl.getFullIdentifier(), true);
+			if (stoDecl != null) {
+				symbolTable.addVariable(stoDecl.getFullIdentifier(), true);
+			}
 			for (FullIdentifier globImp : globImps) {
 				symbolTable.addVariable(globImp, false);
 			}
