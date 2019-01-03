@@ -86,7 +86,7 @@ public class FullIdentifier {
 	}
 
 	public boolean isConst() {
-		return !(changemode instanceof Const);
+		return changemode instanceof Const;
 	}
 
 	/**
