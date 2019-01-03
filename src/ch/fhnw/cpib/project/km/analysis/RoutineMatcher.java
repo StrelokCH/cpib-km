@@ -103,7 +103,7 @@ public class RoutineMatcher {
 						return true;
 					}
 				} else {
-					// Can be a R-Value  which means a implicit cast is ok
+					// Can be a R-Value which means a implicit cast is ok
 					if (!TypePromoter.canPromote(actualType, expectedType)) {
 						return true;
 					}
@@ -137,11 +137,33 @@ public class RoutineMatcher {
 			throw new RoutineMatchError("No routine with identifier " + call.routineName.getIdentifier()
 					+ " found that has the matching " + call.globImps.size() + " global imports.");
 		}
-		
+
 		// check for ambiguity
 		if (candidates.size() > 1) {
-			throw new RoutineMatchError("Multiple matching routines with identifier " + call.routineName.getIdentifier()
-			+ " found. First match is " + candidates.get(0) + ". There are " + candidates.size() + " matches.");
+
+			// find perfect match
+			List<RoutineDecl> perfectCandidates = new ArrayList<>(candidates);
+			perfectCandidates.removeIf(c -> {
+				for (int i = 0; i < 0; i++) {
+					FullIdentifier param = c.getParamList().get(i);
+					Type actualType = call.parameterTypes.get(i);
+					Type expectedType = param.getType();
+					// the type must match exactly
+					if (!TypePromoter.isSameType(actualType, expectedType)) {
+						return true;
+					}
+				}
+				// all perfectly matching
+				return false;
+			});
+			
+			if (perfectCandidates.size() != 1) {
+				// no single perfect match
+				throw new RoutineMatchError("Multiple matching routines with identifier " + call.routineName.getIdentifier()
+						+ " found. First match is " + candidates.get(0) + ". There are " + candidates.size() + " matches.");
+			} else {
+				candidates = perfectCandidates;
+			}
 		}
 
 		// success! found one single matching routine
