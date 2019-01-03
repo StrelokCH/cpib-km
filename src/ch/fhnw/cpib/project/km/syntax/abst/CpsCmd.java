@@ -4,6 +4,7 @@ import java.util.List;
 
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
+import ch.fhnw.cpib.project.km.exceptions.AliasingCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.ConstCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.InitCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
@@ -65,5 +66,10 @@ public class CpsCmd implements ICommand {
 		for (ICommand command : commands) {
 			command.checkInit(env);
 		}
+	}
+
+	@Override
+	public void checkAliasing(Environment env) throws AliasingCheckingException {
+		//Not needed
 	}
 }

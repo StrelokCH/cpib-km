@@ -5,8 +5,10 @@ import java.util.List;
 
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
+import ch.fhnw.cpib.project.km.exceptions.AliasingCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.ConstCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.InitCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.RoutineMatchException;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
 import ch.fhnw.cpib.project.km.token.keywords.FlowmodeInOut;
@@ -65,11 +67,11 @@ public class ProcCallCmd implements ICommand {
 		// check if called procedure exists
 		// throws exception in case no match
 		RoutineDecl routineDecl = env.rootContext.symbolTable.findMatch(this);
-		
+
 		for (IExpression expr : parameters) {
 			expr.checkScope(env);
 		}
-		
+
 		for (Identifier identifier : identifiers) {
 			Context context = env.contextMapping.get(this);
 			FullIdentifier fullIdentifier = new FullIdentifier(identifier,null);
@@ -109,5 +111,27 @@ public class ProcCallCmd implements ICommand {
 	@Override
 	public void checkInit(Environment env) throws InitCheckingException {
 		//To-Do
+	}
+
+	@Override
+	public void checkAliasing(Environment env) throws AliasingCheckingException {
+		RoutineDecl routineDecl = null;
+		try {
+			routineDecl = env.rootContext.symbolTable.findMatch(this);
+		} catch (RoutineMatchException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		List<FullIdentifier> declParameters = routineDecl.getParamList();
+		for (int i = 0; i < declParameters.size(); i++) {
+			FullIdentifier param = declParameters.get(i);
+			for(int j = i+1; j < declParameters.size(); ++j) {
+				FullIdentifier comparedParam = declParameters.get(j);
+
+				if(param.equals(comparedParam)) {
+					throw new AliasingCheckingException(param.toString("") + " and" + comparedParam.toString("") + " are the same Parameter");
+				}
+			}
+		}
 	}
 }

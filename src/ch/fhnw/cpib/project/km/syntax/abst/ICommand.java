@@ -6,6 +6,7 @@ import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.ConstCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.InitCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.AliasingCheckingException;
 
 public interface ICommand {
 	public String toString(String indent);
@@ -19,4 +20,6 @@ public interface ICommand {
 	public void checkConst(Environment env) throws ConstCheckingException;
 	
 	public void checkInit(Environment env) throws InitCheckingException;
+	
+	public void checkAliasing(Environment env) throws AliasingCheckingException;
 }
