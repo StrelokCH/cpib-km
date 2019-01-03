@@ -53,7 +53,7 @@ public class TypePromoter {
 	}
 	
 	/**
-	 * Returns true, if the 
+	 * Returns true, if the types are the exact same
 	 * @param t1
 	 * @param t2
 	 * @return
