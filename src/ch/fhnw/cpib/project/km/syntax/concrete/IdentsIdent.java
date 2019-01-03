@@ -25,6 +25,6 @@ public class IdentsIdent implements IIdents {
 	public List<Identifier> toAbsSyn() {
 		List<Identifier> l = repCommaIdent.toAbsSyn();
 		l.add(0, ident);
-		return null;
+		return l;
 	}
 }
