@@ -21,7 +21,7 @@ public class StoreExpr implements IExpression {
 
 	@Override
 	public String toString(String indent) {
-		return indent + "(" + this.getClass().getSimpleName() + ", " + identifier.toString() + ", isInitialization="
+		return indent + "(" + this.getClass().getSimpleName() + ", " + identifier.toString("") + ", isInitialization="
 				+ isInitialization + ")\n";
 	}
 
