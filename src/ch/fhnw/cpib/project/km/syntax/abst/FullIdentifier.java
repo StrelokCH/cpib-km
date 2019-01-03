@@ -21,6 +21,14 @@ public class FullIdentifier {
 	private final Identifier identifier;
 	private Type type;
 
+	public FullIdentifier(Identifier identifier, Type type) {
+		this.flowmode = null;
+		this.mechmode = null;
+		this.changemode = null;
+		this.identifier = identifier;
+		this.type = type;
+	}
+
 	public FullIdentifier(Flowmode flowmode, Mechmode mechmode, Changemode changemode, Identifier identifier,
 			Type type) {
 		this.flowmode = getFlowmode(flowmode, mechmode, changemode);
@@ -54,9 +62,15 @@ public class FullIdentifier {
 
 	public String toString(String indent) {
 		String ret = indent + "(" + this.getClass().getSimpleName();
-		ret += ", " + flowmode.toString();
-		ret += ", " + mechmode.toString();
-		ret += ", " + changemode.toString();
+		if (flowmode != null) {
+			ret += ", " + flowmode.toString();
+		}
+		if (flowmode != null) {
+			ret += ", " + mechmode.toString();
+		}
+		if (flowmode != null) {
+			ret += ", " + changemode.toString();
+		}
 		ret += ", " + identifier.toString();
 		ret += type == null ? "" : (", " + type.toString());
 		ret += ")\n";

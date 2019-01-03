@@ -72,7 +72,7 @@ public class ProcCallCmd implements ICommand {
 		
 		for (Identifier identifier : identifiers) {
 			Context context = env.contextMapping.get(this);
-			FullIdentifier fullIdentifier = new FullIdentifier(null, null, null, identifier,null);
+			FullIdentifier fullIdentifier = new FullIdentifier(identifier,null);
 			if (!context.symbolTable.containsGlobal(fullIdentifier)) {
 				throw new ScopeCheckingException("global identifier " + fullIdentifier.getIdentifierName() + " does not exist in current scope");
 			}

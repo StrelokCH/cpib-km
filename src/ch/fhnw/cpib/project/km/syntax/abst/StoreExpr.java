@@ -15,7 +15,7 @@ public class StoreExpr implements IExpression {
 	private final boolean isInitialization;
 
 	public StoreExpr(Identifier identifier, boolean isInitialization) {
-		this.identifier = new FullIdentifier(null, null, null, identifier, null);
+		this.identifier = new FullIdentifier(identifier, null);
 		this.isInitialization = isInitialization;
 	}
 
