@@ -43,7 +43,8 @@ public class SymbolTable {
 			return false;
 		}
 		FullIdentifier declaration = variables.get(key);
-		if (declaration.getChangemode() instanceof Const && !(fullIdentifier.getChangemode() instanceof Const)){
+		if (declaration.getChangemode() instanceof Const
+				&& (fullIdentifier.getChangemode() != null && !(fullIdentifier.getChangemode() instanceof Const))) {
 			// trying to remove const from global store
 			return false;
 		}
