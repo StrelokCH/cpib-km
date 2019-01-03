@@ -1,10 +1,6 @@
 package ch.fhnw.cpib.project.km.syntax.concrete;
 
-import java.util.List;
-
 import ch.fhnw.cpib.project.km.syntax.abst.FullIdentifier;
-import ch.fhnw.cpib.project.km.token.keywords.*;
-import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.*;
 
 public class GlobImpOptFlowmode implements IGlobImp {
@@ -28,6 +24,6 @@ public class GlobImpOptFlowmode implements IGlobImp {
 
 	@Override
 	public FullIdentifier toAbsSyn() {
-		return new FullIdentifier(optFlowmode.toAbsSyn(), null, optChangemode.toAbsSyn(), ident, null);
+		return new FullIdentifier(optFlowmode == null ? null : optFlowmode.toAbsSyn(), null, optChangemode == null ? null : optChangemode.toAbsSyn(), ident, null);
 	}
 }
