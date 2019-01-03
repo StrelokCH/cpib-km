@@ -1,6 +1,6 @@
 package ch.fhnw.cpib.project.km.exceptions;
 
-public class ConstCheckingException extends Exception {
+public class ConstCheckingException extends ContextCheckingException {
 
 	public ConstCheckingException(String string) {
 		super(string);

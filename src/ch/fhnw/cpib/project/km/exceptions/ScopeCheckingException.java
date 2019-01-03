@@ -1,6 +1,6 @@
 package ch.fhnw.cpib.project.km.exceptions;
 
-public class ScopeCheckingException extends Exception {
+public class ScopeCheckingException extends ContextCheckingException {
 
 	public ScopeCheckingException(String string) {
 		super(string);

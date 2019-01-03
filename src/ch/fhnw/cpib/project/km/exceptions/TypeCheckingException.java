@@ -1,6 +1,6 @@
 package ch.fhnw.cpib.project.km.exceptions;
 
-public class TypeCheckingException extends Exception {
+public class TypeCheckingException extends ContextCheckingException {
 
 	public TypeCheckingException(String string) {
 		super(string);

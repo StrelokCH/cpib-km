@@ -1,6 +1,6 @@
 package ch.fhnw.cpib.project.km.exceptions;
 
-public class InitCheckingException extends Exception {
+public class InitCheckingException extends ContextCheckingException {
 
 	public InitCheckingException(String string) {
 		super(string);
