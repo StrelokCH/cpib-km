@@ -40,7 +40,7 @@ public class RoutineDecl implements IDecl {
 	public boolean isProcedure() {
 		return stoDecl == null;
 	}
-	
+
 	public Type getReturnType() {
 		if (isProcedure()) {
 			// procedures don't have a return value
@@ -48,16 +48,16 @@ public class RoutineDecl implements IDecl {
 		}
 		return stoDecl.getFullIdentifier().getType();
 	}
-	
+
 	public Identifier getIdentifier() {
 		return identifier;
 	}
-	
-	public List<FullIdentifier> getParamList(){
+
+	public List<FullIdentifier> getParamList() {
 		return paramList;
 	}
-	
-	public List<FullIdentifier> getGlobImps(){
+
+	public List<FullIdentifier> getGlobImps() {
 		return globImps;
 	}
 
@@ -69,7 +69,9 @@ public class RoutineDecl implements IDecl {
 			ret += progParam.toString(indent + "        ");
 		}
 
-		ret += stoDecl.toString(indent + "   ");
+		if (stoDecl != null) {
+			ret += stoDecl.toString(indent + "   ");
+		}
 
 		ret += indent + "    globImps";
 		for (FullIdentifier globImp : globImps) {
@@ -114,9 +116,9 @@ public class RoutineDecl implements IDecl {
 				symbolTable.addVariable(localStoDecl.getFullIdentifier(), true);
 			}
 		}
-		
+
 		for (ICommand command : cpsCmd) {
-			command.addToEnvironment(env,newContext);
+			command.addToEnvironment(env, newContext);
 		}
 	}
 
@@ -125,10 +127,10 @@ public class RoutineDecl implements IDecl {
 		// check if globalImports really exist
 		for (FullIdentifier globImp : globImps) {
 			if (!env.rootContext.symbolTable.containsGlobal(globImp)) {
-				throw new ScopeCheckingError("global import not found (" + globImp.getIdentifierName()+ ")");
+				throw new ScopeCheckingError("global import not found (" + globImp.getIdentifierName() + ")");
 			}
 		}
-		
+
 		for (ICommand command : cpsCmd) {
 			command.checkScope(env);
 		}
