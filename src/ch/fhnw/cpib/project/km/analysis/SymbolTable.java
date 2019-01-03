@@ -42,12 +42,14 @@ public class SymbolTable {
 		if (!variables.containsKey(key)) {
 			return false;
 		}
-		FullIdentifier declaration = variables.get(key);
+		
+		// removed as Globals.iml implies that this check is wrong
+		/*FullIdentifier declaration = variables.get(key);
 		if (declaration.getChangemode() instanceof Const
 				&& (fullIdentifier.getChangemode() != null && !(fullIdentifier.getChangemode() instanceof Const))) {
-			// trying to remove const from global store
+			// trying to remove const from store
 			return false;
-		}
+		}*/
 		return true;
 	}
 
