@@ -2,10 +2,10 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
-import ch.fhnw.cpib.project.km.exceptions.ConstCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.InitCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
+import ch.fhnw.cpib.project.km.exceptions.ConstCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.InitCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
 import ch.fhnw.cpib.project.km.token.keywords.IntegerType;
 import ch.fhnw.cpib.project.km.token.keywords.NotOperator;
 import ch.fhnw.cpib.project.km.token.keywords.Type;
@@ -34,23 +34,23 @@ public class MonadicExpr implements IExpression {
 	}
 
 	@Override
-	public void checkScope(Environment env) throws ScopeCheckingError {
+	public void checkScope(Environment env) throws ScopeCheckingException {
 		expression.checkScope(env);
 	}
 
 	@Override
-	public Type checkType(Environment env) throws TypeCheckingError {
+	public Type checkType(Environment env) throws TypeCheckingException {
 		Type type = expression.checkType(env);
 		if (operator instanceof AddOperator) {
 			if (!(type instanceof IntegerType)) {
-				throw new TypeCheckingError(
+				throw new TypeCheckingException(
 						"Cannot use minus/plus operators on a Bool. Expression is " + expression.toString(""));
 			}
 			return type;
 		}
 		if (operator instanceof NotOperator) {
 			if (!(type instanceof IntegerType)) {
-				throw new TypeCheckingError(
+				throw new TypeCheckingException(
 						"Cannot use not operator on a Integer. Expression is " + expression.toString(""));
 			}
 			return type;
@@ -59,7 +59,7 @@ public class MonadicExpr implements IExpression {
 	}
 
 	@Override
-	public void checkInit(Environment env) throws InitCheckingError {
+	public void checkInit(Environment env) throws InitCheckingException {
 		// TODO Auto-generated method stub
 
 	}

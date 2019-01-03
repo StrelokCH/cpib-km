@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ch.fhnw.cpib.project.km.exceptions.RoutineMatchError;
-import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
+import ch.fhnw.cpib.project.km.exceptions.RoutineMatchException;
+import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
 import ch.fhnw.cpib.project.km.syntax.abst.FullIdentifier;
 import ch.fhnw.cpib.project.km.syntax.abst.FunctionCallExpr;
 import ch.fhnw.cpib.project.km.syntax.abst.ProcCallCmd;
@@ -43,11 +43,11 @@ public class SymbolTable {
 		return globalVariables.containsKey(fullIdentifier.getIdentifierName());
 	}
 
-	public void addVariable(FullIdentifier fullIdentifier, boolean local) throws ScopeCheckingError {
+	public void addVariable(FullIdentifier fullIdentifier, boolean local) throws ScopeCheckingException {
 		String identifier = fullIdentifier.getIdentifierName();
 
 		if (localVariables.containsKey(identifier) || globalVariables.containsKey(identifier)) {
-			throw new ScopeCheckingError("identifier " + identifier + " is declared more than once");
+			throw new ScopeCheckingException("identifier " + identifier + " is declared more than once");
 		}
 
 		if (local) {
@@ -81,11 +81,11 @@ public class SymbolTable {
 		return ret;
 	}
 
-	public RoutineDecl findMatch(ProcCallCmd procCallCmd) throws RoutineMatchError {
+	public RoutineDecl findMatch(ProcCallCmd procCallCmd) throws RoutineMatchException {
 		return new RoutineMatcher(env).findMatch(procedures, procCallCmd);
 	}
 
-	public RoutineDecl findMatch(FunctionCallExpr functionCallExpr) throws RoutineMatchError {
+	public RoutineDecl findMatch(FunctionCallExpr functionCallExpr) throws RoutineMatchException {
 		return new RoutineMatcher(env).findMatch(functions, functionCallExpr);
 	}
 }

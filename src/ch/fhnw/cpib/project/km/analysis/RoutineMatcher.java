@@ -3,8 +3,8 @@ package ch.fhnw.cpib.project.km.analysis;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.fhnw.cpib.project.km.exceptions.RoutineMatchError;
-import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
+import ch.fhnw.cpib.project.km.exceptions.RoutineMatchException;
+import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
 import ch.fhnw.cpib.project.km.syntax.abst.FullIdentifier;
 import ch.fhnw.cpib.project.km.syntax.abst.FunctionCallExpr;
 import ch.fhnw.cpib.project.km.syntax.abst.IExpression;
@@ -28,7 +28,7 @@ public class RoutineMatcher {
 		List<Identifier> globImps;
 	}
 
-	public RoutineDecl findMatch(List<RoutineDecl> procedures, ProcCallCmd procCallCmd) throws RoutineMatchError {
+	public RoutineDecl findMatch(List<RoutineDecl> procedures, ProcCallCmd procCallCmd) throws RoutineMatchException {
 		RoutineCall call = new RoutineCall();
 		call.routineName = procCallCmd.getIdentifierProc();
 		try {
@@ -38,8 +38,8 @@ public class RoutineMatcher {
 				call.parameterTypes.add(expr.checkType(env));
 				call.parameterLValue.add(expr.isLValue());
 			}
-		} catch (TypeCheckingError e) {
-			throw new RoutineMatchError(
+		} catch (TypeCheckingException e) {
+			throw new RoutineMatchException(
 					"Type error while trying to match " + procCallCmd.toString("") + ". Message=" + e.getMessage());
 		}
 		call.globImps = procCallCmd.getGlobImps();
@@ -48,7 +48,7 @@ public class RoutineMatcher {
 	}
 
 	public RoutineDecl findMatch(List<RoutineDecl> functions, FunctionCallExpr functionCallExpr)
-			throws RoutineMatchError {
+			throws RoutineMatchException {
 		RoutineCall call = new RoutineCall();
 		call.routineName = functionCallExpr.getIdentifier();
 		try {
@@ -58,8 +58,8 @@ public class RoutineMatcher {
 				call.parameterTypes.add(expr.checkType(env));
 				call.parameterLValue.add(expr.isLValue());
 			}
-		} catch (TypeCheckingError e) {
-			throw new RoutineMatchError("Type error while trying to match " + functionCallExpr.toString("")
+		} catch (TypeCheckingException e) {
+			throw new RoutineMatchException("Type error while trying to match " + functionCallExpr.toString("")
 					+ ". Message=" + e.getMessage());
 		}
 		call.globImps = new ArrayList<>();
@@ -67,21 +67,21 @@ public class RoutineMatcher {
 		return findMatch(functions, call);
 	}
 
-	private RoutineDecl findMatch(List<RoutineDecl> routines, RoutineCall call) throws RoutineMatchError {
+	private RoutineDecl findMatch(List<RoutineDecl> routines, RoutineCall call) throws RoutineMatchException {
 		List<RoutineDecl> candidates = new ArrayList<>(routines);
 
 		// Filter by name
 		candidates.removeIf(c -> !c.getIdentifier().getIdentifier().equals(call.routineName.getIdentifier()));
 
 		if (candidates.isEmpty()) {
-			throw new RoutineMatchError("Routine with identifier " + call.routineName.getIdentifier() + " not found.");
+			throw new RoutineMatchException("Routine with identifier " + call.routineName.getIdentifier() + " not found.");
 		}
 
 		// Filter by number of parameters
 		candidates.removeIf(c -> c.getParamList().size() != call.parameterTypes.size());
 
 		if (candidates.isEmpty()) {
-			throw new RoutineMatchError("No routine with identifier " + call.routineName.getIdentifier()
+			throw new RoutineMatchException("No routine with identifier " + call.routineName.getIdentifier()
 					+ " found which has " + call.parameterTypes.size() + " parameters.");
 		}
 
@@ -114,7 +114,7 @@ public class RoutineMatcher {
 		});
 
 		if (candidates.isEmpty()) {
-			throw new RoutineMatchError("No routine with identifier " + call.routineName.getIdentifier()
+			throw new RoutineMatchException("No routine with identifier " + call.routineName.getIdentifier()
 					+ " found that has the matching " + call.parameterTypes.size() + " parameters.");
 		}
 
@@ -134,7 +134,7 @@ public class RoutineMatcher {
 		});
 
 		if (candidates.isEmpty()) {
-			throw new RoutineMatchError("No routine with identifier " + call.routineName.getIdentifier()
+			throw new RoutineMatchException("No routine with identifier " + call.routineName.getIdentifier()
 					+ " found that has the matching " + call.globImps.size() + " global imports.");
 		}
 
@@ -159,7 +159,7 @@ public class RoutineMatcher {
 			
 			if (perfectCandidates.size() != 1) {
 				// no single perfect match
-				throw new RoutineMatchError("Multiple matching routines with identifier " + call.routineName.getIdentifier()
+				throw new RoutineMatchException("Multiple matching routines with identifier " + call.routineName.getIdentifier()
 						+ " found. First match is " + candidates.get(0) + ". There are " + candidates.size() + " matches.");
 			} else {
 				candidates = perfectCandidates;

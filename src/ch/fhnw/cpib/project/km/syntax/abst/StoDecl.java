@@ -3,9 +3,9 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.analysis.SymbolTable;
-import ch.fhnw.cpib.project.km.exceptions.ConstCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
+import ch.fhnw.cpib.project.km.exceptions.ConstCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
 
 public class StoDecl implements IDecl {
 	private final FullIdentifier typedIdentifier;
@@ -25,7 +25,7 @@ public class StoDecl implements IDecl {
 	}
 
 	@Override
-	public void appendSymbol(SymbolTable symbolTable, boolean localScope) throws ScopeCheckingError {
+	public void appendSymbol(SymbolTable symbolTable, boolean localScope) throws ScopeCheckingException {
 		symbolTable.addVariable(typedIdentifier, localScope);
 	}
 
@@ -35,17 +35,17 @@ public class StoDecl implements IDecl {
 	}
 
 	@Override
-	public void checkScope(Environment env) throws ScopeCheckingError {
+	public void checkScope(Environment env) throws ScopeCheckingException {
 		// not needed
 	}
 
 	@Override
-	public void checkType(Environment env) throws TypeCheckingError {
+	public void checkType(Environment env) throws TypeCheckingException {
 		// not needed
 	}
 
 	@Override
-	public void checkConst(Environment env) throws ConstCheckingError {
+	public void checkConst(Environment env) throws ConstCheckingException {
 		// not needed
 	}
 	

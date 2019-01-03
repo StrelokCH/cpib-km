@@ -1,8 +1,8 @@
 package ch.fhnw.cpib.project.km.exceptions;
 
-public class ScopeCheckingError extends Exception {
+public class RoutineMatchException extends ScopeCheckingException {
 
-	public ScopeCheckingError(String string) {
+	public RoutineMatchException(String string) {
 		super(string);
 	}
 

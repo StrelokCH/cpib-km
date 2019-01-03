@@ -6,9 +6,9 @@ import java.util.List;
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.analysis.SymbolTable;
-import ch.fhnw.cpib.project.km.exceptions.ConstCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
+import ch.fhnw.cpib.project.km.exceptions.ConstCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
 import ch.fhnw.cpib.project.km.token.keywords.Type;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
 
@@ -96,7 +96,7 @@ public class RoutineDecl implements IDecl {
 	}
 
 	@Override
-	public void addToEnvironment(Environment env, Context context) throws ScopeCheckingError {
+	public void addToEnvironment(Environment env, Context context) throws ScopeCheckingException {
 		// create new context for this routine
 		Context newContext = context.clone();
 		SymbolTable symbolTable = newContext.symbolTable;
@@ -123,11 +123,11 @@ public class RoutineDecl implements IDecl {
 	}
 
 	@Override
-	public void checkScope(Environment env) throws ScopeCheckingError {
+	public void checkScope(Environment env) throws ScopeCheckingException {
 		// check if globalImports really exist
 		for (FullIdentifier globImp : globImps) {
 			if (!env.rootContext.symbolTable.containsGlobal(globImp)) {
-				throw new ScopeCheckingError("global import not found (" + globImp.getIdentifierName() + ")");
+				throw new ScopeCheckingException("global import not found (" + globImp.getIdentifierName() + ")");
 			}
 		}
 
@@ -137,14 +137,14 @@ public class RoutineDecl implements IDecl {
 	}
 
 	@Override
-	public void checkType(Environment env) throws TypeCheckingError {
+	public void checkType(Environment env) throws TypeCheckingException {
 		for (ICommand command : cpsCmd) {
 			command.checkType(env);
 		}
 	}
 
 	@Override
-	public void checkConst(Environment env) throws ConstCheckingError {
+	public void checkConst(Environment env) throws ConstCheckingException {
 		for (ICommand command : cpsCmd) {
 			command.checkConst(env);
 		}

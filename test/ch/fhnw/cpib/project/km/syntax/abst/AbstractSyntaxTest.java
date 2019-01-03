@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
 
 import ch.fhnw.cpib.project.km.analysis.StaticAnalyser;
-import ch.fhnw.cpib.project.km.exceptions.GrammarError;
+import ch.fhnw.cpib.project.km.exceptions.GrammarException;
 import ch.fhnw.cpib.project.km.exceptions.LexicalErrorException;
 import ch.fhnw.cpib.project.km.parser.Parser;
 import ch.fhnw.cpib.project.km.scanner.Scanner;
@@ -33,7 +33,7 @@ public class AbstractSyntaxTest {
 			System.out.println(abstProgram.toString(""));
 		} catch (LexicalErrorException e) {
 			fail(e);
-		} catch (GrammarError e) {
+		} catch (GrammarException e) {
 			fail(e);
 		}
 	}
@@ -53,7 +53,7 @@ public class AbstractSyntaxTest {
 			System.out.println(abstProgram.toString(""));
 		} catch (LexicalErrorException e) {
 			fail(e);
-		} catch (GrammarError e) {
+		} catch (GrammarException e) {
 			fail(e);
 		}
 	}

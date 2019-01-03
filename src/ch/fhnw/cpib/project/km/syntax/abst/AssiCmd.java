@@ -3,10 +3,10 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.analysis.TypePromoter;
-import ch.fhnw.cpib.project.km.exceptions.ConstCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.InitCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
+import ch.fhnw.cpib.project.km.exceptions.ConstCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.InitCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
 import ch.fhnw.cpib.project.km.token.keywords.Type;
 
 public class AssiCmd implements ICommand {
@@ -34,33 +34,33 @@ public class AssiCmd implements ICommand {
 	}
 
 	@Override
-	public void checkScope(Environment env) throws ScopeCheckingError {
+	public void checkScope(Environment env) throws ScopeCheckingException {
 		expression1.checkScope(env);
 		expression2.checkScope(env);
 
 		if (!expression1.isLValue()) {
-			throw new ScopeCheckingError("expression " + expression1.toString("") + "should be an L-Value");
+			throw new ScopeCheckingException("expression " + expression1.toString("") + "should be an L-Value");
 		}
 	}
 
 	@Override
-	public void checkType(Environment env) throws TypeCheckingError {
+	public void checkType(Environment env) throws TypeCheckingException {
 		Type type1 = expression1.checkType(env);
 		Type type2 = expression2.checkType(env);
 		if (!TypePromoter.canPromote(type2, type1)) {
-			throw new TypeCheckingError("can't assign " + expression2.toString("") + " to " + expression1.toString(""));
+			throw new TypeCheckingException("can't assign " + expression2.toString("") + " to " + expression1.toString(""));
 		}
 	}
 
 	@Override
-	public void checkConst(Environment env) throws ConstCheckingError {
+	public void checkConst(Environment env) throws ConstCheckingException {
 		if (expression1.isConst(env)) {
-			throw new ConstCheckingError("identifier " + expression1.toString("") + " is const");
+			throw new ConstCheckingException("identifier " + expression1.toString("") + " is const");
 		}
 	}
 
 	@Override
-	public void checkInit(Environment env) throws InitCheckingError {
+	public void checkInit(Environment env) throws InitCheckingException {
 		expression2.checkInit(env);
 	}
 }

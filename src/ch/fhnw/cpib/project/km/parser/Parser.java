@@ -23,7 +23,7 @@ public class Parser {
 		// concSyn = new ConcSyn(); // discussed later
 	}
 
-	public IProgram parse() throws GrammarError {
+	public IProgram parse() throws GrammarException {
 		// parsing the start symbol ...
 		IProgram program = program();
 		// ... and then consuming the SENTINEL
@@ -31,7 +31,7 @@ public class Parser {
 		return program;
 	}
 
-	private BaseToken consume(Class<?> expectedTerminal) throws GrammarError {
+	private BaseToken consume(Class<?> expectedTerminal) throws GrammarException {
 		if (expectedTerminal.isInstance(terminal)) {
 			BaseToken consumedToken = terminal;
 			if (!Sentinel.class.isInstance(terminal)) {
@@ -39,12 +39,12 @@ public class Parser {
 			}
 			return consumedToken;
 		} else {
-			throw new GrammarError(
+			throw new GrammarException(
 					"terminal expected: " + expectedTerminal.getName() + ", terminal found: " + terminal);
 		}
 	}
 
-	private IProgram program() throws GrammarError {
+	private IProgram program() throws GrammarException {
 		System.out.print("\"Program ::= ");
 		if (terminal instanceof Program) {
 			System.out.println("PROGRAM IDENT <progParamList> <optGlobalCpsDecl> DO <cpsCmd> ENDPROGRAM\"");
@@ -57,10 +57,10 @@ public class Parser {
 			EndProgram endprogram = ((EndProgram) consume(EndProgram.class));
 			return new ProgramProgram(program, ident, progParamList, optGlobalCpsDecl, aDo, cpsCmd, endprogram);
 		}
-		throw new GrammarError("Program");
+		throw new GrammarException("Program");
 	}
 
-	private IOptGlobalCpsDecl optGlobalCpsDecl() throws GrammarError {
+	private IOptGlobalCpsDecl optGlobalCpsDecl() throws GrammarException {
 		System.out.print("\"OptGlobalCpsDecl ::= ");
 		if (terminal instanceof Global) {
 			System.out.println("GLOBAL <cpsDecl>\"");
@@ -72,10 +72,10 @@ public class Parser {
 			System.out.println("\"");
 			return new OptGlobalCpsDecl();
 		}
-		throw new GrammarError("OptGlobalCpsDecl");
+		throw new GrammarException("OptGlobalCpsDecl");
 	}
 
-	private IDecl decl() throws GrammarError {
+	private IDecl decl() throws GrammarException {
 		System.out.print("\"Decl ::= ");
 		if (terminal instanceof Identifier || terminal instanceof Changemode) {
 			System.out.println("<stoDecl>\"");
@@ -92,10 +92,10 @@ public class Parser {
 			IProcDecl procDecl = procDecl();
 			return new DeclProcDecl(procDecl);
 		}
-		throw new GrammarError("Decl");
+		throw new GrammarException("Decl");
 	}
 
-	private IStoDecl stoDecl() throws GrammarError {
+	private IStoDecl stoDecl() throws GrammarException {
 		System.out.print("\"StoDecl ::= ");
 		if (terminal instanceof Changemode) {
 			System.out.println("CHANGEMODE <typedIdent>\"");
@@ -108,10 +108,10 @@ public class Parser {
 			ITypedIdent typedIdent = typedIdent();
 			return new StoDeclTypedIdent(typedIdent);
 		}
-		throw new GrammarError("StoDecl");
+		throw new GrammarException("StoDecl");
 	}
 
-	private IFunDecl funDecl() throws GrammarError {
+	private IFunDecl funDecl() throws GrammarException {
 		System.out.print("\"FunDecl ::= ");
 		if (terminal instanceof Function) {
 			System.out.println(
@@ -129,10 +129,10 @@ public class Parser {
 			return new FunDeclFun(fun, ident, paramList, returns, stoDecl, globalGlobImps, optLocalCpsStoDecl, aDo,
 					cpsCmd, endfun);
 		}
-		throw new GrammarError("FunDecl");
+		throw new GrammarException("FunDecl");
 	}
 
-	private IGlobalGlobImps globalGlobImps() throws GrammarError {
+	private IGlobalGlobImps globalGlobImps() throws GrammarException {
 		System.out.print("\"GlobalGlobImps ::= ");
 		if (terminal instanceof Global) {
 			System.out.println("GLOBAL <globImps>\"");
@@ -144,10 +144,10 @@ public class Parser {
 			System.out.println("\"");
 			return new GlobalGlobImps();
 		}
-		throw new GrammarError("GlobalGlobImps");
+		throw new GrammarException("GlobalGlobImps");
 	}
 
-	private IOptLocalCpsStoDecl optLocalCpsStoDecl() throws GrammarError {
+	private IOptLocalCpsStoDecl optLocalCpsStoDecl() throws GrammarException {
 		System.out.print("\"OptLocalCpsStoDecl ::= ");
 		if (terminal instanceof Local) {
 			System.out.println("LOCAL <cpsStoDecl>\"");
@@ -159,10 +159,10 @@ public class Parser {
 			System.out.println("\"");
 			return new OptLocalCpsStoDecl();
 		}
-		throw new GrammarError("OptLocalCpsStoDecl");
+		throw new GrammarException("OptLocalCpsStoDecl");
 	}
 
-	private IProcDecl procDecl() throws GrammarError {
+	private IProcDecl procDecl() throws GrammarException {
 		System.out.print("\"ProcDecl ::= ");
 		if (terminal instanceof Procedure) {
 			System.out.println("PROC IDENT <paramList> <globalGlobImps> <optLocalCpsStoDecl> DO <cpsCmd> ENDPROC\"");
@@ -176,10 +176,10 @@ public class Parser {
 			EndProcedure endproc = ((EndProcedure) consume(EndProcedure.class));
 			return new ProcDeclProc(proc, ident, paramList, globalGlobImps, optLocalCpsStoDecl, aDo, cpsCmd, endproc);
 		}
-		throw new GrammarError("ProcDecl");
+		throw new GrammarException("ProcDecl");
 	}
 
-	private IGlobImps globImps() throws GrammarError {
+	private IGlobImps globImps() throws GrammarException {
 		System.out.print("\"GlobImps ::= ");
 		if (terminal instanceof Identifier || terminal instanceof Changemode || terminal instanceof Flowmode) {
 			System.out.println("<globImp> <repCommaGlobImps>\"");
@@ -187,10 +187,10 @@ public class Parser {
 			IRepCommaGlobImps repCommaGlobImps = repCommaGlobImps();
 			return new GlobImpsGlobImp(globImp, repCommaGlobImps);
 		}
-		throw new GrammarError("GlobImps");
+		throw new GrammarException("GlobImps");
 	}
 
-	private IRepCommaGlobImps repCommaGlobImps() throws GrammarError {
+	private IRepCommaGlobImps repCommaGlobImps() throws GrammarException {
 		System.out.print("\"RepCommaGlobImps ::= ");
 		if (terminal instanceof Comma) {
 			System.out.println("COMMA <globImp> <repCommaGlobImps>\"");
@@ -203,10 +203,10 @@ public class Parser {
 			System.out.println("\"");
 			return new RepCommaGlobImps();
 		}
-		throw new GrammarError("RepCommaGlobImps");
+		throw new GrammarException("RepCommaGlobImps");
 	}
 
-	private IGlobImp globImp() throws GrammarError {
+	private IGlobImp globImp() throws GrammarException {
 		System.out.print("\"GlobImp ::= ");
 		if (terminal instanceof Identifier || terminal instanceof Changemode || terminal instanceof Flowmode) {
 			System.out.println("<optFlowmode> <optChangemode> IDENT\"");
@@ -215,10 +215,10 @@ public class Parser {
 			Identifier ident = ((Identifier) consume(Identifier.class));
 			return new GlobImpOptFlowmode(optFlowmode, optChangemode, ident);
 		}
-		throw new GrammarError("GlobImp");
+		throw new GrammarException("GlobImp");
 	}
 
-	private IOptFlowmode optFlowmode() throws GrammarError {
+	private IOptFlowmode optFlowmode() throws GrammarException {
 		System.out.print("\"OptFlowmode ::= ");
 		if (terminal instanceof Flowmode) {
 			System.out.println("FLOWMODE\"");
@@ -229,10 +229,10 @@ public class Parser {
 			System.out.println("\"");
 			return new OptFlowmode();
 		}
-		throw new GrammarError("OptFlowmode");
+		throw new GrammarException("OptFlowmode");
 	}
 
-	private IOptChangemode optChangemode() throws GrammarError {
+	private IOptChangemode optChangemode() throws GrammarException {
 		System.out.print("\"OptChangemode ::= ");
 		if (terminal instanceof Changemode) {
 			System.out.println("CHANGEMODE\"");
@@ -243,10 +243,10 @@ public class Parser {
 			System.out.println("\"");
 			return new OptChangemode();
 		}
-		throw new GrammarError("OptChangemode");
+		throw new GrammarException("OptChangemode");
 	}
 
-	private IOptMechmode optMechmode() throws GrammarError {
+	private IOptMechmode optMechmode() throws GrammarException {
 		System.out.print("\"OptMechmode ::= ");
 		if (terminal instanceof Mechmode) {
 			System.out.println("MECHMODE\"");
@@ -257,10 +257,10 @@ public class Parser {
 			System.out.println("\"");
 			return new OptMechmode();
 		}
-		throw new GrammarError("OptMechmode");
+		throw new GrammarException("OptMechmode");
 	}
 
-	private ICpsDecl cpsDecl() throws GrammarError {
+	private ICpsDecl cpsDecl() throws GrammarException {
 		System.out.print("\"CpsDecl ::= ");
 		if (terminal instanceof Procedure || terminal instanceof Function || terminal instanceof Identifier
 				|| terminal instanceof Changemode) {
@@ -269,10 +269,10 @@ public class Parser {
 			IRepSemicolonCpsDecl repSemicolonCpsDecl = repSemicolonCpsDecl();
 			return new CpsDeclDecl(decl, repSemicolonCpsDecl);
 		}
-		throw new GrammarError("CpsDecl");
+		throw new GrammarException("CpsDecl");
 	}
 
-	private IRepSemicolonCpsDecl repSemicolonCpsDecl() throws GrammarError {
+	private IRepSemicolonCpsDecl repSemicolonCpsDecl() throws GrammarException {
 		System.out.print("\"RepSemicolonCpsDecl ::= ");
 		if (terminal instanceof Semicolon) {
 			System.out.println("SEMICOLON <cpsDecl>\"");
@@ -284,10 +284,10 @@ public class Parser {
 			System.out.println("\"");
 			return new RepSemicolonCpsDecl();
 		}
-		throw new GrammarError("RepSemicolonCpsDecl");
+		throw new GrammarException("RepSemicolonCpsDecl");
 	}
 
-	private ICpsStoDecl cpsStoDecl() throws GrammarError {
+	private ICpsStoDecl cpsStoDecl() throws GrammarException {
 		System.out.print("\"CpsStoDecl ::= ");
 		if (terminal instanceof Identifier || terminal instanceof Changemode) {
 			System.out.println("<stoDecl> <repSemicolonCpsStoDecl>\"");
@@ -295,10 +295,10 @@ public class Parser {
 			IRepSemicolonCpsStoDecl repSemicolonCpsStoDecl = repSemicolonCpsStoDecl();
 			return new CpsStoDeclStoDecl(stoDecl, repSemicolonCpsStoDecl);
 		}
-		throw new GrammarError("CpsStoDecl");
+		throw new GrammarException("CpsStoDecl");
 	}
 
-	private IRepSemicolonCpsStoDecl repSemicolonCpsStoDecl() throws GrammarError {
+	private IRepSemicolonCpsStoDecl repSemicolonCpsStoDecl() throws GrammarException {
 		System.out.print("\"RepSemicolonCpsStoDecl ::= ");
 		if (terminal instanceof Semicolon) {
 			System.out.println("SEMICOLON <cpsStoDecl>\"");
@@ -310,10 +310,10 @@ public class Parser {
 			System.out.println("\"");
 			return new RepSemicolonCpsStoDecl();
 		}
-		throw new GrammarError("RepSemicolonCpsStoDecl");
+		throw new GrammarException("RepSemicolonCpsStoDecl");
 	}
 
-	private IProgParamList progParamList() throws GrammarError {
+	private IProgParamList progParamList() throws GrammarException {
 		System.out.print("\"ProgParamList ::= ");
 		if (terminal instanceof LeftParenthesis) {
 			System.out.println("LPAREN <optCpsProgParam> RPAREN\"");
@@ -322,10 +322,10 @@ public class Parser {
 			RightParenthesis rparen = ((RightParenthesis) consume(RightParenthesis.class));
 			return new ProgParamListLparen(lparen, optCpsProgParam, rparen);
 		}
-		throw new GrammarError("ProgParamList");
+		throw new GrammarException("ProgParamList");
 	}
 
-	private IOptCpsProgParam optCpsProgParam() throws GrammarError {
+	private IOptCpsProgParam optCpsProgParam() throws GrammarException {
 		System.out.print("\"OptCpsProgParam ::= ");
 		if (terminal instanceof Identifier || terminal instanceof Changemode || terminal instanceof Flowmode) {
 			System.out.println("<cpsProgParam>\"");
@@ -336,10 +336,10 @@ public class Parser {
 			System.out.println("\"");
 			return new OptCpsProgParam();
 		}
-		throw new GrammarError("OptCpsProgParam");
+		throw new GrammarException("OptCpsProgParam");
 	}
 
-	private ICpsProgParam cpsProgParam() throws GrammarError {
+	private ICpsProgParam cpsProgParam() throws GrammarException {
 		System.out.print("\"CpsProgParam ::= ");
 		if (terminal instanceof Identifier || terminal instanceof Changemode || terminal instanceof Flowmode) {
 			System.out.println("<progParam> <repCommaProgParam>\"");
@@ -347,10 +347,10 @@ public class Parser {
 			IRepCommaProgParam repCommaProgParam = repCommaProgParam();
 			return new CpsProgParamProgParam(progParam, repCommaProgParam);
 		}
-		throw new GrammarError("CpsProgParam");
+		throw new GrammarException("CpsProgParam");
 	}
 
-	private IRepCommaProgParam repCommaProgParam() throws GrammarError {
+	private IRepCommaProgParam repCommaProgParam() throws GrammarException {
 		System.out.print("\"RepCommaProgParam ::= ");
 		if (terminal instanceof Comma) {
 			System.out.println("COMMA <cpsProgParam>\"");
@@ -362,10 +362,10 @@ public class Parser {
 			System.out.println("\"");
 			return new RepCommaProgParam();
 		}
-		throw new GrammarError("RepCommaProgParam");
+		throw new GrammarException("RepCommaProgParam");
 	}
 
-	private IProgParam progParam() throws GrammarError {
+	private IProgParam progParam() throws GrammarException {
 		System.out.print("\"ProgParam ::= ");
 		if (terminal instanceof Identifier || terminal instanceof Changemode || terminal instanceof Flowmode) {
 			System.out.println("<optFlowmode> <optChangemode> <typedIdent>\"");
@@ -374,10 +374,10 @@ public class Parser {
 			ITypedIdent typedIdent = typedIdent();
 			return new ProgParamOptFlowmode(optFlowmode, optChangemode, typedIdent);
 		}
-		throw new GrammarError("ProgParam");
+		throw new GrammarException("ProgParam");
 	}
 
-	private IParamList paramList() throws GrammarError {
+	private IParamList paramList() throws GrammarException {
 		System.out.print("\"ParamList ::= ");
 		if (terminal instanceof LeftParenthesis) {
 			System.out.println("LPAREN <optCpsParam> RPAREN\"");
@@ -386,10 +386,10 @@ public class Parser {
 			RightParenthesis rparen = ((RightParenthesis) consume(RightParenthesis.class));
 			return new ParamListLparen(lparen, optCpsParam, rparen);
 		}
-		throw new GrammarError("ParamList");
+		throw new GrammarException("ParamList");
 	}
 
-	private IOptCpsParam optCpsParam() throws GrammarError {
+	private IOptCpsParam optCpsParam() throws GrammarException {
 		System.out.print("\"OptCpsParam ::= ");
 		if (terminal instanceof Identifier || terminal instanceof Changemode || terminal instanceof Mechmode
 				|| terminal instanceof Flowmode) {
@@ -401,10 +401,10 @@ public class Parser {
 			System.out.println("\"");
 			return new OptCpsParam();
 		}
-		throw new GrammarError("OptCpsParam");
+		throw new GrammarException("OptCpsParam");
 	}
 
-	private ICpsParam cpsParam() throws GrammarError {
+	private ICpsParam cpsParam() throws GrammarException {
 		System.out.print("\"CpsParam ::= ");
 		if (terminal instanceof Identifier || terminal instanceof Changemode || terminal instanceof Mechmode
 				|| terminal instanceof Flowmode) {
@@ -413,10 +413,10 @@ public class Parser {
 			IRepCommaParam repCommaParam = repCommaParam();
 			return new CpsParamParam(param, repCommaParam);
 		}
-		throw new GrammarError("CpsParam");
+		throw new GrammarException("CpsParam");
 	}
 
-	private IRepCommaParam repCommaParam() throws GrammarError {
+	private IRepCommaParam repCommaParam() throws GrammarException {
 		System.out.print("\"RepCommaParam ::= ");
 		if (terminal instanceof Comma) {
 			System.out.println("COMMA <cpsParam>\"");
@@ -428,10 +428,10 @@ public class Parser {
 			System.out.println("\"");
 			return new RepCommaParam();
 		}
-		throw new GrammarError("RepCommaParam");
+		throw new GrammarException("RepCommaParam");
 	}
 
-	private IParam param() throws GrammarError {
+	private IParam param() throws GrammarException {
 		System.out.print("\"Param ::= ");
 		if (terminal instanceof Identifier || terminal instanceof Changemode || terminal instanceof Mechmode
 				|| terminal instanceof Flowmode) {
@@ -442,10 +442,10 @@ public class Parser {
 			ITypedIdent typedIdent = typedIdent();
 			return new ParamOptFlowmode(optFlowmode, optMechmode, optChangemode, typedIdent);
 		}
-		throw new GrammarError("Param");
+		throw new GrammarException("Param");
 	}
 
-	private ITypedIdent typedIdent() throws GrammarError {
+	private ITypedIdent typedIdent() throws GrammarException {
 		System.out.print("\"TypedIdent ::= ");
 		if (terminal instanceof Identifier) {
 			System.out.println("IDENT COLON ATOMTYPE\"");
@@ -454,10 +454,10 @@ public class Parser {
 			Type atomtype = ((Type) consume(Type.class));
 			return new TypedIdentIdent(ident, colon, atomtype);
 		}
-		throw new GrammarError("TypedIdent");
+		throw new GrammarException("TypedIdent");
 	}
 
-	private ICmd cmd() throws GrammarError {
+	private ICmd cmd() throws GrammarException {
 		System.out.print("\"Cmd ::= ");
 		if (terminal instanceof Skip) {
 			System.out.println("SKIP\"");
@@ -512,10 +512,10 @@ public class Parser {
 			IExpr expr = expr();
 			return new CmdDebugout(debugout, expr);
 		}
-		throw new GrammarError("Cmd");
+		throw new GrammarException("Cmd");
 	}
 
-	private IOptGlobInits optGlobInits() throws GrammarError {
+	private IOptGlobInits optGlobInits() throws GrammarException {
 		System.out.print("\"OptGlobInits ::= ");
 		if (terminal instanceof Init) {
 			System.out.println("<globInits>\"");
@@ -528,10 +528,10 @@ public class Parser {
 			System.out.println("\"");
 			return new OptGlobInits();
 		}
-		throw new GrammarError("OptGlobInits");
+		throw new GrammarException("OptGlobInits");
 	}
 
-	private ICpsCmd cpsCmd() throws GrammarError {
+	private ICpsCmd cpsCmd() throws GrammarException {
 		System.out.print("\"CpsCmd ::= ");
 		if (terminal instanceof DebugOut || terminal instanceof DebugIn || terminal instanceof Call
 				|| terminal instanceof While || terminal instanceof If || terminal instanceof LeftParenthesis
@@ -542,10 +542,10 @@ public class Parser {
 			IRepSemicolonCmd repSemicolonCmd = repSemicolonCmd();
 			return new CpsCmdCmd(cmd, repSemicolonCmd);
 		}
-		throw new GrammarError("CpsCmd");
+		throw new GrammarException("CpsCmd");
 	}
 
-	private IRepSemicolonCmd repSemicolonCmd() throws GrammarError {
+	private IRepSemicolonCmd repSemicolonCmd() throws GrammarException {
 		System.out.print("\"RepSemicolonCmd ::= ");
 		if (terminal instanceof Semicolon) {
 			System.out.println("SEMICOLON <cpsCmd>\"");
@@ -558,10 +558,10 @@ public class Parser {
 			System.out.println("\"");
 			return new RepSemicolonCmd();
 		}
-		throw new GrammarError("RepSemicolonCmd");
+		throw new GrammarException("RepSemicolonCmd");
 	}
 
-	private IGlobInits globInits() throws GrammarError {
+	private IGlobInits globInits() throws GrammarException {
 		System.out.print("\"GlobInits ::= ");
 		if (terminal instanceof Init) {
 			System.out.println("INIT <idents>\"");
@@ -569,10 +569,10 @@ public class Parser {
 			IIdents idents = idents();
 			return new GlobInitsInit(init, idents);
 		}
-		throw new GrammarError("GlobInits");
+		throw new GrammarException("GlobInits");
 	}
 
-	private IIdents idents() throws GrammarError {
+	private IIdents idents() throws GrammarException {
 		System.out.print("\"Idents ::= ");
 		if (terminal instanceof Identifier) {
 			System.out.println("IDENT <repCommaIdent>\"");
@@ -580,10 +580,10 @@ public class Parser {
 			IRepCommaIdent repCommaIdent = repCommaIdent();
 			return new IdentsIdent(ident, repCommaIdent);
 		}
-		throw new GrammarError("Idents");
+		throw new GrammarException("Idents");
 	}
 
-	private IRepCommaIdent repCommaIdent() throws GrammarError {
+	private IRepCommaIdent repCommaIdent() throws GrammarException {
 		System.out.print("\"RepCommaIdent ::= ");
 		if (terminal instanceof Comma) {
 			System.out.println("COMMA <idents>\"");
@@ -597,10 +597,10 @@ public class Parser {
 			System.out.println("\"");
 			return new RepCommaIdent();
 		}
-		throw new GrammarError("RepCommaIdent");
+		throw new GrammarException("RepCommaIdent");
 	}
 
-	private IExpr expr() throws GrammarError {
+	private IExpr expr() throws GrammarException {
 		System.out.print("\"Expr ::= ");
 		if (terminal instanceof LeftParenthesis || terminal instanceof AddOperator || terminal instanceof NotEqualsOperator
 				|| terminal instanceof Identifier || terminal instanceof Literal) {
@@ -609,10 +609,10 @@ public class Parser {
 			IRepBooloprExpr repBooloprExpr = repBooloprExpr();
 			return new ExprTerm1(term1, repBooloprExpr);
 		}
-		throw new GrammarError("Expr");
+		throw new GrammarException("Expr");
 	}
 
-	private IRepBooloprExpr repBooloprExpr() throws GrammarError {
+	private IRepBooloprExpr repBooloprExpr() throws GrammarException {
 		System.out.print("\"RepBooloprExpr ::= ");
 		if (terminal instanceof BooleanOperator) {
 			System.out.println("BOOLOPR <expr>\"");
@@ -627,10 +627,10 @@ public class Parser {
 			System.out.println("\"");
 			return new RepBooloprExpr();
 		}
-		throw new GrammarError("RepBooloprExpr");
+		throw new GrammarException("RepBooloprExpr");
 	}
 
-	private ITerm1 term1() throws GrammarError {
+	private ITerm1 term1() throws GrammarException {
 		System.out.print("\"Term1 ::= ");
 		if (terminal instanceof LeftParenthesis || terminal instanceof AddOperator || terminal instanceof NotEqualsOperator
 				|| terminal instanceof Identifier || terminal instanceof Literal) {
@@ -639,10 +639,10 @@ public class Parser {
 			IOptReloprTerm2 optReloprTerm2 = optReloprTerm2();
 			return new Term1Term2(term2, optReloprTerm2);
 		}
-		throw new GrammarError("Term1");
+		throw new GrammarException("Term1");
 	}
 
-	private IOptReloprTerm2 optReloprTerm2() throws GrammarError {
+	private IOptReloprTerm2 optReloprTerm2() throws GrammarException {
 		System.out.print("\"OptReloprTerm2 ::= ");
 		if (terminal instanceof RelationalOperator) {
 			System.out.println("RELOPR <term2>\"");
@@ -658,10 +658,10 @@ public class Parser {
 			System.out.println("\"");
 			return new OptReloprTerm2();
 		}
-		throw new GrammarError("OptReloprTerm2");
+		throw new GrammarException("OptReloprTerm2");
 	}
 
-	private ITerm2 term2() throws GrammarError {
+	private ITerm2 term2() throws GrammarException {
 		System.out.print("\"Term2 ::= ");
 		if (terminal instanceof LeftParenthesis || terminal instanceof AddOperator || terminal instanceof NotEqualsOperator
 				|| terminal instanceof Identifier || terminal instanceof Literal) {
@@ -670,10 +670,10 @@ public class Parser {
 			IRepAddoprTerm3 repAddoprTerm3 = repAddoprTerm3();
 			return new Term2Term3(term3, repAddoprTerm3);
 		}
-		throw new GrammarError("Term2");
+		throw new GrammarException("Term2");
 	}
 
-	private IRepAddoprTerm3 repAddoprTerm3() throws GrammarError {
+	private IRepAddoprTerm3 repAddoprTerm3() throws GrammarException {
 		System.out.print("\"RepAddoprTerm3 ::= ");
 		if (terminal instanceof AddOperator) {
 			System.out.println("ADDOPR <term2>\"");
@@ -689,10 +689,10 @@ public class Parser {
 			System.out.println("\"");
 			return new RepAddoprTerm3();
 		}
-		throw new GrammarError("RepAddoprTerm3");
+		throw new GrammarException("RepAddoprTerm3");
 	}
 
-	private ITerm3 term3() throws GrammarError {
+	private ITerm3 term3() throws GrammarException {
 		System.out.print("\"Term3 ::= ");
 		if (terminal instanceof LeftParenthesis || terminal instanceof AddOperator || terminal instanceof NotEqualsOperator
 				|| terminal instanceof Identifier || terminal instanceof Literal) {
@@ -701,10 +701,10 @@ public class Parser {
 			IRepMultoprFactor repMultoprFactor = repMultoprFactor();
 			return new Term3Factor(factor, repMultoprFactor);
 		}
-		throw new GrammarError("Term3");
+		throw new GrammarException("Term3");
 	}
 
-	private IRepMultoprFactor repMultoprFactor() throws GrammarError {
+	private IRepMultoprFactor repMultoprFactor() throws GrammarException {
 		System.out.print("\"RepMultoprFactor ::= ");
 		if (terminal instanceof MultiplicationOperator) {
 			System.out.println("MULTOPR <term3>\"");
@@ -720,10 +720,10 @@ public class Parser {
 			System.out.println("\"");
 			return new RepMultoprFactor();
 		}
-		throw new GrammarError("RepMultoprFactor");
+		throw new GrammarException("RepMultoprFactor");
 	}
 
-	private IFactor factor() throws GrammarError {
+	private IFactor factor() throws GrammarException {
 		System.out.print("\"Factor ::= ");
 		if (terminal instanceof Literal) {
 			System.out.println("LITERAL\"");
@@ -749,10 +749,10 @@ public class Parser {
 			RightParenthesis rparen = ((RightParenthesis) consume(RightParenthesis.class));
 			return new FactorLparen(lparen, expr, rparen);
 		}
-		throw new GrammarError("Factor");
+		throw new GrammarException("Factor");
 	}
 
-	private IIdent1 ident1() throws GrammarError {
+	private IIdent1 ident1() throws GrammarException {
 		System.out.print("\"Ident1 ::= ");
 		if (terminal instanceof Init) {
 			System.out.println("INIT\"");
@@ -773,10 +773,10 @@ public class Parser {
 			System.out.println("\"");
 			return new Ident1();
 		}
-		throw new GrammarError("Ident1");
+		throw new GrammarException("Ident1");
 	}
 
-	private IMonadicOpr monadicOpr() throws GrammarError {
+	private IMonadicOpr monadicOpr() throws GrammarException {
 		System.out.print("\"MonadicOpr ::= ");
 		if (terminal instanceof NotEqualsOperator) {
 			System.out.println("NOT\"");
@@ -788,10 +788,10 @@ public class Parser {
 			AddOperator addopr = ((AddOperator) consume(AddOperator.class));
 			return new MonadicOprAddopr(addopr);
 		}
-		throw new GrammarError("MonadicOpr");
+		throw new GrammarException("MonadicOpr");
 	}
 
-	private IExprList exprList() throws GrammarError {
+	private IExprList exprList() throws GrammarException {
 		System.out.print("\"ExprList ::= ");
 		if (terminal instanceof LeftParenthesis) {
 			System.out.println("LPAREN <optCpsExpr> RPAREN\"");
@@ -800,10 +800,10 @@ public class Parser {
 			RightParenthesis rparen = ((RightParenthesis) consume(RightParenthesis.class));
 			return new ExprListLparen(lparen, optCpsExpr, rparen);
 		}
-		throw new GrammarError("ExprList");
+		throw new GrammarException("ExprList");
 	}
 
-	private IOptCpsExpr optCpsExpr() throws GrammarError {
+	private IOptCpsExpr optCpsExpr() throws GrammarException {
 		System.out.print("\"OptCpsExpr ::= ");
 		if (terminal instanceof LeftParenthesis || terminal instanceof AddOperator || terminal instanceof NotEqualsOperator
 				|| terminal instanceof Identifier || terminal instanceof Literal) {
@@ -815,10 +815,10 @@ public class Parser {
 			System.out.println("\"");
 			return new OptCpsExpr();
 		}
-		throw new GrammarError("OptCpsExpr");
+		throw new GrammarException("OptCpsExpr");
 	}
 
-	private ICpsExpr cpsExpr() throws GrammarError {
+	private ICpsExpr cpsExpr() throws GrammarException {
 		System.out.print("\"CpsExpr ::= ");
 		if (terminal instanceof LeftParenthesis || terminal instanceof AddOperator || terminal instanceof NotEqualsOperator
 				|| terminal instanceof Identifier || terminal instanceof Literal) {
@@ -827,10 +827,10 @@ public class Parser {
 			IRepCommaExpr repCommaExpr = repCommaExpr();
 			return new CpsExprExpr(expr, repCommaExpr);
 		}
-		throw new GrammarError("CpsExpr");
+		throw new GrammarException("CpsExpr");
 	}
 
-	private IRepCommaExpr repCommaExpr() throws GrammarError {
+	private IRepCommaExpr repCommaExpr() throws GrammarException {
 		System.out.print("\"RepCommaExpr ::= ");
 		if (terminal instanceof Comma) {
 			System.out.println("COMMA <cpsExpr>\"");
@@ -842,7 +842,7 @@ public class Parser {
 			System.out.println("\"");
 			return new RepCommaExpr();
 		}
-		throw new GrammarError("RepCommaExpr");
+		throw new GrammarException("RepCommaExpr");
 	}
 
 }

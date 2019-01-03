@@ -2,10 +2,10 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
-import ch.fhnw.cpib.project.km.exceptions.ConstCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.InitCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
+import ch.fhnw.cpib.project.km.exceptions.ConstCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.InitCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
 import ch.fhnw.cpib.project.km.token.keywords.Bool;
 
 public class CondCmd implements ICommand {
@@ -38,29 +38,29 @@ public class CondCmd implements ICommand {
 	}
 
 	@Override
-	public void checkScope(Environment env) throws ScopeCheckingError {
+	public void checkScope(Environment env) throws ScopeCheckingException {
 		expression.checkScope(env);
 		ifCase.checkScope(env);
 		elseCase.checkScope(env);
 	}
 
 	@Override
-	public void checkType(Environment env) throws TypeCheckingError {
+	public void checkType(Environment env) throws TypeCheckingException {
 		if (!(expression.checkType(env) instanceof Bool)){
-			throw new TypeCheckingError("condition " + expression.toString("") + " must be of type Bool");
+			throw new TypeCheckingException("condition " + expression.toString("") + " must be of type Bool");
 		}
 		ifCase.checkType(env);
 		elseCase.checkType(env);
 	}
 
 	@Override
-	public void checkConst(Environment env) throws ConstCheckingError {
+	public void checkConst(Environment env) throws ConstCheckingException {
 		ifCase.checkConst(env);
 		elseCase.checkConst(env);
 	}
 
 	@Override
-	public void checkInit(Environment env) throws InitCheckingError {
+	public void checkInit(Environment env) throws InitCheckingException {
 		expression.checkInit(env);
 		ifCase.checkInit(env);
 		elseCase.checkInit(env);

@@ -4,11 +4,11 @@ import java.util.List;
 
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
-import ch.fhnw.cpib.project.km.exceptions.ConstCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.InitCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.RoutineMatchError;
-import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
+import ch.fhnw.cpib.project.km.exceptions.ConstCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.InitCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.RoutineMatchException;
+import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
 import ch.fhnw.cpib.project.km.token.keywords.FlowmodeInOut;
 import ch.fhnw.cpib.project.km.token.keywords.FlowmodeOut;
 import ch.fhnw.cpib.project.km.token.keywords.MechmodeReference;
@@ -51,7 +51,7 @@ public class FunctionCallExpr implements IExpression {
 	}
 
 	@Override
-	public void checkScope(Environment env) throws ScopeCheckingError {
+	public void checkScope(Environment env) throws ScopeCheckingException {
 		// check if called function exists
 		// throws exception in case no match
 		RoutineDecl routineDecl = env.rootContext.symbolTable.findMatch(this);
@@ -68,25 +68,25 @@ public class FunctionCallExpr implements IExpression {
 				// must be an L-Value in call
 				IExpression expression = expressions.get(i);
 				if (!expression.isLValue()) {
-					throw new ScopeCheckingError("expression " + expression.toString("") + "should be an L-Value");
+					throw new ScopeCheckingException("expression " + expression.toString("") + "should be an L-Value");
 				}
 			}
 		}
 	}
 
 	@Override
-	public Type checkType(Environment env) throws TypeCheckingError {
+	public Type checkType(Environment env) throws TypeCheckingException {
 		// type checks of parameters were already made in checkScope
 		try {
 			RoutineDecl routineDecl = env.rootContext.symbolTable.findMatch(this);
 			return routineDecl.getReturnType();
-		} catch (RoutineMatchError e) {
+		} catch (RoutineMatchException e) {
 			throw new RuntimeException("RoutineMatchError in FunctionCallExpr.checkType.");
 		}
 	}
 
 	@Override
-	public void checkInit(Environment env) throws InitCheckingError {
+	public void checkInit(Environment env) throws InitCheckingException {
 		// TODO Auto-generated method stub
 
 	}

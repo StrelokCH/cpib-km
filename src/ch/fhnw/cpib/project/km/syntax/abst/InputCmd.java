@@ -2,10 +2,10 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
-import ch.fhnw.cpib.project.km.exceptions.ConstCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.InitCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
+import ch.fhnw.cpib.project.km.exceptions.ConstCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.InitCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
 
 public class InputCmd implements ICommand {
 
@@ -30,27 +30,27 @@ public class InputCmd implements ICommand {
 	}
 
 	@Override
-	public void checkScope(Environment env) throws ScopeCheckingError {
+	public void checkScope(Environment env) throws ScopeCheckingException {
 		expression.checkScope(env);
 		
 		if (!expression.isLValue()) {
-			throw new ScopeCheckingError("expression " + expression.toString("") + "should be an L-Value");
+			throw new ScopeCheckingException("expression " + expression.toString("") + "should be an L-Value");
 		}
 	}
 
 	@Override
-	public void checkType(Environment env) throws TypeCheckingError {
+	public void checkType(Environment env) throws TypeCheckingException {
 		// not necessary as expression must be a L-Value
 	}
 
 	@Override
-	public void checkConst(Environment env) throws ConstCheckingError {
+	public void checkConst(Environment env) throws ConstCheckingException {
 		// Not needed?
 		
 	}
 
 	@Override
-	public void checkInit(Environment env) throws InitCheckingError {
+	public void checkInit(Environment env) throws InitCheckingException {
 		expression.checkInit(env);
 	}
 }

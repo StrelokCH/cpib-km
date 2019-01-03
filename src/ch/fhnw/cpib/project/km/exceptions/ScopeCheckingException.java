@@ -1,8 +1,8 @@
 package ch.fhnw.cpib.project.km.exceptions;
 
-public class InitCheckingError extends Exception {
+public class ScopeCheckingException extends Exception {
 
-	public InitCheckingError(String string) {
+	public ScopeCheckingException(String string) {
 		super(string);
 	}
 

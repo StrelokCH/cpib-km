@@ -3,10 +3,10 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.analysis.TypePromoter;
-import ch.fhnw.cpib.project.km.exceptions.ConstCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.InitCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
+import ch.fhnw.cpib.project.km.exceptions.ConstCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.InitCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
 import ch.fhnw.cpib.project.km.token.keywords.*;
 import ch.fhnw.cpib.project.km.token.symbols.*;
 import ch.fhnw.cpib.project.km.token.various.Operator;
@@ -36,31 +36,31 @@ public class DyadicExpr implements IExpression {
 	}
 
 	@Override
-	public void checkScope(Environment env) throws ScopeCheckingError {
+	public void checkScope(Environment env) throws ScopeCheckingException {
 		expression1.checkScope(env);
 		expression2.checkScope(env);
 	}
 
 	@Override
-	public Type checkType(Environment env) throws TypeCheckingError {
+	public Type checkType(Environment env) throws TypeCheckingException {
 		Type type1 = expression1.checkType(env);
 		Type type2 = expression2.checkType(env);
 		Type finalType = TypePromoter.promote(type1, type2);
 		if (finalType == null) {
-			throw new TypeCheckingError(
+			throw new TypeCheckingException(
 					"type of DyadicExpression expressions don't match. They are " + type1 + " and " + type2);
 		}
 
 		if (operator instanceof AddOperator || operator instanceof MultiplicationOperator) {
 			if (!(finalType instanceof IntegerType)) {
-				throw new TypeCheckingError("Cannot use arithmetic operators on two Bools. Expressions are "
+				throw new TypeCheckingException("Cannot use arithmetic operators on two Bools. Expressions are "
 						+ expression1.toString("") + " and " + expression2.toString(""));
 			}
 			return finalType;
 		}
 		if (operator instanceof CAndOperator || operator instanceof COrOperator) {
 			if (!(finalType instanceof Bool)) {
-				throw new TypeCheckingError("Cannot use bool operators on two Integers. Expressions are "
+				throw new TypeCheckingException("Cannot use bool operators on two Integers. Expressions are "
 						+ expression1.toString("") + " and " + expression2.toString(""));
 			}
 			return finalType;
@@ -70,7 +70,7 @@ public class DyadicExpr implements IExpression {
 		}
 		if (operator instanceof RelationalOperator) {
 			if (!(finalType instanceof IntegerType)) {
-				throw new TypeCheckingError("Cannot use relational operators on two Bools. Expressions are "
+				throw new TypeCheckingException("Cannot use relational operators on two Bools. Expressions are "
 						+ expression1.toString("") + " and " + expression2.toString(""));
 			}
 			return new Bool();
@@ -79,7 +79,7 @@ public class DyadicExpr implements IExpression {
 	}
 
 	@Override
-	public void checkInit(Environment env) throws InitCheckingError {
+	public void checkInit(Environment env) throws InitCheckingException {
 		// TODO Auto-generated method stub
 
 	}

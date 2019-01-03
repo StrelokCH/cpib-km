@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
-import ch.fhnw.cpib.project.km.exceptions.GrammarError;
+import ch.fhnw.cpib.project.km.exceptions.GrammarException;
 import ch.fhnw.cpib.project.km.exceptions.LexicalErrorException;
 import ch.fhnw.cpib.project.km.scanner.Scanner;
 import ch.fhnw.cpib.project.km.syntax.concrete.IProgram;
@@ -60,7 +60,7 @@ class ParserTest {
 		try {
 			tokens = Scanner.scan(input);
 			Executable exe = () -> new Parser(tokens).parse();
-			assertThrows(GrammarError.class, exe);
+			assertThrows(GrammarException.class, exe);
 		} catch (LexicalErrorException e) {
 			fail(e);
 		}

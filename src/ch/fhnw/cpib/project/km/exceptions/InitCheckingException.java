@@ -1,8 +1,8 @@
 package ch.fhnw.cpib.project.km.exceptions;
 
-public class TypeCheckingError extends Exception {
+public class InitCheckingException extends Exception {
 
-	public TypeCheckingError(String string) {
+	public InitCheckingException(String string) {
 		super(string);
 	}
 

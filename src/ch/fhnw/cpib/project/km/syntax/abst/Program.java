@@ -5,9 +5,9 @@ import java.util.List;
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.analysis.SymbolTable;
-import ch.fhnw.cpib.project.km.exceptions.ConstCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
+import ch.fhnw.cpib.project.km.exceptions.ConstCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
 
 public class Program {
@@ -40,7 +40,7 @@ public class Program {
 		return ret;
 	}
 
-	public Environment createEnvironment() throws ScopeCheckingError {
+	public Environment createEnvironment() throws ScopeCheckingException {
 		Environment env = new Environment();
 
 		// Create root symbolTable
@@ -66,7 +66,7 @@ public class Program {
 		return env;
 	}
 
-	public void checkScope(Environment env) throws ScopeCheckingError {
+	public void checkScope(Environment env) throws ScopeCheckingException {
 
 		for (IDecl decl : cpsDecl) {
 			decl.checkScope(env);
@@ -77,7 +77,7 @@ public class Program {
 		}
 	}
 
-	public void checkType(Environment env) throws TypeCheckingError {
+	public void checkType(Environment env) throws TypeCheckingException {
 
 		for (IDecl decl : cpsDecl) {
 			decl.checkType(env);
@@ -88,7 +88,7 @@ public class Program {
 		}
 	}
 
-	public void checkConst(Environment env) throws ConstCheckingError {
+	public void checkConst(Environment env) throws ConstCheckingException {
 		for (IDecl decl : cpsDecl) {
 			decl.checkConst(env);
 		}

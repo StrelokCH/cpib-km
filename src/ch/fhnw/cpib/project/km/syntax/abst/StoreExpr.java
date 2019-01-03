@@ -2,10 +2,10 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
-import ch.fhnw.cpib.project.km.exceptions.ConstCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.InitCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
+import ch.fhnw.cpib.project.km.exceptions.ConstCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.InitCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
 import ch.fhnw.cpib.project.km.token.keywords.Const;
 import ch.fhnw.cpib.project.km.token.keywords.Type;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
@@ -31,10 +31,10 @@ public class StoreExpr implements IExpression {
 	}
 
 	@Override
-	public void checkScope(Environment env) throws ScopeCheckingError {
+	public void checkScope(Environment env) throws ScopeCheckingException {
 		Context context = env.contextMapping.get(this);
 		if (!context.symbolTable.contains(identifier)) {
-			throw new ScopeCheckingError(
+			throw new ScopeCheckingException(
 					"identifier " + identifier.getIdentifierName() + " does not exist in current scope");
 		}
 	}
@@ -60,19 +60,19 @@ public class StoreExpr implements IExpression {
 	}
 
 	@Override
-	public Type checkType(Environment env) throws TypeCheckingError {
+	public Type checkType(Environment env) throws TypeCheckingException {
 		Context c = env.contextMapping.get(this);
 		FullIdentifier declaration = c.symbolTable.getDeclaration(identifier);
 		return declaration.getType();
 	}
 
 	@Override
-	public void checkInit(Environment env) throws InitCheckingError {
+	public void checkInit(Environment env) throws InitCheckingException {
 		// To-Do...
 		// check if store is initialized before it is read or assigned to
 		// check if only initializations of uninitialized stores
 		if (!isInitialization) {
-			throw new InitCheckingError(identifier + " is not initialized");
+			throw new InitCheckingException(identifier + " is not initialized");
 		}
 	}
 }

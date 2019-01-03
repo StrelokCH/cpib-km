@@ -5,10 +5,10 @@ import java.util.List;
 
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
-import ch.fhnw.cpib.project.km.exceptions.ConstCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.InitCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingError;
-import ch.fhnw.cpib.project.km.exceptions.TypeCheckingError;
+import ch.fhnw.cpib.project.km.exceptions.ConstCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.InitCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
 import ch.fhnw.cpib.project.km.token.keywords.FlowmodeInOut;
 import ch.fhnw.cpib.project.km.token.keywords.FlowmodeOut;
 import ch.fhnw.cpib.project.km.token.keywords.MechmodeReference;
@@ -61,7 +61,7 @@ public class ProcCallCmd implements ICommand {
 	}
 
 	@Override
-	public void checkScope(Environment env) throws ScopeCheckingError {
+	public void checkScope(Environment env) throws ScopeCheckingException {
 		// check if called procedure exists
 		// throws exception in case no match
 		RoutineDecl routineDecl = env.rootContext.symbolTable.findMatch(this);
@@ -74,7 +74,7 @@ public class ProcCallCmd implements ICommand {
 			Context context = env.contextMapping.get(this);
 			FullIdentifier fullIdentifier = new FullIdentifier(null, null, null, identifier,null);
 			if (!context.symbolTable.containsGlobal(fullIdentifier)) {
-				throw new ScopeCheckingError("global identifier " + fullIdentifier.getIdentifierName() + " does not exist in current scope");
+				throw new ScopeCheckingException("global identifier " + fullIdentifier.getIdentifierName() + " does not exist in current scope");
 			}
 		}
 
@@ -86,28 +86,28 @@ public class ProcCallCmd implements ICommand {
 				// must be an L-Value in call
 				IExpression expression = parameters.get(i);
 				if (!expression.isLValue()) {
-					throw new ScopeCheckingError("expression " + expression.toString("") + " should be an L-Value");
+					throw new ScopeCheckingException("expression " + expression.toString("") + " should be an L-Value");
 				}
 				// check if non const is needed
 				if (!param.isConst() && expression.isConst(env)) {
-					throw new ScopeCheckingError("expression " + expression.toString("") + " must not be const");
+					throw new ScopeCheckingException("expression " + expression.toString("") + " must not be const");
 				}
 			}
 		}
 	}
 
 	@Override
-	public void checkType(Environment env) throws TypeCheckingError {
+	public void checkType(Environment env) throws TypeCheckingException {
 		// type checks of parameters were already made in checkScope
 	}
 
 	@Override
-	public void checkConst(Environment env) throws ConstCheckingError {
+	public void checkConst(Environment env) throws ConstCheckingException {
 		// const checking of parameters is performed in checkScope
 	}
 
 	@Override
-	public void checkInit(Environment env) throws InitCheckingError {
+	public void checkInit(Environment env) throws InitCheckingException {
 		//To-Do
 	}
 }

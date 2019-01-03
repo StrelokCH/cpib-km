@@ -1,8 +1,8 @@
 package ch.fhnw.cpib.project.km.exceptions;
 
-public class GrammarError extends Exception {
+public class TypeCheckingException extends Exception {
 
-	public GrammarError(String string) {
+	public TypeCheckingException(String string) {
 		super(string);
 	}
 

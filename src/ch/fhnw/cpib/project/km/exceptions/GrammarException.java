@@ -1,8 +1,8 @@
 package ch.fhnw.cpib.project.km.exceptions;
 
-public class ConstCheckingError extends Exception {
+public class GrammarException extends Exception {
 
-	public ConstCheckingError(String string) {
+	public GrammarException(String string) {
 		super(string);
 	}
 
