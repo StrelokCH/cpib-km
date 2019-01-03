@@ -9,6 +9,7 @@ import ch.fhnw.cpib.project.km.analysis.SymbolTable;
 import ch.fhnw.cpib.project.km.exceptions.ConstCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
+import ch.fhnw.cpib.project.km.token.keywords.MechmodeReference;
 import ch.fhnw.cpib.project.km.token.keywords.Type;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
 
@@ -97,11 +98,12 @@ public class RoutineDecl implements IDecl {
 
 	@Override
 	public void addToEnvironment(Environment env, Context context) throws ScopeCheckingException {
+		env.contextMapping.put(this, context);
+		
 		// create new context for this routine
 		Context newContext = context.clone();
 		SymbolTable symbolTable = newContext.symbolTable;
 		symbolTable.clearVariables();
-		env.contextMapping.put(this, newContext);
 
 		// add local variables & imports
 		{
@@ -112,7 +114,15 @@ public class RoutineDecl implements IDecl {
 				symbolTable.addVariable(stoDecl.getFullIdentifier(), true);
 			}
 			for (FullIdentifier globImp : globImps) {
-				symbolTable.addVariable(globImp, false);
+				// add type information if possible
+				// note: in case no global store exists, checkScope throws an exception
+				FullIdentifier temp = globImp;
+				FullIdentifier declaration = context.symbolTable.getDeclaration(globImp);
+				if (declaration != null) {
+					temp = new FullIdentifier(globImp.getFlowmode(), new MechmodeReference(), globImp.getChangemode(),
+							globImp.getIdentifier(), declaration.getType());
+				}
+				symbolTable.addVariable(temp, false);
 			}
 			for (StoDecl localStoDecl : cpsStoDecl) {
 				symbolTable.addVariable(localStoDecl.getFullIdentifier(), true);
@@ -128,8 +138,8 @@ public class RoutineDecl implements IDecl {
 	public void checkScope(Environment env) throws ScopeCheckingException {
 		// check if globalImports really exist
 		for (FullIdentifier globImp : globImps) {
-			if (!env.rootContext.symbolTable.containsGlobal(globImp)) {
-				throw new ScopeCheckingException("global import not found (" + globImp.getIdentifierName() + ")");
+			if (!env.contextMapping.get(this).symbolTable.containsGlobal(globImp)) {
+				throw new ScopeCheckingException("global import not found (" + globImp.getIdentifierName() + ").");
 			}
 		}
 

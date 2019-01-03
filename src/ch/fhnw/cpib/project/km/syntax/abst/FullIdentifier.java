@@ -38,6 +38,22 @@ public class FullIdentifier {
 		this.type = type;
 	}
 
+	public Flowmode getFlowmode() {
+		return flowmode;
+	}
+
+	public Mechmode getMechmode() {
+		return mechmode;
+	}
+
+	public Changemode getChangemode() {
+		return changemode;
+	}
+
+	public Identifier getIdentifier() {
+		return identifier;
+	}
+
 	public static Flowmode getFlowmode(Flowmode flowmode, Mechmode mechmode, Changemode changemode) {
 		return flowmode == null ? new FlowmodeIn() : flowmode;
 	}

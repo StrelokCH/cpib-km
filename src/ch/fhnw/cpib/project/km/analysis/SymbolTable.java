@@ -11,6 +11,8 @@ import ch.fhnw.cpib.project.km.syntax.abst.FullIdentifier;
 import ch.fhnw.cpib.project.km.syntax.abst.FunctionCallExpr;
 import ch.fhnw.cpib.project.km.syntax.abst.ProcCallCmd;
 import ch.fhnw.cpib.project.km.syntax.abst.RoutineDecl;
+import ch.fhnw.cpib.project.km.token.keywords.Changemode;
+import ch.fhnw.cpib.project.km.token.keywords.Const;
 
 public class SymbolTable {
 	private final Environment env;
@@ -22,7 +24,7 @@ public class SymbolTable {
 	public SymbolTable(Environment env) {
 		this.env = env;
 	}
-	
+
 	public void addRoutine(RoutineDecl routine) {
 		if (routine.isProcedure()) {
 			procedures.add(routine);
@@ -35,12 +37,25 @@ public class SymbolTable {
 		return containsLocal(fullIdentifier) || containsGlobal(fullIdentifier);
 	}
 
+	public boolean contains(Map<String, FullIdentifier> variables, FullIdentifier fullIdentifier) {
+		String key = fullIdentifier.getIdentifierName();
+		if (!variables.containsKey(key)) {
+			return false;
+		}
+		FullIdentifier declaration = variables.get(key);
+		if (declaration.getChangemode() instanceof Const && !(fullIdentifier.getChangemode() instanceof Const)){
+			// trying to remove const from global store
+			return false;
+		}
+		return true;
+	}
+
 	public boolean containsLocal(FullIdentifier fullIdentifier) {
-		return localVariables.containsKey(fullIdentifier.getIdentifierName());
+		return contains(localVariables, fullIdentifier);
 	}
 
 	public boolean containsGlobal(FullIdentifier fullIdentifier) {
-		return globalVariables.containsKey(fullIdentifier.getIdentifierName());
+		return contains(globalVariables, fullIdentifier);
 	}
 
 	public void addVariable(FullIdentifier fullIdentifier, boolean local) throws ScopeCheckingException {
@@ -56,12 +71,13 @@ public class SymbolTable {
 			globalVariables.put(identifier, fullIdentifier);
 		}
 	}
-	
+
 	public FullIdentifier getDeclaration(FullIdentifier fullIdentifier) {
 		String key = fullIdentifier.getIdentifierName();
 		if (localVariables.containsKey(key)) {
 			return localVariables.get(key);
-		} if (globalVariables.containsKey(key)) {
+		}
+		if (globalVariables.containsKey(key)) {
 			return globalVariables.get(key);
 		}
 		return null;
