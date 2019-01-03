@@ -8,6 +8,7 @@ import ch.fhnw.cpib.project.km.analysis.SymbolTable;
 import ch.fhnw.cpib.project.km.exceptions.ConstCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.AliasingCheckingException;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
 
 public class Program {
@@ -95,6 +96,13 @@ public class Program {
 
 		for (ICommand command : cpsCmd) {
 			command.checkConst(env);
+		}
+	}
+	
+	public void checkAliasing(Environment env) throws AliasingCheckingException {
+
+		for (ICommand command : cpsCmd) {
+			command.checkAliasing(env);
 		}
 	}
 }
