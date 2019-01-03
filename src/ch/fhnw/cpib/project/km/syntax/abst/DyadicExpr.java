@@ -65,9 +65,6 @@ public class DyadicExpr implements IExpression {
 			}
 			return finalType;
 		}
-		if (operator instanceof EqualsOperator || operator instanceof NotEqualsOperator) {
-			return finalType;
-		}
 		if (operator instanceof RelationalOperator) {
 			if (!(finalType instanceof IntegerType)) {
 				throw new TypeCheckingException("Cannot use relational operators on two Bools. Expressions are "
