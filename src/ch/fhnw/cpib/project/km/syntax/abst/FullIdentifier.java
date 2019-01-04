@@ -106,13 +106,12 @@ public class FullIdentifier {
 	}
 
 	/**
-	 * Returns true if one of the following modes are present: FlowmodeOut,
-	 * FlowmodeInOut, MechmodeReference
+	 * Returns true if one of the following modes are present:
+	 * FlowmodeOut, FlowmodeInOut
 	 * 
 	 * @return
 	 */
 	public boolean needsLValue() {
-		return flowmode instanceof FlowmodeOut || flowmode instanceof FlowmodeInOut
-				|| mechmode instanceof MechmodeReference;
+		return flowmode instanceof FlowmodeOut || flowmode instanceof FlowmodeInOut;
 	}
 }
