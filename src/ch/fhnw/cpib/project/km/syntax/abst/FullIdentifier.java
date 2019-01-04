@@ -115,9 +115,4 @@ public class FullIdentifier {
 		return flowmode instanceof FlowmodeOut || flowmode instanceof FlowmodeInOut
 				|| mechmode instanceof MechmodeReference;
 	}
-
-	public boolean equals(FullIdentifier other) {
-		//flowmode, mechmode and changemode are not relevant here?
-		return identifier.equals(other.identifier) && type.equals(other.type);
-	}
 }
