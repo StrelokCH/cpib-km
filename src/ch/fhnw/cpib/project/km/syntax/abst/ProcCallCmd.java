@@ -137,7 +137,7 @@ public class ProcCallCmd implements ICommand {
 		List<IExpression> tempParameters = new ArrayList<>(parameters);
 		for (Integer index : deleteParemeters) {
 			// remove R-Values
-			tempParameters.remove(index);
+			tempParameters.remove((int)index);
 		}
 		
 		List<String> parameterNames = tempParameters.stream()
