@@ -118,6 +118,47 @@ public class IMLTestPrograms {
 			+ "  do h init := x ; x := y ; y := h endproc\r\n" + "do\r\n" + "  call euclidExtendedNatWOSign\r\n"
 			+ "    (a, b, g init, u init, v init, u' init, v' init, sign init, numIt init)\r\n" + "endprogram\r\n";
 
+	
+	public static String testOverlading = 
+			  "program testOverloading\r\n" + "  (in a:int32, in b:int64)\r\n"
+			+ "	global\r\n"
+			+ "	proc printSum(in copy const m:int32, in copy const n:int32)\r\n" 
+			+ "		do\r\n"
+			+ "			var s:int32\r\n;\r\n"
+	   		+ "			s init := m + n;\r\n"
+	   		+ "			debugout s;\r\n"
+	   		+ "	endproc\r\n"
+	   		
+			+ "	proc printSum(in copy const m:int32, in copy const n:int64)\r\n" 
+			+ "		do\r\n"
+			+ "			var s:int64\r\n;\r\n"
+			+ "			s init := m + n;\r\n"
+	   		+ "			debugout s;\r\n"
+	   		+ "	endproc\r\n"
+	
+			+ "	proc printSum(in copy const m:int64, in copy const n:int64)\r\n" 
+			+ "		do\r\n"
+			+ "			var s:int64\r\n;\r\n"
+			+ "			s init := m + n;\r\n"
+	   		+ "			debugout s;\r\n"
+	   		+ "	endproc\r\n"
+	   		
+			+ "	proc printSum(in copy const m:int64, in copy const n:int32)\r\n" 
+			+ "		do\r\n"
+			+ "			var s:int64\r\n;\r\n"
+			+ "			s init := m + n;\r\n"
+	   		+ "			debugout s;\r\n"
+	   		+ "	endproc\r\n"
+	   	
+	   		+" do\r\n" 
+	   		+" call printSum(a, a)\r\n"
+	   		+" call printSum(b, b)\r\n"
+	   		+" call printSum(a, b)\r\n"
+	   		+" call printSum(b, a)\r\n"
+	   		+" call printSum(b, a, a)\r\n"
+	   		+" endprogram\r\n";
+
+	
 	public static List<String> getValidPrograms() {
 		List<String> ret = new ArrayList<String>();
 		ret.add(IntDiv);
@@ -129,6 +170,7 @@ public class IMLTestPrograms {
 		ret.add(ParameterPassingInCopy);
 		ret.add(ParameterPassingInRef);
 		ret.add(EuclidExtendedNat);
+		ret.add(testOverlading);
 		return ret;
 	}
 }
