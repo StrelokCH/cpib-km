@@ -11,8 +11,7 @@ import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
 public class InputCmd implements ICommand {
 
 	private IExpression expression;
-	
-	
+
 	public InputCmd(IExpression expression) {
 		super();
 		this.expression = expression;
@@ -20,22 +19,24 @@ public class InputCmd implements ICommand {
 
 	@Override
 	public String toString(String indent) {
-		return indent + "(" + this.getClass().getSimpleName() + ")\n"
-				+ expression.toString(indent + "    \n");
+		return indent + "(" + this.getClass().getSimpleName() + ")\n" + expression.toString(indent + "    \n");
 	}
 
 	@Override
 	public void addToEnvironment(Environment env, Context context) {
 		env.contextMapping.put(this, context);
-		expression.addToEnvironment(env,context);
+		expression.addToEnvironment(env, context);
 	}
 
 	@Override
 	public void checkScope(Environment env) throws ScopeCheckingException {
 		expression.checkScope(env);
-		
+
 		if (!expression.isLValue()) {
 			throw new ScopeCheckingException("expression " + expression.toString("") + "should be an L-Value");
+		}
+		if (!expression.isConst(env)) {
+			throw new ScopeCheckingException("expression " + expression.toString("") + " must not be const");
 		}
 	}
 
@@ -46,8 +47,7 @@ public class InputCmd implements ICommand {
 
 	@Override
 	public void checkConst(Environment env) throws ConstCheckingException {
-		// Not needed?
-		
+		// not needed
 	}
 
 	@Override
@@ -57,6 +57,6 @@ public class InputCmd implements ICommand {
 
 	@Override
 	public void checkAliasing(Environment env) throws AliasingCheckingException {
-		//Not needed
+		// not needed
 	}
 }
