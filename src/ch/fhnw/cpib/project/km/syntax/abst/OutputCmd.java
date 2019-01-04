@@ -41,7 +41,7 @@ public class OutputCmd implements ICommand {
 
 	@Override
 	public void checkConst(Environment env) throws ConstCheckingException {
-		// Not needed?
+		// not needed
 	}
 
 	@Override
@@ -51,6 +51,6 @@ public class OutputCmd implements ICommand {
 
 	@Override
 	public void checkAliasing(Environment env) throws AliasingCheckingException {
-		//Not needed
+		// not needed
 	}
 }

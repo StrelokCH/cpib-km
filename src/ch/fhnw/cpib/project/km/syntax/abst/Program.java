@@ -100,7 +100,10 @@ public class Program {
 	}
 
 	public void checkAliasing(Environment env) throws AliasingCheckingException {
-
+		for (IDecl decl : cpsDecl) {
+			decl.checkAliasing(env);
+		}
+		
 		for (ICommand command : cpsCmd) {
 			command.checkAliasing(env);
 		}

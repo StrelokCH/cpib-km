@@ -69,6 +69,6 @@ public class CondCmd implements ICommand {
 
 	@Override
 	public void checkAliasing(Environment env) throws AliasingCheckingException {
-		//Not needed
+		// not needed
 	}
 }

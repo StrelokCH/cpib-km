@@ -11,12 +11,17 @@ import ch.fhnw.cpib.project.km.token.keywords.Type;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
 
 public class StoreExpr implements IExpression {
+
 	private final FullIdentifier identifier;
 	private final boolean isInitialization;
 
 	public StoreExpr(Identifier identifier, boolean isInitialization) {
 		this.identifier = new FullIdentifier(identifier, null);
 		this.isInitialization = isInitialization;
+	}
+	
+	public FullIdentifier getIdentifier() {
+		return identifier;
 	}
 
 	@Override

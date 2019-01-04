@@ -38,11 +38,11 @@ public class SkipCmd implements ICommand {
 
 	@Override
 	public void checkInit(Environment env) throws InitCheckingException {
-		//Not needed
+		// not needed
 	}
 
 	@Override
 	public void checkAliasing(Environment env) throws AliasingCheckingException {
-		//Not needed
+		// not needed
 	}
 }

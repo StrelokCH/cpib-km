@@ -1,7 +1,11 @@
 package ch.fhnw.cpib.project.km.syntax.abst;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
@@ -11,9 +15,6 @@ import ch.fhnw.cpib.project.km.exceptions.InitCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.RoutineMatchException;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
-import ch.fhnw.cpib.project.km.token.keywords.FlowmodeInOut;
-import ch.fhnw.cpib.project.km.token.keywords.FlowmodeOut;
-import ch.fhnw.cpib.project.km.token.keywords.MechmodeReference;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
 
 public class ProcCallCmd implements ICommand {
@@ -110,27 +111,44 @@ public class ProcCallCmd implements ICommand {
 
 	@Override
 	public void checkInit(Environment env) throws InitCheckingException {
-		//To-Do
+		// Todo
 	}
 
 	@Override
 	public void checkAliasing(Environment env) throws AliasingCheckingException {
-		RoutineDecl routineDecl = null;
-		try {
-			routineDecl = env.rootContext.symbolTable.findMatch(this);
-		} catch (RoutineMatchException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		List<FullIdentifier> declParameters = routineDecl.getParamList();
-		for (int i = 0; i < declParameters.size(); i++) {
-			FullIdentifier param = declParameters.get(i);
-			for(int j = i+1; j < declParameters.size(); ++j) {
-				FullIdentifier comparedParam = declParameters.get(j);
 
-				if(param.equals(comparedParam)) {
-					throw new AliasingCheckingException(param.toString("") + " and" + comparedParam.toString("") + " are the same Parameter");
-				}
+		List<FullIdentifier> declParameters = new ArrayList<>();;
+		try {
+			RoutineDecl routineDecl = env.rootContext.symbolTable.findMatch(this);
+			declParameters = routineDecl.getParamList();
+		} catch (RoutineMatchException e) {
+			throw new AliasingCheckingException("RoutineMatchException in checkAliasing. This exception should only occur in checkScope.");
+		}
+		
+		// find out, which parameters can be used multiple times (R-Values)
+		List<Integer> deleteParemeters = new ArrayList<>();
+		for (int i = 0; i < declParameters.size(); i++) {
+			if (!declParameters.get(i).needsLValue()) {
+				deleteParemeters.add(i);
+			}
+		}
+		
+		Collections.reverse(deleteParemeters);
+		List<IExpression> tempParameters = new ArrayList<>(parameters);
+		for (Integer index : deleteParemeters) {
+			// remove R-Values
+			tempParameters.remove(index);
+		}
+		
+		List<String> parameterNames = tempParameters.stream()
+				.map(p -> ((StoreExpr)p).getIdentifier().getIdentifierName())
+				.collect(Collectors.toList());
+
+		// check if there are duplicates
+		Set<String> duplicateFinder = new HashSet<>();
+		for (String parameterName : parameterNames ) {
+			if (!duplicateFinder.add(parameterName)) {
+				throw new AliasingCheckingException("Parameter " + parameterName + " cannot be used multiple times in call " + this.toString(""));
 			}
 		}
 	}

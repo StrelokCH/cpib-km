@@ -70,6 +70,8 @@ public class CpsCmd implements ICommand {
 
 	@Override
 	public void checkAliasing(Environment env) throws AliasingCheckingException {
-		//Not needed
+		for (ICommand command : commands) {
+			command.checkAliasing(env);
+		}
 	}
 }

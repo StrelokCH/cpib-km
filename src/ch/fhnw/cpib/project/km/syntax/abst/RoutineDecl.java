@@ -6,6 +6,7 @@ import java.util.List;
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.analysis.SymbolTable;
+import ch.fhnw.cpib.project.km.exceptions.AliasingCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.ConstCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
@@ -167,5 +168,12 @@ public class RoutineDecl implements IDecl {
 		// flowMode in functions must be InFlow
 		// changeMode in routines for InFlow RefMech must be Const
 		// changeMode in routines for InoutFlow must be Var
+	}
+
+	@Override
+	public void checkAliasing(Environment env) throws AliasingCheckingException {
+		for (ICommand command : cpsCmd) {
+			command.checkAliasing(env);
+		}
 	}
 }
