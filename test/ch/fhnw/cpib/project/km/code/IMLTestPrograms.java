@@ -118,6 +118,41 @@ public class IMLTestPrograms {
 			+ "  do h init := x ; x := y ; y := h endproc\r\n" + "do\r\n" + "  call euclidExtendedNatWOSign\r\n"
 			+ "    (a, b, g init, u init, v init, u' init, v' init, sign init, numIt init)\r\n" + "endprogram\r\n";
 
+	// from StaticAnalysis Page 7
+	public static String Scopes = "// from StaticAnalysis Page 7\r\n" + 
+			"\r\n" + 
+			"program Scopes()\r\n" + 
+			"global\r\n" + 
+			"    fun f(p1:int32) returns r1:int32 global g1\r\n" + 
+			"    local\r\n" + 
+			"        var l1:int32; g3:int32\r\n" + 
+			"    do\r\n" + 
+			"        debugout(g1); // global\r\n" + 
+			"        //debugout(g2); // global, but not imported\r\n" + 
+			"        g3 init := -3; // local (also global, but not imported)\r\n" + 
+			"        debugout(g3);\r\n" + 
+			"        debugout(p1); // local\r\n" + 
+			"        l1 init := -1; // local\r\n" + 
+			"        debugout(l1);\r\n" + 
+			"        if p1 > 0 then\r\n" + 
+			"            r1 init := p1 * f(p1 - 1)\r\n" + 
+			"        else\r\n" + 
+			"            r1 init := 1\r\n" + 
+			"        endif;\r\n" + 
+			"        debugout(r1)\r\n" + 
+			"    endfun ;\r\n" + 
+			"    g1:int32 ;\r\n" + 
+			"    g2:int32 ;\r\n" + 
+			"    g3:int32 ;\r\n" + 
+			"    f: int32 // two namespaces: one for stores, one for routines\r\n" + 
+			"do\r\n" + 
+			"    g1 init := 1;\r\n" + 
+			"    debugin(g2 init);\r\n" + 
+			"    g3 init := 3;\r\n" + 
+			"    f init := 0;\r\n" + 
+			"    debugout(f(g2))\r\n" + 
+			"endprogram\r\n";
+	
 	public static List<String> getValidPrograms() {
 		List<String> ret = new ArrayList<String>();
 		ret.add(IntDiv);
@@ -129,6 +164,7 @@ public class IMLTestPrograms {
 		ret.add(ParameterPassingInCopy);
 		ret.add(ParameterPassingInRef);
 		ret.add(EuclidExtendedNat);
+		ret.add(Scopes);
 		return ret;
 	}
 }
