@@ -87,7 +87,7 @@ public class RoutineMatcher {
 
 		// Filter by parameters
 		candidates.removeIf(c -> {
-			for (int i = 0; i < 0; i++) {
+			for (int i = 0; i < c.getParamList().size(); i++) {
 				FullIdentifier param = c.getParamList().get(i);
 				Type actualType = call.parameterTypes.get(i);
 				Type expectedType = param.getType();
@@ -124,7 +124,7 @@ public class RoutineMatcher {
 			// find perfect match
 			List<RoutineDecl> perfectCandidates = new ArrayList<>(candidates);
 			perfectCandidates.removeIf(c -> {
-				for (int i = 0; i < 0; i++) {
+				for (int i = 0; i < c.getParamList().size(); i++) {
 					FullIdentifier param = c.getParamList().get(i);
 					Type actualType = call.parameterTypes.get(i);
 					Type expectedType = param.getType();
@@ -139,8 +139,9 @@ public class RoutineMatcher {
 			
 			if (perfectCandidates.size() != 1) {
 				// no single perfect match
+				
 				throw new RoutineMatchException("Multiple matching routines with identifier " + call.routineName.getIdentifier()
-						+ " found. First match is " + candidates.get(0) + ". There are " + candidates.size() + " matches.");
+						+ " found. First match is " + candidates.get(0).toString("") + ". There are " + candidates.size() + " matches.");
 			} else {
 				candidates = perfectCandidates;
 			}
