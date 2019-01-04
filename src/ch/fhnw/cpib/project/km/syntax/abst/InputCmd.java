@@ -35,7 +35,7 @@ public class InputCmd implements ICommand {
 		if (!expression.isLValue()) {
 			throw new ScopeCheckingException("expression " + expression.toString("") + "should be an L-Value");
 		}
-		if (!expression.isConst(env)) {
+		if (expression.isConst(env)) {
 			throw new ScopeCheckingException("expression " + expression.toString("") + " must not be const");
 		}
 	}
