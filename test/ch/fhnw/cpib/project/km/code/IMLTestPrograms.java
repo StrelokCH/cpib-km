@@ -167,10 +167,10 @@ public class IMLTestPrograms {
 			" endproc\r\n" + 
 			"\r\n" + 
 			"do\r\n" + 
-			" //call printSum(a, a); // calls  printSum(int32,int32)\r\n" + 
-			" //call printSum(b, b); // calls  printSum(int64,int64)\r\n" + 
-			" call printSum(a, b) // calls  printSum(int32,int64)\r\n" + 
-			" // call printSum(b, a) // Mehrdeutigkeit?\r\n" + 
+			" call printSum(a, a); // calls  printSum(int32,int32)\r\n" + 
+			" call printSum(b, b); // calls  printSum(int64,int64)\r\n" + 
+			" call printSum(a, b); // calls  printSum(int32,int64)\r\n" + 
+			" call printSum(b, a) // calls  printSum(int64,int32)\r\n" + 
 			" // call printSum(b, a, a) // compile time error, no matching overload found\r\n" + 
 			"endprogram\r\n" + 
 			"";
