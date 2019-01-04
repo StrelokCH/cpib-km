@@ -50,6 +50,12 @@ public class Program {
 			// Program Parameters are handled as local variables
 			symbolTable.addVariable(progParam, true);
 		}
+		{
+			// add predefined cast functions
+			new RoutineDeclCastClamp().appendSymbol(symbolTable, false);
+			new RoutineDeclCastCut().appendSymbol(symbolTable, false);
+			new RoutineDeclCastCutUnsigned().appendSymbol(symbolTable, false);
+		}
 		for (IDecl decl : cpsDecl) {
 			decl.appendSymbol(symbolTable, false);
 		}
@@ -103,7 +109,7 @@ public class Program {
 		for (IDecl decl : cpsDecl) {
 			decl.checkAliasing(env);
 		}
-		
+
 		for (ICommand command : cpsCmd) {
 			command.checkAliasing(env);
 		}
