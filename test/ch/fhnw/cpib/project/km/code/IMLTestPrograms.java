@@ -132,6 +132,7 @@ public class IMLTestPrograms {
 			+ "    g1 init := 1;\r\n" + "    debugin(g2 init);\r\n" + "    g3 init := 3;\r\n" + "    f init := 0;\r\n"
 			+ "    debugout(f(g2))\r\n" + "endprogram\r\n";
 
+	// own
 	public static String Overloading = "program testOverloading(in a:int32, in b:int64)\r\n" + 
 			"global\r\n" + 
 			" proc printSum(in copy const m:int32, in copy const n:int32)\r\n" + 
@@ -174,6 +175,22 @@ public class IMLTestPrograms {
 			" // call printSum(b, a, a) // compile time error, no matching overload found\r\n" + 
 			"endprogram\r\n" + 
 			"";
+	
+	// own
+	public static String ToInt32Clamp = "program testToInt32Clamp()\r\n" + 
+			"global\r\n" + 
+			"  var normalInt:int64 ;\r\n" + 
+			"  var bigInt:int64 ;\r\n" + 
+			"  var smallInt:int64\r\n" + 
+			"do\r\n" + 
+			"  normalInt init := 5 ;\r\n" + 
+			"  bigInt init := 10000000000 ; // value bigger than int32.maxValue\r\n" + 
+			"  smallInt init := -10000000000 ; // value smaller than int32.minValue\r\n" + 
+			"  debugout toInt32Clamp(normalInt) ; // prints 5\r\n" + 
+			"  debugout toInt32Clamp(bigInt) ; // prints int32.maxValue which is 2,147,483,647\r\n" + 
+			"  debugout toInt32Clamp(smallInt) // prints int32.minValue which is -2,147,483,648\r\n" + 
+			"endprogram\r\n" + 
+			"";
 
 	public static List<String> getValidPrograms() {
 		List<String> ret = new ArrayList<String>();
@@ -188,6 +205,7 @@ public class IMLTestPrograms {
 		ret.add(EuclidExtendedNat);
 		ret.add(Scopes);
 		ret.add(Overloading);
+		ret.add(ToInt32Clamp);
 		return ret;
 	}
 }
