@@ -152,6 +152,45 @@ public class IMLTestPrograms {
 			"    f init := 0;\r\n" + 
 			"    debugout(f(g2))\r\n" + 
 			"endprogram\r\n";
+
+	public static String Overloading = 
+			  "program testOverloading\r\n" + "  (in a:int32, in b:int64)\r\n"
+			+ "	global\r\n"
+			+ "	proc printSum(in copy const m:int32, in copy const n:int32)\r\n" 
+			+ "		do\r\n"
+			+ "			var s:int32\r\n;\r\n"
+	   		+ "			s init := m + n;\r\n"
+	   		+ "			debugout s;\r\n"
+	   		+ "	endproc\r\n"
+	   		
+			+ "	proc printSum(in copy const m:int32, in copy const n:int64)\r\n" 
+			+ "		do\r\n"
+			+ "			var s:int64\r\n;\r\n"
+			+ "			s init := m + n;\r\n"
+	   		+ "			debugout s;\r\n"
+	   		+ "	endproc\r\n"
+	
+			+ "	proc printSum(in copy const m:int64, in copy const n:int64)\r\n" 
+			+ "		do\r\n"
+			+ "			var s:int64\r\n;\r\n"
+			+ "			s init := m + n;\r\n"
+	   		+ "			debugout s;\r\n"
+	   		+ "	endproc\r\n"
+	   		
+			+ "	proc printSum(in copy const m:int64, in copy const n:int32)\r\n" 
+			+ "		do\r\n"
+			+ "			var s:int64\r\n;\r\n"
+			+ "			s init := m + n;\r\n"
+	   		+ "			debugout s;\r\n"
+	   		+ "	endproc\r\n"
+	   	
+	   		+" do\r\n" 
+	   		+" call printSum(a, a)\r\n"
+	   		+" call printSum(b, b)\r\n"
+	   		+" call printSum(a, b)\r\n"
+	   		+" call printSum(b, a)\r\n"
+	   		+" call printSum(b, a, a)\r\n"
+	   		+" endprogram\r\n";
 	
 	public static List<String> getValidPrograms() {
 		List<String> ret = new ArrayList<String>();
@@ -165,6 +204,7 @@ public class IMLTestPrograms {
 		ret.add(ParameterPassingInRef);
 		ret.add(EuclidExtendedNat);
 		ret.add(Scopes);
+		ret.add(Overloading);
 		return ret;
 	}
 }
