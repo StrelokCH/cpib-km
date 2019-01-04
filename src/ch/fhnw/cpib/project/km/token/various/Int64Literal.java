@@ -9,7 +9,7 @@ public class Int64Literal extends Literal {
 	
 	public Int64Literal(long value) {
 		// unsigned
-		super("\\\\d('*\\\\d+)*");
+		super("\\d('*\\d+)*");
 		this.value = value;
 	}
 
@@ -25,15 +25,16 @@ public class Int64Literal extends Literal {
 		int length = super.match(s);
 		if (length > 0) {
 			String matchedCharSequence = s.subSequence(0, length).toString();
-			long longValue = Long.parseLong(matchedCharSequence);
-			BigInteger bigIntValue = new BigInteger(matchedCharSequence);
-			if (BigInteger.valueOf(longValue) == bigIntValue) {
-				// value fits in a long and is therefore 64bit
-				return length;
+			try {
+				Long.parseLong(matchedCharSequence);
+			} catch (NumberFormatException e){
+				// number is too big
+				return 0;
 			}
-			
+			// no error, it is an int64
+			return length;
 		}
-		// no match or too big value
+		// no match
 		return 0;
 	}
 

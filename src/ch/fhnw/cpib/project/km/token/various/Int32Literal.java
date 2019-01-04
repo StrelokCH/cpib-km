@@ -25,15 +25,16 @@ public class Int32Literal extends Literal {
 		int length = super.match(s);
 		if (length > 0) {
 			String matchedCharSequence = s.subSequence(0, length).toString();
-			long longValue = Long.parseLong(matchedCharSequence);
-			int intValue = Integer.parseInt(matchedCharSequence);
-			if ((long) intValue == longValue) {
-				// value fits in an integer and is therefore 32bit
-				return length;
+			try {
+				Integer.parseInt(matchedCharSequence);
+			} catch (NumberFormatException e){
+				// number is too big
+				return 0;
 			}
-
+			// no error, it is an int32
+			return length;
 		}
-		// no match or too big value
+		// no match
 		return 0;
 	}
 
