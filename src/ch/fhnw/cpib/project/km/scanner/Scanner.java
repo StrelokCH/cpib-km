@@ -149,7 +149,7 @@ public class Scanner {
 
 			if (longestMatch == 0) {
 				// no match
-				throw new LexicalErrorException("lexical error at position " + start);
+				throw new LexicalErrorException("lexical error at position " + start + ". Near \"" + currentCharSequence + "\"");
 			}
 
 			if (!(matchedToken instanceof Ignore) && !(matchedToken instanceof Comment)) {
