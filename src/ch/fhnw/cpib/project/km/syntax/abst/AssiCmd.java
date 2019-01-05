@@ -79,11 +79,12 @@ public class AssiCmd implements ICommand {
 
 	@Override
 	public void createCode(CodeGenerationEnvironment cgenv) throws CodeTooSmallError, CodeGenerationException {
-		// load right side to stack
-		expression2.createCode(cgenv);
 
 		// load target address to stack
 		expression1.createCodeLoadAddr(cgenv);
+		
+		// load right side to stack
+		expression2.createCode(cgenv);
 
 		// store input to address
 		cgenv.code.put(cgenv.locInc(), new IInstructions.Store());
