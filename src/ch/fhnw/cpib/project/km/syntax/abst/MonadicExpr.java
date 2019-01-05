@@ -80,7 +80,7 @@ public class MonadicExpr implements IExpression {
 			// int32
 			expression.createCode(cgenv);
 			cgenv.code.put(cgenv.locInc(), new IInstructions.NegInt());
-		}  else if (operator instanceof MinusOperator && type instanceof Int64) {
+		} else if (operator instanceof MinusOperator && type instanceof Int64) {
 			// int64
 			expression.createCode(cgenv);
 			cgenv.code.put(cgenv.locInc(), new IInstructions.NegInt64());
@@ -88,8 +88,10 @@ public class MonadicExpr implements IExpression {
 			// boolean not
 			expression.createCode(cgenv);
 			cgenv.code.put(cgenv.locInc(), new IInstructions.InvBool());
+		} else {
+			throw new CodeGenerationException(
+					"Missing operator " + operator + " for type " + type.toString() + "in MonadicExpr.createCode");
 		}
-		throw new CodeGenerationException("Missing operator " + operator + " in MonadicExpr.createCode");
 	}
 
 }
