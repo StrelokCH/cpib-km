@@ -17,7 +17,13 @@ import ch.fhnw.cpib.project.km.exceptions.RoutineMatchException;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
 import ch.fhnw.cpib.project.km.synthesis.CodeGenerationEnvironment;
+import ch.fhnw.cpib.project.km.token.keywords.FlowmodeIn;
+import ch.fhnw.cpib.project.km.token.keywords.FlowmodeInOut;
+import ch.fhnw.cpib.project.km.token.keywords.FlowmodeOut;
+import ch.fhnw.cpib.project.km.token.keywords.MechmodeCopy;
+import ch.fhnw.cpib.project.km.token.keywords.MechmodeReference;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
+import ch.fhnw.cpib.project.km.vm.IInstructions;
 import ch.fhnw.cpib.project.km.vm.ICodeArray.CodeTooSmallError;
 
 public class ProcCallCmd implements ICommand {
@@ -79,9 +85,10 @@ public class ProcCallCmd implements ICommand {
 
 		for (Identifier identifier : identifiers) {
 			Context context = env.contextMapping.get(this);
-			FullIdentifier fullIdentifier = new FullIdentifier(identifier,null);
+			FullIdentifier fullIdentifier = new FullIdentifier(identifier, null);
 			if (!context.symbolTable.containsGlobal(fullIdentifier)) {
-				throw new ScopeCheckingException("global identifier " + fullIdentifier.getIdentifierName() + " does not exist in current scope");
+				throw new ScopeCheckingException(
+						"global identifier " + fullIdentifier.getIdentifierName() + " does not exist in current scope");
 			}
 		}
 
@@ -121,14 +128,16 @@ public class ProcCallCmd implements ICommand {
 	@Override
 	public void checkAliasing(Environment env) throws AliasingCheckingException {
 
-		List<FullIdentifier> declParameters = new ArrayList<>();;
+		List<FullIdentifier> declParameters = new ArrayList<>();
+		;
 		try {
 			RoutineDecl routineDecl = env.rootContext.symbolTable.findMatch(this);
 			declParameters = routineDecl.getParamList();
 		} catch (RoutineMatchException e) {
-			throw new AliasingCheckingException("RoutineMatchException in checkAliasing. This exception should only occur in checkScope.");
+			throw new AliasingCheckingException(
+					"RoutineMatchException in checkAliasing. This exception should only occur in checkScope.");
 		}
-		
+
 		// find out, which parameters can be used multiple times (R-Values)
 		List<Integer> deleteParemeters = new ArrayList<>();
 		for (int i = 0; i < declParameters.size(); i++) {
@@ -136,29 +145,81 @@ public class ProcCallCmd implements ICommand {
 				deleteParemeters.add(i);
 			}
 		}
-		
+
 		Collections.reverse(deleteParemeters);
 		List<IExpression> tempParameters = new ArrayList<>(parameters);
 		for (Integer index : deleteParemeters) {
 			// remove R-Values
-			tempParameters.remove((int)index);
+			tempParameters.remove((int) index);
 		}
-		
+
 		List<String> parameterNames = tempParameters.stream()
-				.map(p -> ((StoreExpr)p).getIdentifier().getIdentifierName())
-				.collect(Collectors.toList());
+				.map(p -> ((StoreExpr) p).getIdentifier().getIdentifierName()).collect(Collectors.toList());
 
 		// check if there are duplicates
 		Set<String> duplicateFinder = new HashSet<>();
-		for (String parameterName : parameterNames ) {
+		for (String parameterName : parameterNames) {
 			if (!duplicateFinder.add(parameterName)) {
-				throw new AliasingCheckingException("Parameter " + parameterName + " cannot be used multiple times in call " + this.toString(""));
+				throw new AliasingCheckingException(
+						"Parameter " + parameterName + " cannot be used multiple times in call " + this.toString(""));
 			}
 		}
 	}
 
 	@Override
 	public void createCode(CodeGenerationEnvironment cgenv) throws CodeTooSmallError, CodeGenerationException {
-		// Todo
+
+		RoutineDecl routineDecl = null;
+		try {
+			routineDecl = cgenv.env.rootContext.symbolTable.findMatch(this);
+		} catch (RoutineMatchException e) {
+			throw new CodeGenerationException("RoutineMatchError in ProcCallCmd.createCode.");
+		}
+
+		// save expressions to stack (in order)
+		for (int parameterIndex : routineDecl.getParamOrder()) {
+			FullIdentifier decl = routineDecl.getParamList().get(parameterIndex);
+			if (decl.getFlowmode() instanceof FlowmodeIn) {
+				if (decl.getMechmode() instanceof MechmodeCopy) {
+					// in copy -> R-Value
+					parameters.get(parameterIndex).createCode(cgenv);
+				} else if (decl.getMechmode() instanceof MechmodeReference) {
+					// in ref -> Address
+					parameters.get(parameterIndex).createCodeLoadAddr(cgenv);
+				} else {
+					throw new CodeGenerationException(
+							"Unknown Mechmode of argument " + decl.toString("") + "in ProcCallCmd.createCode.");
+				}
+			} else if (decl.getFlowmode() instanceof FlowmodeInOut) {
+				if (decl.getMechmode() instanceof MechmodeCopy) {
+					// inout copy -> R-Value
+					parameters.get(parameterIndex).createCode(cgenv);
+				} else if (decl.getMechmode() instanceof MechmodeReference) {
+					// inout ref -> Address
+					parameters.get(parameterIndex).createCodeLoadAddr(cgenv);
+				} else {
+					throw new CodeGenerationException(
+							"Unknown Mechmode of argument " + decl.toString("") + "in ProcCallCmd.createCode.");
+				}
+			} else if (decl.getFlowmode() instanceof FlowmodeOut) {
+				if (decl.getMechmode() instanceof MechmodeCopy) {
+					// out copy -> R-Value
+					parameters.get(parameterIndex).createCode(cgenv);
+				} else if (decl.getMechmode() instanceof MechmodeReference) {
+					// out ref -> Address
+					parameters.get(parameterIndex).createCodeLoadAddr(cgenv);
+				} else {
+					throw new CodeGenerationException(
+							"Unknown Mechmode of argument " + decl.toString("") + "in ProcCallCmd.createCode.");
+				}
+			} else {
+				throw new CodeGenerationException(
+						"Unknown Flowmode of argument " + decl.toString("") + "in ProcCallCmd.createCode.");
+			}
+		}
+
+		// call to function
+		int routineLocation = cgenv.getRoutineLocation(routineDecl);
+		cgenv.code.put(cgenv.locInc(), new IInstructions.Call(routineLocation));
 	}
 }
