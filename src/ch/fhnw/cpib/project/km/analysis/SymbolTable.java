@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ch.fhnw.cpib.project.km.exceptions.CodeGenerationException;
 import ch.fhnw.cpib.project.km.exceptions.RoutineMatchException;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
 import ch.fhnw.cpib.project.km.syntax.abst.FullIdentifier;
@@ -17,6 +18,7 @@ import ch.fhnw.cpib.project.km.token.keywords.Const;
 public class SymbolTable {
 	private final Environment env;
 	private final Map<String, FullIdentifier> localVariables = new HashMap<>();
+	private final Map<String, Integer> localVariablesLocation = new HashMap<>();
 	private final Map<String, FullIdentifier> globalVariables = new HashMap<>();
 	private final List<RoutineDecl> procedures = new ArrayList<>();
 	private final List<RoutineDecl> functions = new ArrayList<>();
@@ -88,12 +90,14 @@ public class SymbolTable {
 
 	public void clearVariables() {
 		localVariables.clear();
+		localVariablesLocation.clear();
 		globalVariables.clear();
 	}
 
 	public SymbolTable clone() {
 		SymbolTable ret = new SymbolTable(env);
 		ret.localVariables.putAll(localVariables);
+		ret.localVariablesLocation.putAll(localVariablesLocation);
 		ret.globalVariables.putAll(globalVariables);
 		ret.procedures.addAll(procedures);
 		ret.functions.addAll(functions);
@@ -106,5 +110,19 @@ public class SymbolTable {
 
 	public RoutineDecl findMatch(FunctionCallExpr functionCallExpr) throws RoutineMatchException {
 		return new RoutineMatcher(env).findMatch(functions, functionCallExpr);
+	}
+
+	public int getLocalVariablesLocation(String identifier) {
+		return localVariablesLocation.getOrDefault(identifier, -1);
+	}
+
+	public void setLocalVariablesLocation(String identifier, int location) throws CodeGenerationException {
+		if (localVariablesLocation.containsKey(identifier) && localVariablesLocation.get(identifier) != location) {
+			throw new CodeGenerationException("Trying to add identifier " + identifier + " with a different location.");
+		}
+		if (location < 0) {
+			throw new CodeGenerationException("Identifier " + identifier + " cannot be at location" + location +".");
+		}
+		localVariablesLocation.put(identifier, location);
 	}
 }

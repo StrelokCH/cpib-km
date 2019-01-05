@@ -3,11 +3,15 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.exceptions.AliasingCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.CodeGenerationException;
 import ch.fhnw.cpib.project.km.exceptions.ConstCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.InitCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
+import ch.fhnw.cpib.project.km.synthesis.CodeGenerationEnvironment;
 import ch.fhnw.cpib.project.km.token.keywords.Bool;
+import ch.fhnw.cpib.project.km.vm.IInstructions;
+import ch.fhnw.cpib.project.km.vm.ICodeArray.CodeTooSmallError;
 
 public class WhileCmd implements ICommand {
 
@@ -61,5 +65,23 @@ public class WhileCmd implements ICommand {
 	@Override
 	public void checkAliasing(Environment env) throws AliasingCheckingException {
 		// not needed
+	}
+
+	@Override
+	public void createCode(CodeGenerationEnvironment cgenv) throws CodeTooSmallError, CodeGenerationException {
+		int loc = cgenv.loc();
+		
+		// load value of expression to stack
+		expression.createCode(cgenv);
+		
+		int loc1 = cgenv.locInc();
+		
+		command.createCode(cgenv);
+		
+		int loc3 = cgenv.locInc();
+		int loc4 = cgenv.locInc();
+		
+		cgenv.code.put(loc1, new IInstructions.CondJump(loc4));
+		cgenv.code.put(loc3, new IInstructions.UncondJump(loc));
 	}
 }

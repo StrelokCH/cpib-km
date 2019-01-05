@@ -10,6 +10,7 @@ import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
 import ch.fhnw.cpib.project.km.synthesis.CodeGenerationEnvironment;
 import ch.fhnw.cpib.project.km.token.keywords.Bool;
+import ch.fhnw.cpib.project.km.vm.IInstructions;
 import ch.fhnw.cpib.project.km.vm.ICodeArray.CodeTooSmallError;
 
 public class CondCmd implements ICommand {
@@ -74,5 +75,22 @@ public class CondCmd implements ICommand {
 	public void checkAliasing(Environment env) throws AliasingCheckingException {
 		ifCase.checkAliasing(env);
 		elseCase.checkAliasing(env);
+	}
+
+	@Override
+	public void createCode(CodeGenerationEnvironment cgenv) throws CodeTooSmallError, CodeGenerationException {
+		int locExpr = cgenv.loc();
+		
+		// load value of expression to stack
+		expression.createCode(cgenv);
+		
+		int locCondJump = cgenv.locInc();
+		
+		ifCase.createCode(cgenv);
+		
+		int locElseCase = cgenv.loc();
+		elseCase.createCode(cgenv);
+		
+		cgenv.code.put(locCondJump, new IInstructions.CondJump(locElseCase));
 	}
 }

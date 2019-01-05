@@ -4,15 +4,21 @@ import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.analysis.TypePromoter;
 import ch.fhnw.cpib.project.km.exceptions.AliasingCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.CodeGenerationException;
 import ch.fhnw.cpib.project.km.exceptions.ConstCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.InitCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
+import ch.fhnw.cpib.project.km.synthesis.CodeGenerationEnvironment;
 import ch.fhnw.cpib.project.km.token.keywords.Type;
+import ch.fhnw.cpib.project.km.vm.IInstructions;
+import ch.fhnw.cpib.project.km.vm.ICodeArray.CodeTooSmallError;
 
 public class AssiCmd implements ICommand {
 
+	// left
 	private final IExpression expression1;
+	// right
 	private final IExpression expression2;
 
 	public AssiCmd(IExpression expression1, IExpression expression2) {
@@ -69,5 +75,17 @@ public class AssiCmd implements ICommand {
 	@Override
 	public void checkAliasing(Environment env) throws AliasingCheckingException {
 		// not needed
+	}
+
+	@Override
+	public void createCode(CodeGenerationEnvironment cgenv) throws CodeTooSmallError, CodeGenerationException {
+		// load right side to stack
+		expression2.createCode(cgenv);
+
+		// load target address to stack
+		expression1.createCodeLoadAddr(cgenv);
+
+		// store input to address
+		cgenv.code.put(cgenv.locInc(), new IInstructions.Store());
 	}
 }

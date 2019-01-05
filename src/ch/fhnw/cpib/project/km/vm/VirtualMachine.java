@@ -89,6 +89,17 @@ public class VirtualMachine implements IVirtualMachine {
 
 	// routine operations
 
+	public class PopSingleBlockExec extends PopSingleBlock implements IExecInstr {
+		public PopSingleBlockExec() {
+			super();
+		}
+
+		public void execute() throws ExecutionError {
+			sp = sp - 1;
+			pc = pc + 1;
+		}
+	}
+
 	public class AllocBlockExec extends AllocBlock implements IExecInstr {
 		public AllocBlockExec(int size) {
 			super(size);
@@ -170,6 +181,23 @@ public class VirtualMachine implements IVirtualMachine {
 		}
 	}
 
+	// load immediate int64 value (value -> stack)
+	public class LoadImInt64Exec extends LoadImInt64 implements IExecInstr {
+		public LoadImInt64Exec(long value) {
+			super(value);
+		}
+
+		public void execute() throws ExecutionError {
+			// remove following check if use ep
+			if (sp > hp) {
+				throw new ExecutionError(SP_OVER_HP);
+			}
+			store[sp] = Data.int64New(value);
+			sp = sp + 1;
+			pc = pc + 1;
+		}
+	}
+
 	// load address relative to frame pointer (address -> stack)
 	public class LoadAddrRelExec extends LoadAddrRel implements IExecInstr {
 		public LoadAddrRelExec(int relAddress) {
@@ -217,12 +245,34 @@ public class VirtualMachine implements IVirtualMachine {
 		}
 	}
 
+	public class NegInt64Exec extends NegInt64 implements IExecInstr {
+		public void execute() {
+			store[sp - 1] = Data.int64Inv(store[sp - 1]);
+			pc = pc + 1;
+		}
+	}
+
+	public class InvBoolExec extends NegInt implements IExecInstr {
+		public void execute() {
+			store[sp - 1] = Data.boolInv(store[sp - 1]);
+			pc = pc + 1;
+		}
+	}
+
 	// dyadic instructions
 
 	public class AddIntExec extends AddInt implements IExecInstr {
 		public void execute() {
 			sp = sp - 1;
 			store[sp - 1] = Data.intAdd(store[sp - 1], store[sp]);
+			pc = pc + 1;
+		}
+	}
+
+	public class AddInt64Exec extends AddInt64 implements IExecInstr {
+		public void execute() {
+			sp = sp - 1;
+			store[sp - 1] = Data.int64Add(store[sp - 1], store[sp]);
 			pc = pc + 1;
 		}
 	}
@@ -235,10 +285,26 @@ public class VirtualMachine implements IVirtualMachine {
 		}
 	}
 
+	public class SubInt64Exec extends SubInt64 implements IExecInstr {
+		public void execute() {
+			sp = sp - 1;
+			store[sp - 1] = Data.int64Sub(store[sp - 1], store[sp]);
+			pc = pc + 1;
+		}
+	}
+
 	public class MultIntExec extends MultInt implements IExecInstr {
 		public void execute() {
 			sp = sp - 1;
 			store[sp - 1] = Data.intMult(store[sp - 1], store[sp]);
+			pc = pc + 1;
+		}
+	}
+
+	public class MultInt64Exec extends MultInt64 implements IExecInstr {
+		public void execute() {
+			sp = sp - 1;
+			store[sp - 1] = Data.int64Mult(store[sp - 1], store[sp]);
 			pc = pc + 1;
 		}
 	}
@@ -251,10 +317,26 @@ public class VirtualMachine implements IVirtualMachine {
 		}
 	}
 
+	public class DivTruncInt64Exec extends DivTruncInt64 implements IExecInstr {
+		public void execute() throws ExecutionError {
+			sp = sp - 1;
+			store[sp - 1] = Data.int64DivTrunc(store[sp - 1], store[sp]);
+			pc = pc + 1;
+		}
+	}
+
 	public class ModTruncIntExec extends ModTruncInt implements IExecInstr {
 		public void execute() throws ExecutionError {
 			sp = sp - 1;
 			store[sp - 1] = Data.intModTrunc(store[sp - 1], store[sp]);
+			pc = pc + 1;
+		}
+	}
+
+	public class ModTruncInt64Exec extends ModTruncInt64 implements IExecInstr {
+		public void execute() throws ExecutionError {
+			sp = sp - 1;
+			store[sp - 1] = Data.int64ModTrunc(store[sp - 1], store[sp]);
 			pc = pc + 1;
 		}
 	}
@@ -267,10 +349,26 @@ public class VirtualMachine implements IVirtualMachine {
 		}
 	}
 
+	public class EqInt64Exec extends EqInt64 implements IExecInstr {
+		public void execute() {
+			sp = sp - 1;
+			store[sp - 1] = Data.int64EQ(store[sp - 1], store[sp]);
+			pc = pc + 1;
+		}
+	}
+
 	public class NeIntExec extends NeInt implements IExecInstr {
 		public void execute() {
 			sp = sp - 1;
 			store[sp - 1] = Data.intNE(store[sp - 1], store[sp]);
+			pc = pc + 1;
+		}
+	}
+
+	public class NeInt64Exec extends NeInt64 implements IExecInstr {
+		public void execute() {
+			sp = sp - 1;
+			store[sp - 1] = Data.int64NE(store[sp - 1], store[sp]);
 			pc = pc + 1;
 		}
 	}
@@ -283,10 +381,26 @@ public class VirtualMachine implements IVirtualMachine {
 		}
 	}
 
+	public class GtInt64Exec extends GtInt64 implements IExecInstr {
+		public void execute() {
+			sp = sp - 1;
+			store[sp - 1] = Data.int64GT(store[sp - 1], store[sp]);
+			pc = pc + 1;
+		}
+	}
+
 	public class LtIntExec extends LtInt implements IExecInstr {
 		public void execute() {
 			sp = sp - 1;
 			store[sp - 1] = Data.intLT(store[sp - 1], store[sp]);
+			pc = pc + 1;
+		}
+	}
+
+	public class LtInt64Exec extends LtInt64 implements IExecInstr {
+		public void execute() {
+			sp = sp - 1;
+			store[sp - 1] = Data.int64LT(store[sp - 1], store[sp]);
 			pc = pc + 1;
 		}
 	}
@@ -299,10 +413,26 @@ public class VirtualMachine implements IVirtualMachine {
 		}
 	}
 
+	public class GeInt64Exec extends GeInt64 implements IExecInstr {
+		public void execute() {
+			sp = sp - 1;
+			store[sp - 1] = Data.int64GE(store[sp - 1], store[sp]);
+			pc = pc + 1;
+		}
+	}
+
 	public class LeIntExec extends LeInt implements IExecInstr {
 		public void execute() {
 			sp = sp - 1;
 			store[sp - 1] = Data.intLE(store[sp - 1], store[sp]);
+			pc = pc + 1;
+		}
+	}
+
+	public class LeInt64Exec extends LeInt64 implements IExecInstr {
+		public void execute() {
+			sp = sp - 1;
+			store[sp - 1] = Data.int64LE(store[sp - 1], store[sp]);
 			pc = pc + 1;
 		}
 	}
@@ -353,10 +483,25 @@ public class VirtualMachine implements IVirtualMachine {
 		}
 
 		public void execute() throws ExecutionError {
-			System.out.print("? " + indicator + " : int = ");
+			System.out.print("? " + indicator + " : int32 = ");
 			int input = InputUtility.readInt();
 			int address = Data.intGet(store[sp - 1]);
 			store[address] = Data.intNew(input);
+			sp = sp - 1;
+			pc = pc + 1;
+		}
+	}
+
+	public class InputInt64Exec extends InputInt implements IExecInstr {
+		public InputInt64Exec(String indicator) {
+			super(indicator);
+		}
+
+		public void execute() throws ExecutionError {
+			System.out.print("? " + indicator + " : int64 = ");
+			long input = InputUtility.readLong();
+			int address = Data.intGet(store[sp - 1]);
+			store[address] = Data.int64New(input);
 			sp = sp - 1;
 			pc = pc + 1;
 		}
@@ -383,8 +528,30 @@ public class VirtualMachine implements IVirtualMachine {
 		public void execute() {
 			sp = sp - 1;
 			int output = Data.intGet(store[sp]);
-			System.out.println("! " + indicator + " : int = " + output);
+			System.out.println("! " + indicator + " : int32 = " + output);
 			pc = pc + 1;
+		}
+	}
+
+	public class OutputInt64Exec extends OutputInt implements IExecInstr {
+		public OutputInt64Exec(String indicator) {
+			super(indicator);
+		}
+
+		public void execute() {
+			sp = sp - 1;
+			long output = Data.int64Get(store[sp]);
+			System.out.println("! " + indicator + " : int64 = " + output);
+			pc = pc + 1;
+		}
+	}
+
+	public class PromoteInt32ToInt64Exec extends PromoteInt32ToInt64 implements IExecInstr {
+		public PromoteInt32ToInt64Exec() {
+		}
+
+		public void execute() {
+			store[sp - 1] = Data.promoteInt32ToInt64(store[sp - 1]);
 		}
 	}
 }

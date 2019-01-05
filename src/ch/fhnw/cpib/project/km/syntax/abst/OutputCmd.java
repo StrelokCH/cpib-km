@@ -3,10 +3,18 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.exceptions.AliasingCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.CodeGenerationException;
 import ch.fhnw.cpib.project.km.exceptions.ConstCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.InitCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
+import ch.fhnw.cpib.project.km.synthesis.CodeGenerationEnvironment;
+import ch.fhnw.cpib.project.km.token.keywords.Bool;
+import ch.fhnw.cpib.project.km.token.keywords.Int32;
+import ch.fhnw.cpib.project.km.token.keywords.Int64;
+import ch.fhnw.cpib.project.km.token.keywords.Type;
+import ch.fhnw.cpib.project.km.vm.ICodeArray.CodeTooSmallError;
+import ch.fhnw.cpib.project.km.vm.IInstructions;
 
 public class OutputCmd implements ICommand {
 
@@ -52,5 +60,26 @@ public class OutputCmd implements ICommand {
 	@Override
 	public void checkAliasing(Environment env) throws AliasingCheckingException {
 		// not needed
+	}
+
+	@Override
+	public void createCode(CodeGenerationEnvironment cgenv) throws CodeTooSmallError, CodeGenerationException {
+		// load expression
+		expression.createCode(cgenv);
+
+		// output top of stack
+		Type type = expression.getTypeSafe(cgenv.env);
+		IInstructions.IInstr instruction = null;
+		String indicator = expression.toString("");
+		if (type instanceof Int32) {
+			instruction= new IInstructions.OutputInt(indicator);
+		} else if (type instanceof Int64) {
+			instruction= new IInstructions.OutputInt64(indicator);
+		} else if (type instanceof Bool) {
+			instruction= new IInstructions.OutputBool(indicator);
+		} else {
+			throw new CodeGenerationException("invalid type in OutputCmd.createCode. Type is " + type.toString() + ".");
+		}
+		cgenv.code.put(cgenv.locInc(), instruction);
 	}
 }

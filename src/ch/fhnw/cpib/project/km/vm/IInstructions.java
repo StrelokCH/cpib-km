@@ -43,6 +43,19 @@ public interface IInstructions {
 
 	// routine operations
 
+	class PopSingleBlock implements IInstr {
+		public PopSingleBlock() {
+		}
+
+		public String toString() {
+			return "PopSingleBlock";
+		}
+
+		public IExecInstr toExecInstr(VirtualMachine vm) {
+			return vm.new PopSingleBlockExec();
+		}
+	}
+
 	class AllocBlock implements IInstr {
 		protected int size;
 
@@ -124,6 +137,23 @@ public interface IInstructions {
 		}
 	}
 
+	// load immediate int64 value (value -> stack)
+	class LoadImInt64 implements IInstr {
+		protected long value;
+
+		public LoadImInt64(long value) {
+			this.value = value;
+		}
+
+		public String toString() {
+			return "LoadImInt64(" + value + ")";
+		}
+
+		public IExecInstr toExecInstr(VirtualMachine vm) {
+			return vm.new LoadImInt64Exec(value);
+		}
+	}
+
 	// load address relative to frame pointer (address -> stack)
 	class LoadAddrRel implements IInstr {
 		protected int relAddress;
@@ -169,11 +199,31 @@ public interface IInstructions {
 
 	class NegInt implements IInstr {
 		public String toString() {
-			return "NegInt";
+			return "NegInt32";
 		}
 
 		public IExecInstr toExecInstr(VirtualMachine vm) {
 			return vm.new NegIntExec();
+		}
+	}
+
+	class NegInt64 implements IInstr {
+		public String toString() {
+			return "NegInt64";
+		}
+
+		public IExecInstr toExecInstr(VirtualMachine vm) {
+			return vm.new NegInt64Exec();
+		}
+	}
+
+	class InvBool implements IInstr {
+		public String toString() {
+			return "InvBool";
+		}
+
+		public IExecInstr toExecInstr(VirtualMachine vm) {
+			return vm.new InvBoolExec();
 		}
 	}
 
@@ -189,9 +239,19 @@ public interface IInstructions {
 		}
 	}
 
+	class AddInt64 implements IInstr {
+		public String toString() {
+			return "AddInt32";
+		}
+
+		public IExecInstr toExecInstr(VirtualMachine vm) {
+			return vm.new AddInt64Exec();
+		}
+	}
+
 	class SubInt implements IInstr {
 		public String toString() {
-			return "SubInt";
+			return "SubInt32";
 		}
 
 		public IExecInstr toExecInstr(VirtualMachine vm) {
@@ -199,13 +259,33 @@ public interface IInstructions {
 		}
 	}
 
+	class SubInt64 implements IInstr {
+		public String toString() {
+			return "SubInt64";
+		}
+
+		public IExecInstr toExecInstr(VirtualMachine vm) {
+			return vm.new SubInt64Exec();
+		}
+	}
+
 	class MultInt implements IInstr {
 		public String toString() {
-			return "MultInt";
+			return "MultInt32";
 		}
 
 		public IExecInstr toExecInstr(VirtualMachine vm) {
 			return vm.new MultIntExec();
+		}
+	}
+
+	class MultInt64 implements IInstr {
+		public String toString() {
+			return "MultInt64";
+		}
+
+		public IExecInstr toExecInstr(VirtualMachine vm) {
+			return vm.new MultInt64Exec();
 		}
 	}
 
@@ -219,6 +299,16 @@ public interface IInstructions {
 		}
 	}
 
+	class DivTruncInt64 implements IInstr {
+		public String toString() {
+			return "DivTruncInt64";
+		}
+
+		public IExecInstr toExecInstr(VirtualMachine vm) {
+			return vm.new DivTruncInt64Exec();
+		}
+	}
+
 	class ModTruncInt implements IInstr {
 		public String toString() {
 			return "ModTruncInt";
@@ -226,6 +316,16 @@ public interface IInstructions {
 
 		public IExecInstr toExecInstr(VirtualMachine vm) {
 			return vm.new ModTruncIntExec();
+		}
+	}
+
+	class ModTruncInt64 implements IInstr {
+		public String toString() {
+			return "ModTruncInt64";
+		}
+
+		public IExecInstr toExecInstr(VirtualMachine vm) {
+			return vm.new ModTruncInt64Exec();
 		}
 	}
 
@@ -239,6 +339,16 @@ public interface IInstructions {
 		}
 	}
 
+	class EqInt64 implements IInstr {
+		public String toString() {
+			return "EqInt64";
+		}
+
+		public IExecInstr toExecInstr(VirtualMachine vm) {
+			return vm.new EqInt64Exec();
+		}
+	}
+
 	class NeInt implements IInstr {
 		public String toString() {
 			return "NeInt";
@@ -246,6 +356,16 @@ public interface IInstructions {
 
 		public IExecInstr toExecInstr(VirtualMachine vm) {
 			return vm.new NeIntExec();
+		}
+	}
+
+	class NeInt64 implements IInstr {
+		public String toString() {
+			return "NeInt64";
+		}
+
+		public IExecInstr toExecInstr(VirtualMachine vm) {
+			return vm.new NeInt64Exec();
 		}
 	}
 
@@ -259,6 +379,16 @@ public interface IInstructions {
 		}
 	}
 
+	class GtInt64 implements IInstr {
+		public String toString() {
+			return "GtInt64";
+		}
+
+		public IExecInstr toExecInstr(VirtualMachine vm) {
+			return vm.new GtInt64Exec();
+		}
+	}
+
 	class LtInt implements IInstr {
 		public String toString() {
 			return "LtInt";
@@ -266,6 +396,16 @@ public interface IInstructions {
 
 		public IExecInstr toExecInstr(VirtualMachine vm) {
 			return vm.new LtIntExec();
+		}
+	}
+
+	class LtInt64 implements IInstr {
+		public String toString() {
+			return "LtInt64";
+		}
+
+		public IExecInstr toExecInstr(VirtualMachine vm) {
+			return vm.new LtInt64Exec();
 		}
 	}
 
@@ -279,6 +419,16 @@ public interface IInstructions {
 		}
 	}
 
+	class GeInt64 implements IInstr {
+		public String toString() {
+			return "GeInt64";
+		}
+
+		public IExecInstr toExecInstr(VirtualMachine vm) {
+			return vm.new GeInt64Exec();
+		}
+	}
+
 	class LeInt implements IInstr {
 		public String toString() {
 			return "LeInt";
@@ -286,6 +436,16 @@ public interface IInstructions {
 
 		public IExecInstr toExecInstr(VirtualMachine vm) {
 			return vm.new LeIntExec();
+		}
+	}
+
+	class LeInt64 implements IInstr {
+		public String toString() {
+			return "LeInt64";
+		}
+
+		public IExecInstr toExecInstr(VirtualMachine vm) {
+			return vm.new LeInt64Exec();
 		}
 	}
 
@@ -357,6 +517,22 @@ public interface IInstructions {
 		}
 	}
 
+	class InputInt64 implements IInstr {
+		protected String indicator;
+
+		public InputInt64(String indicator) {
+			this.indicator = indicator;
+		}
+
+		public String toString() {
+			return "InputInt64(\"" + indicator + "\")";
+		}
+
+		public IExecInstr toExecInstr(VirtualMachine vm) {
+			return vm.new InputInt64Exec(indicator);
+		}
+	}
+
 	class OutputBool implements IInstr {
 		protected String indicator;
 
@@ -386,6 +562,37 @@ public interface IInstructions {
 
 		public IExecInstr toExecInstr(VirtualMachine vm) {
 			return vm.new OutputIntExec(indicator);
+		}
+	}
+
+	class OutputInt64 implements IInstr {
+		protected String indicator;
+
+		public OutputInt64(String indicator) {
+			this.indicator = indicator;
+		}
+
+		public String toString() {
+			return "OutputInt64(\"" + indicator + "\")";
+		}
+
+		public IExecInstr toExecInstr(VirtualMachine vm) {
+			return vm.new OutputInt64Exec(indicator);
+		}
+	}
+	
+	// cast instructions
+
+	class PromoteInt32ToInt64 implements IInstr {
+		public PromoteInt32ToInt64() {
+		}
+
+		public String toString() {
+			return "PromoteInt32ToInt64";
+		}
+
+		public IExecInstr toExecInstr(VirtualMachine vm) {
+			return vm.new PromoteInt32ToInt64Exec();
 		}
 	}
 }

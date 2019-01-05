@@ -3,10 +3,20 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.exceptions.AliasingCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.CodeGenerationException;
 import ch.fhnw.cpib.project.km.exceptions.ConstCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.InitCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
+import ch.fhnw.cpib.project.km.synthesis.CodeGenerationEnvironment;
+import ch.fhnw.cpib.project.km.token.keywords.Bool;
+import ch.fhnw.cpib.project.km.token.keywords.Int32;
+import ch.fhnw.cpib.project.km.token.keywords.Int64;
+import ch.fhnw.cpib.project.km.token.keywords.Type;
+import ch.fhnw.cpib.project.km.vm.ICodeArray.CodeTooSmallError;
+import ch.fhnw.cpib.project.km.vm.IInstructions.IExecInstr;
+import ch.fhnw.cpib.project.km.vm.IInstructions;
+import ch.fhnw.cpib.project.km.vm.VirtualMachine;
 
 public class InputCmd implements ICommand {
 
@@ -58,5 +68,32 @@ public class InputCmd implements ICommand {
 	@Override
 	public void checkAliasing(Environment env) throws AliasingCheckingException {
 		// not needed
+	}
+
+	public static void createCode(CodeGenerationEnvironment cgenv, Type type, String indicator)
+			throws CodeTooSmallError, CodeGenerationException {
+		IInstructions.IInstr instruction = null;
+		if (type instanceof Int32) {
+			instruction = new IInstructions.InputInt(indicator);
+		} else if (type instanceof Int64) {
+			instruction = new IInstructions.InputInt64(indicator);
+		} else if (type instanceof Bool) {
+			instruction = new IInstructions.InputBool(indicator);
+		} else {
+			throw new CodeGenerationException("invalid type in InputCmd.createCode. Type is " + type.toString() + ".");
+		}
+		cgenv.code.put(cgenv.locInc(), instruction);
+	}
+
+	@Override
+	public void createCode(CodeGenerationEnvironment cgenv) throws CodeTooSmallError, CodeGenerationException {
+		// query input to stack
+		createCode(cgenv, expression.getTypeSafe(cgenv.env), expression.toString(""));
+
+		// load target address to stack
+		expression.createCodeLoadAddr(cgenv);
+
+		// store input to address
+		cgenv.code.put(cgenv.locInc(), new IInstructions.Store());
 	}
 }

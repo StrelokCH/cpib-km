@@ -7,12 +7,15 @@ import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.analysis.SymbolTable;
 import ch.fhnw.cpib.project.km.exceptions.AliasingCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.CodeGenerationException;
 import ch.fhnw.cpib.project.km.exceptions.ConstCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
+import ch.fhnw.cpib.project.km.synthesis.CodeGenerationEnvironment;
 import ch.fhnw.cpib.project.km.token.keywords.MechmodeReference;
 import ch.fhnw.cpib.project.km.token.keywords.Type;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
+import ch.fhnw.cpib.project.km.vm.ICodeArray.CodeTooSmallError;
 
 /**
  * May be a function or procedure declaration
@@ -175,5 +178,11 @@ public class RoutineDecl implements IDecl {
 		for (ICommand command : cpsCmd) {
 			command.checkAliasing(env);
 		}
+	}
+
+	@Override
+	public void createCode(CodeGenerationEnvironment cgenv) throws CodeTooSmallError, CodeGenerationException {
+		// Todo
+		cgenv.addRoutine(this, cgenv.loc());
 	}
 }

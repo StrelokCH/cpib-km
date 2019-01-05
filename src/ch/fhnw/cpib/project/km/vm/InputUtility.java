@@ -42,4 +42,18 @@ class InputUtility {
 			throw new ExecutionError("Not an integer.");
 		}
 	}
+
+	public static long readLong() throws ExecutionError {
+		String s;
+		try {
+			s = reader.readLine();
+		} catch (IOException e) {
+			throw new ExecutionError("Input failed.");
+		}
+		try {
+			return Long.parseLong(s);
+		} catch (NumberFormatException e) {
+			throw new ExecutionError("Not an long.");
+		}
+	}
 }

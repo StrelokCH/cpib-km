@@ -4,16 +4,19 @@ import java.util.List;
 
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
+import ch.fhnw.cpib.project.km.exceptions.CodeGenerationException;
 import ch.fhnw.cpib.project.km.exceptions.ConstCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.InitCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.RoutineMatchException;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
+import ch.fhnw.cpib.project.km.synthesis.CodeGenerationEnvironment;
 import ch.fhnw.cpib.project.km.token.keywords.FlowmodeInOut;
 import ch.fhnw.cpib.project.km.token.keywords.FlowmodeOut;
 import ch.fhnw.cpib.project.km.token.keywords.MechmodeReference;
 import ch.fhnw.cpib.project.km.token.keywords.Type;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
+import ch.fhnw.cpib.project.km.vm.ICodeArray.CodeTooSmallError;
 
 public class FunctionCallExpr implements IExpression {
 
@@ -87,7 +90,11 @@ public class FunctionCallExpr implements IExpression {
 
 	@Override
 	public void checkInit(Environment env) throws InitCheckingException {
-		// TODO Auto-generated method stub
+		// Todo
+	}
 
+	@Override
+	public void createCode(CodeGenerationEnvironment cgenv) throws CodeTooSmallError, CodeGenerationException {
+		// Todo
 	}
 }

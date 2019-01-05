@@ -3,10 +3,13 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.exceptions.AliasingCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.CodeGenerationException;
 import ch.fhnw.cpib.project.km.exceptions.ConstCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.InitCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
+import ch.fhnw.cpib.project.km.synthesis.CodeGenerationEnvironment;
+import ch.fhnw.cpib.project.km.vm.ICodeArray.CodeTooSmallError;
 
 public class SkipCmd implements ICommand {
 
@@ -44,5 +47,10 @@ public class SkipCmd implements ICommand {
 	@Override
 	public void checkAliasing(Environment env) throws AliasingCheckingException {
 		// not needed
+	}
+
+	@Override
+	public void createCode(CodeGenerationEnvironment cgenv) throws CodeTooSmallError, CodeGenerationException {
+		// not needed as skip is an empty instruction
 	}
 }

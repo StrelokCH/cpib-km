@@ -24,16 +24,44 @@ public class Data {
 		}
 	}
 
+	static class Int64Data implements IBaseData {
+		private long i;
+
+		Int64Data(long i) {
+			this.i = i;
+		}
+
+		long getData() {
+			return i;
+		}
+
+		public Int64Data copy() {
+			return int64Copy(this);
+		}
+	}
+
 	static IntData intNew(int i) {
 		return new IntData(i);
+	}
+
+	static Int64Data int64New(long i) {
+		return new Int64Data(i);
 	}
 
 	static int intGet(IBaseData a) {
 		return ((IntData) a).getData();
 	}
 
+	static long int64Get(IBaseData a) {
+		return ((Int64Data) a).getData();
+	}
+
 	static IntData intCopy(IBaseData a) {
 		return intNew(intGet(a));
+	}
+
+	static Int64Data int64Copy(IBaseData a) {
+		return int64New(int64Get(a));
 	}
 
 	// coding booleans as integers
@@ -78,6 +106,14 @@ public class Data {
 		return intNew(-intGet(a));
 	}
 
+	static Int64Data int64Inv(IBaseData a) {
+		return int64New(-int64Get(a));
+	}
+
+	static IntData boolInv(IBaseData a) {
+		return intNew(boolGet(a) ? 0 : 1);
+	}
+
 	static FloatData floatInv(IBaseData a) {
 		return floatNew(-floatGet(a));
 	}
@@ -86,17 +122,37 @@ public class Data {
 		return intNew(intGet(a) + intGet(b));
 	}
 
+	static Int64Data int64Add(IBaseData a, IBaseData b) {
+		return int64New(int64Get(a) + int64Get(b));
+	}
+
 	static IntData intSub(IBaseData a, IBaseData b) {
 		return intNew(intGet(a) - intGet(b));
+	}
+
+	static Int64Data int64Sub(IBaseData a, IBaseData b) {
+		return int64New(int64Get(a) - int64Get(b));
 	}
 
 	static IntData intMult(IBaseData a, IBaseData b) {
 		return intNew(intGet(a) * intGet(b));
 	}
 
+	static Int64Data int64Mult(IBaseData a, IBaseData b) {
+		return int64New(int64Get(a) * int64Get(b));
+	}
+
 	static IntData intDivTrunc(IBaseData a, IBaseData b) throws IVirtualMachine.ExecutionError {
 		try {
 			return intNew(intGet(a) / intGet(b));
+		} catch (ArithmeticException e) {
+			throw new VirtualMachine.ExecutionError("Integer division by zero.");
+		}
+	}
+
+	static Int64Data int64DivTrunc(IBaseData a, IBaseData b) throws IVirtualMachine.ExecutionError {
+		try {
+			return int64New(int64Get(a) / int64Get(b));
 		} catch (ArithmeticException e) {
 			throw new VirtualMachine.ExecutionError("Integer division by zero.");
 		}
@@ -110,27 +166,63 @@ public class Data {
 		}
 	}
 
+	static Int64Data int64ModTrunc(IBaseData a, IBaseData b) throws IVirtualMachine.ExecutionError {
+		try {
+			return int64New(int64Get(a) % int64Get(b));
+		} catch (ArithmeticException e) {
+			throw new VirtualMachine.ExecutionError("Integer remainder by zero.");
+		}
+	}
+
 	static IntData intEQ(IBaseData a, IBaseData b) {
 		return boolNew(intGet(a) == intGet(b));
+	}
+
+	static IntData int64EQ(IBaseData a, IBaseData b) {
+		return boolNew(int64Get(a) == int64Get(b));
 	}
 
 	static IntData intNE(IBaseData a, IBaseData b) {
 		return boolNew(intGet(a) != intGet(b));
 	}
 
+	static IntData int64NE(IBaseData a, IBaseData b) {
+		return boolNew(int64Get(a) != int64Get(b));
+	}
+
 	static IntData intGT(IBaseData a, IBaseData b) {
 		return boolNew(intGet(a) > intGet(b));
+	}
+
+	static IntData int64GT(IBaseData a, IBaseData b) {
+		return boolNew(int64Get(a) > int64Get(b));
 	}
 
 	static IntData intLT(IBaseData a, IBaseData b) {
 		return boolNew(intGet(a) < intGet(b));
 	}
 
+	static IntData int64LT(IBaseData a, IBaseData b) {
+		return boolNew(int64Get(a) < int64Get(b));
+	}
+
 	static IntData intGE(IBaseData a, IBaseData b) {
 		return boolNew(intGet(a) >= intGet(b));
 	}
 
+	static IntData int64GE(IBaseData a, IBaseData b) {
+		return boolNew(int64Get(a) >= int64Get(b));
+	}
+
 	static IntData intLE(IBaseData a, IBaseData b) {
 		return boolNew(intGet(a) <= intGet(b));
+	}
+
+	static IntData int64LE(IBaseData a, IBaseData b) {
+		return boolNew(int64Get(a) <= int64Get(b));
+	}
+
+	public static Int64Data promoteInt32ToInt64(IBaseData iBaseData) {
+		return int64New(intGet(iBaseData));
 	}
 }

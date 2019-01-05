@@ -10,17 +10,21 @@ import java.util.stream.Collectors;
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.exceptions.AliasingCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.CodeGenerationException;
 import ch.fhnw.cpib.project.km.exceptions.ConstCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.InitCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.RoutineMatchException;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
+import ch.fhnw.cpib.project.km.synthesis.CodeGenerationEnvironment;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
+import ch.fhnw.cpib.project.km.vm.ICodeArray.CodeTooSmallError;
 
 public class ProcCallCmd implements ICommand {
 
 	private final Identifier identifierProc;
 	private final List<IExpression> parameters;
+	// global stores
 	private final List<Identifier> identifiers;
 
 	public ProcCallCmd(Identifier identifierProc, List<IExpression> parameters, List<Identifier> identifiers) {
@@ -151,5 +155,10 @@ public class ProcCallCmd implements ICommand {
 				throw new AliasingCheckingException("Parameter " + parameterName + " cannot be used multiple times in call " + this.toString(""));
 			}
 		}
+	}
+
+	@Override
+	public void createCode(CodeGenerationEnvironment cgenv) throws CodeTooSmallError, CodeGenerationException {
+		// Todo
 	}
 }

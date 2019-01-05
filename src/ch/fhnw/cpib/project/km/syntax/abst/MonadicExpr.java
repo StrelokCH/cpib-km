@@ -2,15 +2,23 @@ package ch.fhnw.cpib.project.km.syntax.abst;
 
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
+import ch.fhnw.cpib.project.km.exceptions.CodeGenerationException;
 import ch.fhnw.cpib.project.km.exceptions.ConstCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.InitCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
+import ch.fhnw.cpib.project.km.synthesis.CodeGenerationEnvironment;
+import ch.fhnw.cpib.project.km.token.keywords.Int32;
+import ch.fhnw.cpib.project.km.token.keywords.Int64;
 import ch.fhnw.cpib.project.km.token.keywords.IntegerType;
 import ch.fhnw.cpib.project.km.token.keywords.NotOperator;
 import ch.fhnw.cpib.project.km.token.keywords.Type;
 import ch.fhnw.cpib.project.km.token.symbols.AddOperator;
+import ch.fhnw.cpib.project.km.token.symbols.MinusOperator;
+import ch.fhnw.cpib.project.km.token.symbols.PlusOperator;
 import ch.fhnw.cpib.project.km.token.various.Operator;
+import ch.fhnw.cpib.project.km.vm.ICodeArray.CodeTooSmallError;
+import ch.fhnw.cpib.project.km.vm.IInstructions;
 
 public class MonadicExpr implements IExpression {
 	private final Operator operator;
@@ -60,8 +68,28 @@ public class MonadicExpr implements IExpression {
 
 	@Override
 	public void checkInit(Environment env) throws InitCheckingException {
-		// TODO Auto-generated method stub
+		// Todo
+	}
 
+	@Override
+	public void createCode(CodeGenerationEnvironment cgenv) throws CodeTooSmallError, CodeGenerationException {
+		Type type = expression.getTypeSafe(cgenv.env);
+		if (operator instanceof PlusOperator) {
+			// ignore Plus operator
+		} else if (operator instanceof MinusOperator && type instanceof Int32) {
+			// int32
+			expression.createCode(cgenv);
+			cgenv.code.put(cgenv.locInc(), new IInstructions.NegInt());
+		}  else if (operator instanceof MinusOperator && type instanceof Int64) {
+			// int64
+			expression.createCode(cgenv);
+			cgenv.code.put(cgenv.locInc(), new IInstructions.NegInt64());
+		} else if (operator instanceof NotOperator) {
+			// boolean not
+			expression.createCode(cgenv);
+			cgenv.code.put(cgenv.locInc(), new IInstructions.InvBool());
+		}
+		throw new CodeGenerationException("Missing operator " + operator + " in MonadicExpr.createCode");
 	}
 
 }

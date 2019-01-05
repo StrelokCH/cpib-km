@@ -1,6 +1,7 @@
 package ch.fhnw.cpib.project.km.syntax.abst;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
@@ -8,8 +9,13 @@ import ch.fhnw.cpib.project.km.analysis.SymbolTable;
 import ch.fhnw.cpib.project.km.exceptions.ConstCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
+import ch.fhnw.cpib.project.km.synthesis.CodeGenerationEnvironment;
 import ch.fhnw.cpib.project.km.exceptions.AliasingCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.CodeGenerationException;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
+import ch.fhnw.cpib.project.km.vm.CodeArray;
+import ch.fhnw.cpib.project.km.vm.IInstructions;
+import ch.fhnw.cpib.project.km.vm.ICodeArray.CodeTooSmallError;
 
 public class Program {
 
@@ -112,6 +118,47 @@ public class Program {
 
 		for (ICommand command : cpsCmd) {
 			command.checkAliasing(env);
+		}
+	}
+
+	public void createCode(CodeGenerationEnvironment cgenv) throws CodeTooSmallError, CodeGenerationException {
+
+		// Prog Params
+		{
+			for (int i = 0; i < progParamList.size(); i++) {
+				// safe position of progParams
+				cgenv.globalStoreLocation.put(progParamList.get(i).getIdentifierName(), i);
+			}
+			for (FullIdentifier progParam : progParamList) {
+				// input progParams
+				InputCmd.createCode(cgenv, progParam.getType(), progParam.getIdentifierName());
+			}
+		}
+
+		// stores
+		{
+			int startLocation = progParamList.size();
+			List<IDecl> stores = cpsDecl.stream().filter(d -> d instanceof StoDecl).collect(Collectors.toList());
+			for (int i = 0; i < stores.size(); i++) {
+				// save location
+				StoDecl store = (StoDecl) stores.get(i);
+				cgenv.globalStoreLocation.put(store.getFullIdentifier().getIdentifierName(), startLocation + i);
+
+				stores.get(i).createCode(cgenv);
+			}
+		}
+
+		// commands
+		for (ICommand command : cpsCmd) {
+			command.createCode(cgenv);
+		}
+
+		// routines
+		{
+			List<IDecl> routines = cpsDecl.stream().filter(d -> d instanceof RoutineDecl).collect(Collectors.toList());
+			for (IDecl routine : routines) {
+				routine.createCode(cgenv);
+			}
 		}
 	}
 }
