@@ -12,6 +12,7 @@ import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
 import ch.fhnw.cpib.project.km.synthesis.CodeGenerationEnvironment;
 import ch.fhnw.cpib.project.km.token.keywords.Const;
 import ch.fhnw.cpib.project.km.token.keywords.FlowmodeIn;
+import ch.fhnw.cpib.project.km.token.keywords.Int32;
 import ch.fhnw.cpib.project.km.token.keywords.Int64;
 import ch.fhnw.cpib.project.km.token.keywords.MechmodeReference;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
@@ -40,7 +41,7 @@ public class RoutineDeclCastClamp extends RoutineDecl {
 
 	static StoDecl createReturn() {
 		// const x32:int32
-		return new StoDecl(new FullIdentifier(null, null, new Const(), new Identifier("x32"), new Int64()));
+		return new StoDecl(new FullIdentifier(null, null, new Const(), new Identifier("x32"), new Int32()));
 	}
 
 	static List<FullIdentifier> createGlobImps() {
@@ -76,7 +77,13 @@ public class RoutineDeclCastClamp extends RoutineDecl {
 
 		// load return address
 		int locationReturn = -2; // 0 - 1 (param) - 1
-		cgenv.code.put(cgenv.locInc(), new IInstructions.LoadImInt(locationReturn));
+		cgenv.code.put(cgenv.locInc(), new IInstructions.LoadAddrRel(locationReturn));
+
+		// load value onto stack
+		int locationValue = -1; // 0 - 1
+		cgenv.code.put(cgenv.locInc(), new IInstructions.LoadAddrRel(locationValue));
+		cgenv.code.put(cgenv.locInc(), new IInstructions.Deref());
+		cgenv.code.put(cgenv.locInc(), new IInstructions.Deref());
 
 		// cast
 		cgenv.code.put(cgenv.locInc(), new IInstructions.CastInt64ToInt32Clamp());

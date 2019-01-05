@@ -231,20 +231,20 @@ public class Data {
 	}
 
 	public static IntData castInt64ToInt32Clamp(IBaseData iBaseData) {
-		long value = intGet(iBaseData);
+		long value = int64Get(iBaseData);
 		value = Math.min(value, Integer.MAX_VALUE);
 		value = Math.max(value, Integer.MIN_VALUE);
 		return intNew((int) value);
 	}
 
 	public static IntData castInt64ToInt32Cut(IBaseData iBaseData) {
-		long value = intGet(iBaseData);
+		long value = int64Get(iBaseData);
 		value &= 0xFFFFFFFF;
 		return intNew((int) value);
 	}
 
 	public static IntData castInt64ToInt32Lossless(IBaseData iBaseData) throws ExecutionError {
-		long value = intGet(iBaseData);
+		long value = int64Get(iBaseData);
 		int newValue = (int)(value & 0xFFFFFFFF);
 		if (value != newValue) {
 			// error as lossless was expected
