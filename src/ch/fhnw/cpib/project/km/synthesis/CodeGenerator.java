@@ -31,8 +31,6 @@ public class CodeGenerator {
 			//       The missing guards lead to poor performance as each instruction is written twice.
 			cgenv.locSet(0);
 			program.getProgram().createCode(cgenv);
-			
-			code.put(cgenv.locInc(), new IInstructions.Stop());
 		} catch (CodeTooSmallError e) {
 			// try with bigger size
 			codeArraySize *= 1.5;

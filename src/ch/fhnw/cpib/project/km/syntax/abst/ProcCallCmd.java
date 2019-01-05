@@ -20,6 +20,8 @@ import ch.fhnw.cpib.project.km.synthesis.CodeGenerationEnvironment;
 import ch.fhnw.cpib.project.km.token.keywords.FlowmodeIn;
 import ch.fhnw.cpib.project.km.token.keywords.FlowmodeInOut;
 import ch.fhnw.cpib.project.km.token.keywords.FlowmodeOut;
+import ch.fhnw.cpib.project.km.token.keywords.Int32;
+import ch.fhnw.cpib.project.km.token.keywords.Int64;
 import ch.fhnw.cpib.project.km.token.keywords.MechmodeCopy;
 import ch.fhnw.cpib.project.km.token.keywords.MechmodeReference;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
@@ -183,6 +185,11 @@ public class ProcCallCmd implements ICommand {
 				if (decl.getMechmode() instanceof MechmodeCopy) {
 					// in copy -> R-Value
 					parameters.get(parameterIndex).createCode(cgenv);
+					if (decl.getType() instanceof Int64
+							&& parameters.get(parameterIndex).getTypeSafe(cgenv.env) instanceof Int32) {
+						// promote
+						cgenv.code.put(cgenv.locInc(), new IInstructions.PromoteInt32ToInt64());
+					}
 				} else if (decl.getMechmode() instanceof MechmodeReference) {
 					// in ref -> Address
 					parameters.get(parameterIndex).createCodeLoadAddr(cgenv);

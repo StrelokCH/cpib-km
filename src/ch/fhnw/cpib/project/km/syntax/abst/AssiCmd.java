@@ -10,6 +10,8 @@ import ch.fhnw.cpib.project.km.exceptions.InitCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
 import ch.fhnw.cpib.project.km.synthesis.CodeGenerationEnvironment;
+import ch.fhnw.cpib.project.km.token.keywords.Int32;
+import ch.fhnw.cpib.project.km.token.keywords.Int64;
 import ch.fhnw.cpib.project.km.token.keywords.Type;
 import ch.fhnw.cpib.project.km.vm.IInstructions;
 import ch.fhnw.cpib.project.km.vm.ICodeArray.CodeTooSmallError;
@@ -82,9 +84,14 @@ public class AssiCmd implements ICommand {
 
 		// load target address to stack
 		expression1.createCodeLoadAddr(cgenv);
-		
+
 		// load right side to stack
 		expression2.createCode(cgenv);
+		if (expression1.getTypeSafe(cgenv.env) instanceof Int64
+				&& expression2.getTypeSafe(cgenv.env) instanceof Int32) {
+			// promote
+			cgenv.code.put(cgenv.locInc(), new IInstructions.PromoteInt32ToInt64());
+		}
 
 		// store input to address
 		cgenv.code.put(cgenv.locInc(), new IInstructions.Store());

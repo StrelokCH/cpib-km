@@ -241,7 +241,7 @@ public interface IInstructions {
 
 	class AddInt64 implements IInstr {
 		public String toString() {
-			return "AddInt32";
+			return "AddInt64";
 		}
 
 		public IExecInstr toExecInstr(VirtualMachine vm) {
