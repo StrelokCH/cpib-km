@@ -18,7 +18,9 @@ import ch.fhnw.cpib.project.km.vm.InputUtility;
 
 public class Main {
 
+	// settings
 	private static int storeSize = 1024;
+	private static boolean outputCodeArray = true;
 
 	/**
 	 * Runs a program which can be selected.
@@ -42,10 +44,15 @@ public class Main {
 				StaticAnalyser analyser = new StaticAnalyser(abstProgram);
 				analyser.check();
 				ICodeArray codeArray = new CodeGenerator(analyser).generate();
-				codeArray.resize();
+
 				System.out.println("Build successful.");
+				if (outputCodeArray) {
+					System.out.println(codeArray.toString());
+				}
+
+				codeArray.resize();
 				new VirtualMachine(codeArray, storeSize);
-				
+
 				Thread.sleep(10);
 				System.out.println();
 			} catch (Exception e) {
