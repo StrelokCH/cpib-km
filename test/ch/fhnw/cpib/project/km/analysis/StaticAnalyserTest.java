@@ -16,8 +16,8 @@ public class StaticAnalyserTest extends AbstractTest {
 	protected Object test(String input) throws Exception {
 		try {
 			ITokenList tokens = Scanner.scan(input);
-			IProgram program = new Parser(tokens).parse();
-			Program abstProgram = program.toAbsSyn();
+			IProgram concreteProgram = new Parser(tokens).parse();
+			Program abstProgram = concreteProgram.toAbsSyn();
 			StaticAnalyser analyser = new StaticAnalyser(abstProgram);
 			analyser.check();
 			return abstProgram;

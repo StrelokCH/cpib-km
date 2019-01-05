@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 
 import ch.fhnw.cpib.project.km.vm.IVirtualMachine.ExecutionError;
 
-class InputUtility {
+public class InputUtility {
 
 	private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 

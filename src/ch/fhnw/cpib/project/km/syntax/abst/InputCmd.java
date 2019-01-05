@@ -91,7 +91,11 @@ public class InputCmd implements ICommand {
 		expression.createCodeLoadAddr(cgenv);
 
 		// query input to stack
-		createCode(cgenv, expression.getTypeSafe(cgenv.env), expression.toString(""));
+		String indicator = expression.toString("");
+		if (expression instanceof StoreExpr) {
+			indicator = ((StoreExpr)expression).getIdentifier().getIdentifierName();
+		}
+		createCode(cgenv, expression.getTypeSafe(cgenv.env), indicator);
 
 		// store input to address
 		cgenv.code.put(cgenv.locInc(), new IInstructions.Store());

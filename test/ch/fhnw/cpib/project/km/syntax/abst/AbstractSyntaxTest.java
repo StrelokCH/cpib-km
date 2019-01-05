@@ -20,8 +20,8 @@ public class AbstractSyntaxTest extends AbstractTest {
 	protected Object test(String input) throws Exception {
 		try {
 			ITokenList tokens = Scanner.scan(input);
-			IProgram program = new Parser(tokens).parse();
-			Program abstProgram = program.toAbsSyn();
+			IProgram concreteProgram = new Parser(tokens).parse();
+			Program abstProgram = concreteProgram.toAbsSyn();
 			System.out.println(abstProgram.toString(""));
 			return abstProgram;
 		} catch (LexicalErrorException e) {
