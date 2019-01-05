@@ -44,7 +44,10 @@ public class Main {
 				ICodeArray codeArray = new CodeGenerator(analyser).generate();
 				codeArray.resize();
 				System.out.println("Build successful.");
-				VirtualMachine vm = new VirtualMachine(codeArray, storeSize);
+				new VirtualMachine(codeArray, storeSize);
+				
+				Thread.sleep(10);
+				System.out.println();
 			} catch (Exception e) {
 				// Should not happen
 				e.printStackTrace();
@@ -60,10 +63,6 @@ public class Main {
 	 * @return The program code of the chosen program or an empty string (exit).
 	 */
 	private static String ChooseProgram() {
-		// clear screen
-		System.out.print("\033[H\033[2J");
-		System.out.flush();
-
 		PrintMenu();
 		return QuerySelection();
 	}
