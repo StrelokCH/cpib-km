@@ -79,15 +79,15 @@ public class RoutineDecl implements IDecl {
 	 */
 	public List<Integer> getParamOrder() {
 		List<Integer> ret = new ArrayList<Integer>();
-		// L-Values first
+		// the ones that need a store first
 		for (int i = 0; i < paramList.size(); i++) {
-			if (paramList.get(i).needsLValue()) {
+			if (needsStore(paramList.get(i))) {
 				ret.add(i);
 			}
 		}
-		// R-Values
+		// rest
 		for (int i = 0; i < paramList.size(); i++) {
-			if (!paramList.get(i).needsLValue()) {
+			if (!needsStore(paramList.get(i))) {
 				ret.add(i);
 			}
 		}
@@ -265,7 +265,7 @@ public class RoutineDecl implements IDecl {
 			int location = -1;
 			List<Integer> reverseParamOrder = new ArrayList<>(getParamOrder());
 			Collections.reverse(reverseParamOrder);
-			for (int index : getParamOrder()) {
+			for (int index : reverseParamOrder) {
 				FullIdentifier declaration = paramList.get(index);
 
 				symbolTable.setLocalVariablesLocation(declaration.getIdentifierName(), location);
