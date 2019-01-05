@@ -79,7 +79,7 @@ public class WhileCmd implements ICommand {
 		command.createCode(cgenv);
 		
 		int loc3 = cgenv.locInc();
-		int loc4 = cgenv.locInc();
+		int loc4 = cgenv.loc();
 		
 		cgenv.code.put(loc1, new IInstructions.CondJump(loc4));
 		cgenv.code.put(loc3, new IInstructions.UncondJump(loc));
