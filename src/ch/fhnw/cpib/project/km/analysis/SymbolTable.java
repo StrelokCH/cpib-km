@@ -44,14 +44,14 @@ public class SymbolTable {
 		if (!variables.containsKey(key)) {
 			return false;
 		}
-		
+
 		// removed as Globals.iml implies that this check is wrong
-		/*FullIdentifier declaration = variables.get(key);
-		if (declaration.getChangemode() instanceof Const
-				&& (fullIdentifier.getChangemode() != null && !(fullIdentifier.getChangemode() instanceof Const))) {
-			// trying to remove const from store
-			return false;
-		}*/
+		/*
+		 * FullIdentifier declaration = variables.get(key); if
+		 * (declaration.getChangemode() instanceof Const &&
+		 * (fullIdentifier.getChangemode() != null && !(fullIdentifier.getChangemode()
+		 * instanceof Const))) { // trying to remove const from store return false; }
+		 */
 		return true;
 	}
 
@@ -119,9 +119,6 @@ public class SymbolTable {
 	public void setLocalVariablesLocation(String identifier, int location) throws CodeGenerationException {
 		if (localVariablesLocation.containsKey(identifier) && localVariablesLocation.get(identifier) != location) {
 			throw new CodeGenerationException("Trying to add identifier " + identifier + " with a different location.");
-		}
-		if (location < 0) {
-			throw new CodeGenerationException("Identifier " + identifier + " cannot be at location" + location +".");
 		}
 		localVariablesLocation.put(identifier, location);
 	}

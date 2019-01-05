@@ -1,6 +1,7 @@
 package ch.fhnw.cpib.project.km.syntax.abst;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import ch.fhnw.cpib.project.km.analysis.Context;
@@ -14,7 +15,6 @@ import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
 import ch.fhnw.cpib.project.km.synthesis.CodeGenerationEnvironment;
 import ch.fhnw.cpib.project.km.token.keywords.Const;
-import ch.fhnw.cpib.project.km.token.keywords.Flowmode;
 import ch.fhnw.cpib.project.km.token.keywords.FlowmodeIn;
 import ch.fhnw.cpib.project.km.token.keywords.FlowmodeInOut;
 import ch.fhnw.cpib.project.km.token.keywords.FlowmodeOut;
@@ -24,6 +24,7 @@ import ch.fhnw.cpib.project.km.token.keywords.Type;
 import ch.fhnw.cpib.project.km.token.keywords.Var;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
 import ch.fhnw.cpib.project.km.vm.ICodeArray.CodeTooSmallError;
+import ch.fhnw.cpib.project.km.vm.IInstructions;
 
 /**
  * May be a function or procedure declaration
@@ -102,12 +103,23 @@ public class RoutineDecl implements IDecl {
 	public int getStoreNumber() {
 		int count = 0;
 		for (FullIdentifier declaration : paramList) {
-			if ((declaration.getFlowmode() instanceof FlowmodeInOut || declaration.getFlowmode() instanceof FlowmodeOut)
-					&& declaration.getMechmode() instanceof MechmodeCopy) {
+			if (needsStore(declaration)) {
 				count++;
 			}
 		}
 		return count;
+	}
+
+	/**
+	 * Return true, if the parameter must be stored after Procedure call.
+	 * 
+	 * @param declaration
+	 * @return
+	 */
+	private boolean needsStore(FullIdentifier declaration) {
+		return (declaration.getFlowmode() instanceof FlowmodeInOut || declaration.getFlowmode() instanceof FlowmodeOut)
+				&& declaration.getMechmode() instanceof MechmodeCopy;
+
 	}
 
 	public List<FullIdentifier> getGlobImps() {
@@ -150,12 +162,11 @@ public class RoutineDecl implements IDecl {
 
 	@Override
 	public void addToEnvironment(Environment env, Context context) throws ScopeCheckingException {
-		env.contextMapping.put(this, context);
-
 		// create new context for this routine
 		Context newContext = context.clone();
 		SymbolTable symbolTable = newContext.symbolTable;
 		symbolTable.clearVariables();
+		env.contextMapping.put(this, newContext);
 
 		// add local variables & imports
 		{
@@ -190,7 +201,7 @@ public class RoutineDecl implements IDecl {
 	public void checkScope(Environment env) throws ScopeCheckingException {
 		// check if globalImports really exist
 		for (FullIdentifier globImp : globImps) {
-			if (!env.contextMapping.get(this).symbolTable.containsGlobal(globImp)) {
+			if (!env.rootContext.symbolTable.containsGlobal(globImp)) {
 				throw new ScopeCheckingException("global import not found (" + globImp.getIdentifierName() + ").");
 			}
 		}
@@ -246,7 +257,55 @@ public class RoutineDecl implements IDecl {
 
 	@Override
 	public void createCode(CodeGenerationEnvironment cgenv) throws CodeTooSmallError, CodeGenerationException {
-		// Todo
+
+		SymbolTable symbolTable = cgenv.env.contextMapping.get(this).symbolTable;
+
+		// save location of parameters
+		{
+			int location = -1;
+			List<Integer> reverseParamOrder = new ArrayList<>(getParamOrder());
+			Collections.reverse(reverseParamOrder);
+			for (int index : getParamOrder()) {
+				FullIdentifier declaration = paramList.get(index);
+
+				symbolTable.setLocalVariablesLocation(declaration.getIdentifierName(), location);
+
+				location--;
+				if (needsStore(declaration)) {
+					// needs two blocks
+					location--;
+				}
+			}
+
+			// save location of return
+			if (stoDecl != null) {
+				symbolTable.setLocalVariablesLocation(stoDecl.getFullIdentifier().getIdentifierName(), location);
+			}
+		}
+
+		// save location of routine
 		cgenv.addRoutine(this, cgenv.loc());
+
+		// alloc local stores
+		cgenv.code.put(cgenv.locInc(), new IInstructions.AllocBlock(cpsStoDecl.size()));
+
+		// save location of local stores
+		{
+			int location = 3; // fp + 1 (ev) + 1 (pc) + 1
+			for (StoDecl declaration : cpsStoDecl) {
+
+				symbolTable.setLocalVariablesLocation(declaration.getFullIdentifier().getIdentifierName(), location);
+
+				location++;
+			}
+		}
+
+		// body
+		for (ICommand command : cpsCmd) {
+			command.createCode(cgenv);
+		}
+
+		// return
+		cgenv.code.put(cgenv.locInc(), new IInstructions.Return(paramList.size() - getStoreNumber()));
 	}
 }
