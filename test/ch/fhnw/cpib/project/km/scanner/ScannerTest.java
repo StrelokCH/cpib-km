@@ -97,7 +97,7 @@ class ScannerTest extends AbstractTest {
 
 	@Test
 	void testScan_IntDivProgram() {
-		String input = IMLTestPrograms.IntDiv;
+		String input = IMLTestPrograms.IntDiv64;
 
 		ITokenList expected = new TokenList();
 

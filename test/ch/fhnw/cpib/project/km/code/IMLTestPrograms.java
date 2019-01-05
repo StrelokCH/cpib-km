@@ -9,14 +9,23 @@ public class IMLTestPrograms {
 
 	// IML Example Program (Basic IML)
 	// from cpib_HS-2018_Slides_IML_V1.pdf page 5
-	// or from IML_ExamplePrograms/
-	public static String IntDiv = "program intDiv(in const m:int64, in const n:int64,\r\n"
-			+ "out const q:int64, out const r:int64)\r\n" + "global\r\n"
-			+ "proc divide(in copy const m:int64, in copy const n:int64,\r\n"
-			+ "out ref var q:int64, out ref var r:int64)\r\n" + "do\r\n" + "q init := 0;\r\n" + "r init := m;\r\n"
-			+ "while r >= n do\r\n" + "q := q + 1;\r\n" + "r := r - n\r\n" + "endwhile\r\n" + "endproc\r\n" + "do\r\n"
-			+ "call divide(m, n, q init, r init)\r\n" + "endprogram\n";
+	public static String IntDiv64 = "program intDiv64(in const m:int64, in const n:int64,\r\n"
+			+ "               out const q:int64, out const r:int64)\r\n" + "global\r\n"
+			+ "  proc divide(in copy const m:int64, in copy const n:int64,\r\n"
+			+ "              out ref var q:int64, out ref var r:int64)\r\n" + "  do\r\n" + "    q init := 0;\r\n"
+			+ "    r init := m;\r\n" + "    while r >= n do\r\n" + "      q := q + 1;\r\n" + "      r := r - n\r\n"
+			+ "    endwhile\r\n" + "  endproc\r\n" + "do\r\n" + "  call divide(m, n, q init, r init)\r\n"
+			+ "endprogram\r\n" + "";
 
+	// from IML_ExamplePrograms/
+	public static String IntDiv = "program intDiv64(in const m:int64, in const n:int64,\r\n"
+			+ "               out const q:int64, out const r:int64)\r\n" + "global\r\n"
+			+ "  proc divide(in copy const m:int64, in copy const n:int64,\r\n"
+			+ "              out ref var q:int64, out ref var r:int64)\r\n" + "  do\r\n" + "    q init := 0;\r\n"
+			+ "    r init := m;\r\n" + "    while r >= n do\r\n" + "      q := q + 1;\r\n" + "      r := r - n\r\n"
+			+ "    endwhile\r\n" + "  endproc\r\n" + "do\r\n" + "  call divide(m, n, q init, r init)\r\n"
+			+ "endprogram\r\n" + "";
+	
 	// from IML_ExamplePrograms/
 	public static String Assoc = "program Assoc()\r\n" + "global x:int32\r\n" + "do\r\n" + "  debugin x init ;\r\n"
 			+ "\r\n" + "  debugout x - (x - x) ;\r\n" + "  debugout (x - x) - x ;\r\n" + "  debugout x - x - x\r\n"
@@ -133,173 +142,88 @@ public class IMLTestPrograms {
 			+ "    debugout(f(g2))\r\n" + "endprogram\r\n";
 
 	// own
-	public static String Overloading = "program testOverloading(in a:int32, in b:int64)\r\n" + 
-			"global\r\n" + 
-			" proc printSum(in copy const m:int32, in copy const n:int32)\r\n" + 
-			" local\r\n" + 
-			"   var s:int32\r\n" + 
-			" do\r\n" + 
-			"   s init := m + n;\r\n" + 
-			"   debugout s\r\n" + 
-			" endproc ;\r\n" + 
-			"\r\n" + 
-			" proc printSum(in copy const m:int32, in copy const n:int64)\r\n" + 
-			" local\r\n" + 
-			"   var s:int64\r\n" + 
-			" do\r\n" + 
-			"   s init := m + n;\r\n" + 
-			"   debugout s\r\n" + 
-			" endproc ;\r\n" + 
-			"\r\n" + 
-			" proc printSum(in copy const m:int64, in copy const n:int64)\r\n" + 
-			" local\r\n" + 
-			"   var s:int64\r\n" + 
-			" do\r\n" + 
-			"   s init := m + n;\r\n" + 
-			"   debugout s\r\n" + 
-			" endproc ;\r\n" + 
-			"\r\n" + 
-			"proc printSum(in copy const m:int64, in copy const n:int32)\r\n" + 
-			" local\r\n" + 
-			"   var s:int64\r\n" + 
-			" do\r\n" + 
-			"   s init := m + n;\r\n" + 
-			"   debugout s\r\n" + 
-			" endproc\r\n" + 
-			"\r\n" + 
-			"do\r\n" + 
-			" call printSum(a, a); // calls  printSum(int32,int32)\r\n" + 
-			" call printSum(b, b); // calls  printSum(int64,int64)\r\n" + 
-			" call printSum(a, b); // calls  printSum(int32,int64)\r\n" + 
-			" call printSum(b, a) // calls  printSum(int64,int32)\r\n" + 
-			" // call printSum(b, a, a) // compile time error, no matching overload found\r\n" + 
-			"endprogram\r\n" + 
-			"";
+	public static String Overloading = "program testOverloading(in a:int32, in b:int64)\r\n" + "global\r\n"
+			+ " proc printSum(in copy const m:int32, in copy const n:int32)\r\n" + " local\r\n" + "   var s:int32\r\n"
+			+ " do\r\n" + "   s init := m + n;\r\n" + "   debugout s\r\n" + " endproc ;\r\n" + "\r\n"
+			+ " proc printSum(in copy const m:int32, in copy const n:int64)\r\n" + " local\r\n" + "   var s:int64\r\n"
+			+ " do\r\n" + "   s init := m + n;\r\n" + "   debugout s\r\n" + " endproc ;\r\n" + "\r\n"
+			+ " proc printSum(in copy const m:int64, in copy const n:int64)\r\n" + " local\r\n" + "   var s:int64\r\n"
+			+ " do\r\n" + "   s init := m + n;\r\n" + "   debugout s\r\n" + " endproc ;\r\n" + "\r\n"
+			+ "proc printSum(in copy const m:int64, in copy const n:int32)\r\n" + " local\r\n" + "   var s:int64\r\n"
+			+ " do\r\n" + "   s init := m + n;\r\n" + "   debugout s\r\n" + " endproc\r\n" + "\r\n" + "do\r\n"
+			+ " call printSum(a, a); // calls  printSum(int32,int32)\r\n"
+			+ " call printSum(b, b); // calls  printSum(int64,int64)\r\n"
+			+ " call printSum(a, b); // calls  printSum(int32,int64)\r\n"
+			+ " call printSum(b, a) // calls  printSum(int64,int32)\r\n"
+			+ " // call printSum(b, a, a) // compile time error, no matching overload found\r\n" + "endprogram\r\n"
+			+ "";
 
 	// own
-	public static String ToInt32Clamp = "program testToInt32Clamp()\r\n" + 
-			"global\r\n" + 
-			"  var normalInt:int64 ;\r\n" + 
-			"  var bigInt:int64 ;\r\n" + 
-			"  var smallInt:int64\r\n" + 
-			"do\r\n" + 
-			"  normalInt init := 5 ;\r\n" + 
-			"  bigInt init := 10000000000 ; // value bigger than int32.maxValue\r\n" + 
-			"  smallInt init := -10000000000 ; // value smaller than int32.minValue\r\n" + 
-			"  debugout toInt32Clamp(normalInt) ; // prints 5\r\n" + 
-			"  debugout toInt32Clamp(bigInt) ; // prints int32.maxValue which is 2,147,483,647\r\n" + 
-			"  debugout toInt32Clamp(smallInt) // prints int32.minValue which is -2,147,483,648\r\n" + 
-			"endprogram\r\n" + 
-			"";
+	public static String ToInt32Clamp = "program testToInt32Clamp()\r\n" + "global\r\n" + "  var normalInt:int64 ;\r\n"
+			+ "  var bigInt:int64 ;\r\n" + "  var smallInt:int64\r\n" + "do\r\n" + "  normalInt init := 5 ;\r\n"
+			+ "  bigInt init := 10000000000 ; // value bigger than int32.maxValue\r\n"
+			+ "  smallInt init := -10000000000 ; // value smaller than int32.minValue\r\n"
+			+ "  debugout toInt32Clamp(normalInt) ; // prints 5\r\n"
+			+ "  debugout toInt32Clamp(bigInt) ; // prints int32.maxValue which is 2,147,483,647\r\n"
+			+ "  debugout toInt32Clamp(smallInt) // prints int32.minValue which is -2,147,483,648\r\n"
+			+ "endprogram\r\n" + "";
 
-	//Beispiel 2 Bericht: int64 to int32 clamp
-	public static String clamp = "program testToInt32Clamp()\r\n"
-			+"global\r\n"
-			+" var normalInt:int64;\r\n"
-			+" var biggestInt:int64;\r\n"
-			+" var smallestInt:int64;\r\n"
-			+" var bigInt:int64;\r\n"
-			+" var smallInt:int64\r\n"
-			+"do\r\n"
-			+"  normalInt init := 5;\r\n"
-			+"  biggestInt init := 2147483647; // int32.maxValue\r\n"
-			+"  smallestInt init := -2147483648; // int32.minValue\r\n"
-			+"  bigInt init := 10000000000; // value bigger than int32.maxValue\r\n"
-			+"  smallInt init := -10000000000; // value smaller than int32.minValue\r\n"
-			+"  debugout toInt32Clamp(normalInt); // prints 5\r\n"
-			+"  debugout toInt32Clamp(biggestInt); // prints int32.maxValue which is 2,147,483,647\r\n"
-			+"  debugout toInt32Clamp(smallestInt); // prints int32.minValue which is -2,147,483,648\r\n"
-			+"  debugout toInt32Clamp(bigInt); // prints int32.maxValue which is 2,147,483,647\r\n"
-			+"  debugout toInt32Clamp(smallInt) // prints int32.minValue which is -2,147,483,648\r\n"
-			+"endprogram\r\n";	
+	// Beispiel 2 Bericht: int64 to int32 clamp
+	public static String clamp = "program testToInt32Clamp()\r\n" + "global\r\n" + " var normalInt:int64;\r\n"
+			+ " var biggestInt:int64;\r\n" + " var smallestInt:int64;\r\n" + " var bigInt:int64;\r\n"
+			+ " var smallInt:int64\r\n" + "do\r\n" + "  normalInt init := 5;\r\n"
+			+ "  biggestInt init := 2147483647; // int32.maxValue\r\n"
+			+ "  smallestInt init := -2147483648; // int32.minValue\r\n"
+			+ "  bigInt init := 10000000000; // value bigger than int32.maxValue\r\n"
+			+ "  smallInt init := -10000000000; // value smaller than int32.minValue\r\n"
+			+ "  debugout toInt32Clamp(normalInt); // prints 5\r\n"
+			+ "  debugout toInt32Clamp(biggestInt); // prints int32.maxValue which is 2,147,483,647\r\n"
+			+ "  debugout toInt32Clamp(smallestInt); // prints int32.minValue which is -2,147,483,648\r\n"
+			+ "  debugout toInt32Clamp(bigInt); // prints int32.maxValue which is 2,147,483,647\r\n"
+			+ "  debugout toInt32Clamp(smallInt) // prints int32.minValue which is -2,147,483,648\r\n"
+			+ "endprogram\r\n";
 
+	public static String cut = "program testToInt32Cut()\r\n" + "global\r\n" + "  var posInt:int64;\r\n"
+			+ "  var negInt:int64;\r\n" + "  var biggestInt:int64;\r\n" + "  var smallestInt:int64\r\n" + "do\r\n"
+			+ " biggestInt init := 2147483647; // int32.maxValue\r\n"
+			+ "  smallestInt init := -2147483648; // int32.minValue\r\n"
+			+ "  posInt init := 2147483648; // on greater than int32.maxValue\r\n"
+			+ "  negInt init := -2147483649; // on smaller than int32.minValue\r\n"
+			+ "  debugout toInt32Cut(posInt); // prints 0, information loss\r\n"
+			+ "  debugout toInt32Cut(negInt); // prints -0, information loss\r\n"
+			+ "  debugout toInt32Cut(biggestInt); // prints int32.maxValue which is 2,147,483,647, no information loss\r\n"
+			+ "  debugout toInt32Cut(smallestInt) // prints int32.minValue which is -2,147,483,648,  no information loss\r\n"
+			+ "endprogram\r\n";
 
-	public static String cut = "program testToInt32Cut()\r\n"
-			+"global\r\n"
-			+"  var posInt:int64;\r\n"
-			+"  var negInt:int64;\r\n"
-			+"  var biggestInt:int64;\r\n"
-			+"  var smallestInt:int64\r\n"
-			+"do\r\n"
-			+" biggestInt init := 2147483647; // int32.maxValue\r\n"
-			+"  smallestInt init := -2147483648; // int32.minValue\r\n"
-			+"  posInt init := 2147483648; // on greater than int32.maxValue\r\n"
-			+"  negInt init := -2147483649; // on smaller than int32.minValue\r\n"
-			+"  debugout toInt32Cut(posInt); // prints 0, information loss\r\n"
-			+"  debugout toInt32Cut(negInt); // prints -0, information loss\r\n"
-			+"  debugout toInt32Cut(biggestInt); // prints int32.maxValue which is 2,147,483,647, no information loss\r\n"
-			+"  debugout toInt32Cut(smallestInt) // prints int32.minValue which is -2,147,483,648,  no information loss\r\n"
-			+"endprogram\r\n";
+	public static String cutUnsigned = "program testToInt32CutUnsigned()\r\n" + "global\r\n" + " var posInt:int64;\r\n"
+			+ " var negInt:int64;\r\n" + " var biggestInt:int64;\r\n" + " var smallestInt:int64\r\n" + "do\r\n"
+			+ " biggestInt init := 2147483647; // int32.maxValue\r\n"
+			+ " smallestInt init := -2147483648; // int32.minValue\r\n" + " posInt init := 2147483648;\r\n"
+			+ " negInt init := -2147483649;\r\n"
+			+ " debugout toInt32CutUnsigned(posInt); //prints 0, information loss\r\n"
+			+ " debugout toInt32CutUnsigned(negInt); //prints 1, information and sign loss\r\n"
+			+ " debugout toInt32CutUnsigned(biggestInt); //prints 2,147,483,647, no information loss\r\n"
+			+ " debugout toInt32CutUnsigned(smallestInt) //prints 0, sign loss and information loss\r\n"
+			+ "endprogram\r\n";
 
-	public static String cutUnsigned = "program testToInt32CutUnsigned()\r\n"
-			+"global\r\n"
-			+" var posInt:int64;\r\n"
-			+" var negInt:int64;\r\n"
-			+" var biggestInt:int64;\r\n"
-			+" var smallestInt:int64\r\n"
-			+"do\r\n"
-			+" biggestInt init := 2147483647; // int32.maxValue\r\n"
-			+" smallestInt init := -2147483648; // int32.minValue\r\n"
-			+" posInt init := 2147483648;\r\n"
-			+" negInt init := -2147483649;\r\n"
-			+" debugout toInt32CutUnsigned(posInt); //prints 0, information loss\r\n"
-			+" debugout toInt32CutUnsigned(negInt); //prints 1, information and sign loss\r\n"
-			+" debugout toInt32CutUnsigned(biggestInt); //prints 2,147,483,647, no information loss\r\n"
-			+" debugout toInt32CutUnsigned(smallestInt) //prints 0, sign loss and information loss\r\n"
-			+"endprogram\r\n";
+	public static String operationOnInt64 = "program operationOnInt64()\r\n" + "global\r\n" + " var a:int64;\r\n"
+			+ " var b:int64\r\n" + "do\r\n" + " a :=10000000000;\r\n" + " b := 500000000;\r\n" + " debugout a + b;\r\n"
+			+ " debugout a - b;\r\n" + " debugout a * b;\r\n" + " debugout a divE b;\r\n" + " debugout a modE b;\r\n"
+			+ " debugout a = b;\r\n" + " debugout a < b;\r\n" + " debugout a > b;\r\n" + " debugout a /= b;\r\n"
+			+ " debugout a >= b;\r\n" + " debugout a <= b\r\n" + "endprogram\r\n";
 
-
-
-	public static String operationOnInt64 = "program operationOnInt64()\r\n"
-			+"global\r\n"
-			+" var a:int64;\r\n"
-			+" var b:int64\r\n"
-			+"do\r\n"
-			+" a :=10000000000;\r\n"
-			+" b := 500000000;\r\n"
-			+" debugout a + b;\r\n"
-			+" debugout a - b;\r\n"
-			+" debugout a * b;\r\n"
-			+" debugout a divE b;\r\n"
-			+" debugout a modE b;\r\n"
-			+" debugout a = b;\r\n"
-			+" debugout a < b;\r\n"
-			+" debugout a > b;\r\n"
-			+" debugout a /= b;\r\n"
-			+" debugout a >= b;\r\n"
-			+" debugout a <= b\r\n"
-			+"endprogram\r\n";
-
-
-	public static String faculty = "program faculty(in n:int32)\r\n"
-			+"global\r\n"
-			+"fun facultyLoop(in copy const n:int32) returns var r:int32\r\n"
-			+"local\r\n"
-			+" var i:int32\r\n"
-			+"do\r\n"
-			+" i init := n-1;\r\n"
-			+" r init := n;\r\n"
-			+" while i>1 do\r\n"
-			+"   r := r * i;\r\n"
-			+"   i := i - 1\r\n"
-			+" endwhile\r\n"
-			+"endfun\r\n;"
-			+" fun facultyRecursiv(in copy const n:int32) returns const r:int32\r\n"
-			+" do\r\n"
-			+"  if n>1 then\r\n"
-			+"   r init := n * facultyRecursiv(n-1)\r\n"
-			+"  else\r\n"
-			+"   r init := 1\r\n"
-			+"  endif\r\n"
-			+" endfun\r\n"
-			+"do\r\n"
-			+" debugout facultyLoop(n);\r\n"
-			+" debugout facultyRecursiv(n)\r\n"
-			+"endprogram\r\n";
-
+	public static String faculty = "program faculty(in n:int32)\r\n" + "global\r\n"
+			+ "fun facultyLoop(in copy const n:int32) returns var r:int32\r\n" + "local\r\n" + " var i:int32\r\n"
+			+ "do\r\n" + " i init := n-1;\r\n" + " r init := n;\r\n" + " while i>1 do\r\n" + "   r := r * i;\r\n"
+			+ "   i := i - 1\r\n" + " endwhile\r\n" + "endfun\r\n;"
+			+ " fun facultyRecursiv(in copy const n:int32) returns const r:int32\r\n" + " do\r\n" + "  if n>1 then\r\n"
+			+ "   r init := n * facultyRecursiv(n-1)\r\n" + "  else\r\n" + "   r init := 1\r\n" + "  endif\r\n"
+			+ " endfun\r\n" + "do\r\n" + " debugout facultyLoop(n);\r\n" + " debugout facultyRecursiv(n)\r\n"
+			+ "endprogram\r\n";
 
 	public static List<String> getValidPrograms() {
 		List<String> ret = new ArrayList<String>();
+		ret.add(IntDiv64);
 		ret.add(IntDiv);
 		ret.add(Assoc);
 		ret.add(GlobalInits1);

@@ -43,21 +43,27 @@ public class Main {
 				analyser.check();
 				ICodeArray codeArray = new CodeGenerator(analyser).generate();
 				codeArray.resize();
+				System.out.println("Build successful.");
 				VirtualMachine vm = new VirtualMachine(codeArray, storeSize);
 			} catch (Exception e) {
 				// Should not happen
 				e.printStackTrace();
 			}
 		}
-		
+
 		System.out.println("Program ended.");
 	}
 
 	/**
 	 * Asks the user to choose a program.
-	 * @return The program code of the choosen program or an empty string (exit).
+	 * 
+	 * @return The program code of the chosen program or an empty string (exit).
 	 */
 	private static String ChooseProgram() {
+		// clear screen
+		System.out.print("\033[H\033[2J");
+		System.out.flush();
+
 		PrintMenu();
 		return QuerySelection();
 	}
@@ -73,8 +79,12 @@ public class Main {
 				selection = -1;
 			}
 		} while (!programs.containsKey(selection));
+
+		String code = programs.get(selection);
 		System.out.println("You selected " + selection + ".");
-		return programs.get(selection);
+		System.out.println("The code is as follows:");
+		System.out.println(code);
+		return code;
 	}
 
 	private static void PrintMenu() {
@@ -96,11 +106,13 @@ public class Main {
 
 	/**
 	 * Mapping from selection to program code.
+	 * 
 	 * @return
 	 */
 	private static Map<Integer, String> GetPrograms() {
 		HashMap<Integer, String> ret = new HashMap<>();
 		int i = 1;
+		ret.put(i++, IMLTestPrograms.IntDiv64);
 		ret.put(i++, IMLTestPrograms.IntDiv);
 		ret.put(i++, IMLTestPrograms.Assoc);
 		ret.put(i++, IMLTestPrograms.GlobalInits1);
@@ -124,12 +136,14 @@ public class Main {
 
 	/**
 	 * Mapping from selection to program description.
+	 * 
 	 * @return
 	 */
 	private static Map<Integer, String> GetDescriptions() {
 
 		HashMap<Integer, String> ret = new HashMap<>();
 		int i = 1;
+		ret.put(i++, "IntDiv64");
 		ret.put(i++, "IntDiv");
 		ret.put(i++, "Assoc");
 		ret.put(i++, "GlobalInits1");
