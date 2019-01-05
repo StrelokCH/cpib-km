@@ -18,7 +18,7 @@ public class CondCmd implements ICommand {
 	private IExpression expression;
 	private ICommand ifCase;
 	private ICommand elseCase;
-		
+
 	public CondCmd(IExpression expression, ICommand ifCase, ICommand elseCase) {
 		super();
 		this.expression = expression;
@@ -28,16 +28,14 @@ public class CondCmd implements ICommand {
 
 	@Override
 	public String toString(String indent) {
-		return indent + "(" + this.getClass().getSimpleName() + ")\n"
-				+ expression.toString(indent + "    \n")
-				+ ifCase.toString(indent + "    \n")
-				+ elseCase.toString(indent + "    \n") ;
+		return indent + "(" + this.getClass().getSimpleName() + ")\n" + expression.toString(indent + "    \n")
+				+ ifCase.toString(indent + "    \n") + elseCase.toString(indent + "    \n");
 	}
 
 	@Override
 	public void addToEnvironment(Environment env, Context context) {
 		env.contextMapping.put(this, context);
-		expression.addToEnvironment(env,context);
+		expression.addToEnvironment(env, context);
 		ifCase.addToEnvironment(env, context);
 		elseCase.addToEnvironment(env, context);
 	}
@@ -51,7 +49,7 @@ public class CondCmd implements ICommand {
 
 	@Override
 	public void checkType(Environment env) throws TypeCheckingException {
-		if (!(expression.checkType(env) instanceof Bool)){
+		if (!(expression.checkType(env) instanceof Bool)) {
 			throw new TypeCheckingException("condition " + expression.toString("") + " must be of type Bool");
 		}
 		ifCase.checkType(env);
@@ -80,17 +78,24 @@ public class CondCmd implements ICommand {
 	@Override
 	public void createCode(CodeGenerationEnvironment cgenv) throws CodeTooSmallError, CodeGenerationException {
 		int locExpr = cgenv.loc();
-		
+
 		// load value of expression to stack
 		expression.createCode(cgenv);
-		
+
 		int locCondJump = cgenv.locInc();
-		
+
 		ifCase.createCode(cgenv);
-		
+
+		// jump over else
+		int locUncondJump = cgenv.locInc();
+
 		int locElseCase = cgenv.loc();
-		elseCase.createCode(cgenv);
-		
 		cgenv.code.put(locCondJump, new IInstructions.CondJump(locElseCase));
+
+		elseCase.createCode(cgenv);
+
+		int locEnd = cgenv.loc();
+		cgenv.code.put(locUncondJump, new IInstructions.UncondJump(locEnd));
+
 	}
 }
