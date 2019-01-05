@@ -34,6 +34,11 @@ public class Program {
 		this.progParamList = progParamList;
 		this.cpsDecl = cpsDecl;
 		this.cpsCmd = cpsCmd;
+
+		// add predefined cast functions
+		cpsDecl.add(new RoutineDeclCastClamp());
+		cpsDecl.add(new RoutineDeclCastCut());
+		cpsDecl.add(new RoutineDeclCastLossless());
 	}
 
 	public String toString(String indent) {
@@ -58,12 +63,6 @@ public class Program {
 		for (FullIdentifier progParam : progParamList) {
 			// Program Parameters are handled as local variables
 			symbolTable.addVariable(progParam, false);
-		}
-		{
-			// add predefined cast functions
-			new RoutineDeclCastClamp().appendSymbol(symbolTable, false);
-			new RoutineDeclCastCut().appendSymbol(symbolTable, false);
-			new RoutineDeclCastLossless().appendSymbol(symbolTable, false);
 		}
 		for (IDecl decl : cpsDecl) {
 			decl.appendSymbol(symbolTable, false);
