@@ -228,7 +228,7 @@ public class VirtualMachine implements IVirtualMachine {
 	// store instruction with address on stack
 	// store (top of stack -> inside stack) operation
 	public class StoreExec extends Store implements IExecInstr {
-		public void execute() {
+		public void execute() {			
 			int address = Data.intGet(store[sp - 2]);
 			store[address] = store[sp - 1];
 			sp = sp - 2;
@@ -552,6 +552,7 @@ public class VirtualMachine implements IVirtualMachine {
 
 		public void execute() {
 			store[sp - 1] = Data.promoteInt32ToInt64(store[sp - 1]);
+			pc = pc + 1;
 		}
 	}
 
