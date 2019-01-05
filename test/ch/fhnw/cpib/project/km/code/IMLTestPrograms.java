@@ -18,14 +18,14 @@ public class IMLTestPrograms {
 			+ "endprogram\r\n" + "";
 
 	// from IML_ExamplePrograms/
-	public static String IntDiv = "program intDiv64(in const m:int64, in const n:int64,\r\n"
-			+ "               out const q:int64, out const r:int64)\r\n" + "global\r\n"
-			+ "  proc divide(in copy const m:int64, in copy const n:int64,\r\n"
-			+ "              out ref var q:int64, out ref var r:int64)\r\n" + "  do\r\n" + "    q init := 0;\r\n"
-			+ "    r init := m;\r\n" + "    while r >= n do\r\n" + "      q := q + 1;\r\n" + "      r := r - n\r\n"
+	public static String IntDiv = "program intDiv(in  m:int32, in  n:int32,\r\n"
+			+ "               out q:int32, out r:int32)\r\n" + "global\r\n"
+			+ "  proc divide(in copy const m:int32, in copy const n:int32,\r\n"
+			+ "              out ref var   q:int32, out ref var   r:int32)\r\n" + "  do\r\n" + "    q init := 0;\r\n"
+			+ "    r init := m;\r\n" + "    while r >= n do\r\n" + "      q := q + 1 ;\r\n" + "      r := r - n\r\n"
 			+ "    endwhile\r\n" + "  endproc\r\n" + "do\r\n" + "  call divide(m, n, q init, r init)\r\n"
-			+ "endprogram\r\n" + "";
-	
+			+ "endprogram";
+
 	// from IML_ExamplePrograms/
 	public static String Assoc = "program Assoc()\r\n" + "global x:int32\r\n" + "do\r\n" + "  debugin x init ;\r\n"
 			+ "\r\n" + "  debugout x - (x - x) ;\r\n" + "  debugout (x - x) - x ;\r\n" + "  debugout x - x - x\r\n"
