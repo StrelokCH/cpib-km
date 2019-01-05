@@ -207,7 +207,7 @@ public class IMLTestPrograms {
 			+ "endprogram\r\n";
 
 	public static String operationOnInt64 = "program operationOnInt64()\r\n" + "global\r\n" + " var a:int64;\r\n"
-			+ " var b:int64\r\n" + "do\r\n" + " a :=10000000000;\r\n" + " b := 500000000;\r\n" + " debugout a + b;\r\n"
+			+ " var b:int64\r\n" + "do\r\n" + " a :=10;\r\n" + " b := 20;\r\n" + " debugout a + b;\r\n"
 			+ " debugout a - b;\r\n" + " debugout a * b;\r\n" + " debugout a divE b;\r\n" + " debugout a modE b;\r\n"
 			+ " debugout a = b;\r\n" + " debugout a < b;\r\n" + " debugout a > b;\r\n" + " debugout a /= b;\r\n"
 			+ " debugout a >= b;\r\n" + " debugout a <= b\r\n" + "endprogram\r\n";
