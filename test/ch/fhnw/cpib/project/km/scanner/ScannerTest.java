@@ -102,7 +102,7 @@ class ScannerTest extends AbstractTest {
 		ITokenList expected = new TokenList();
 
 		expected.add(new Program());
-		expected.add(new Identifier("intDiv"));
+		expected.add(new Identifier("intDiv64"));
 		expected.add(new LeftParenthesis());
 		expected.add(new FlowmodeIn());
 		expected.add(new Const());
