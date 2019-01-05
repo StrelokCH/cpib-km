@@ -19,7 +19,7 @@ import ch.fhnw.cpib.project.km.vm.InputUtility;
 public class Main {
 
 	// settings
-	private static int storeSize = 2048;
+	private static int storeSize = 1024;
 	private static boolean outputCodeArray = true;
 
 	/**
