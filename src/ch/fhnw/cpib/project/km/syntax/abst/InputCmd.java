@@ -70,6 +70,15 @@ public class InputCmd implements ICommand {
 		// not needed
 	}
 
+	/**
+	 * Precondition: store address is on top of stack.
+	 * 
+	 * @param cgenv
+	 * @param type
+	 * @param indicator
+	 * @throws CodeTooSmallError
+	 * @throws CodeGenerationException
+	 */
 	public static void createCode(CodeGenerationEnvironment cgenv, Type type, String indicator)
 			throws CodeTooSmallError, CodeGenerationException {
 		IInstructions.IInstr instruction = null;
@@ -82,6 +91,8 @@ public class InputCmd implements ICommand {
 		} else {
 			throw new CodeGenerationException("invalid type in InputCmd.createCode. Type is " + type.toString() + ".");
 		}
+
+		// stores value direct
 		cgenv.code.put(cgenv.locInc(), instruction);
 	}
 
@@ -93,11 +104,8 @@ public class InputCmd implements ICommand {
 		// query input to stack
 		String indicator = expression.toString("");
 		if (expression instanceof StoreExpr) {
-			indicator = ((StoreExpr)expression).getIdentifier().getIdentifierName();
+			indicator = ((StoreExpr) expression).getIdentifier().getIdentifierName();
 		}
 		createCode(cgenv, expression.getTypeSafe(cgenv.env), indicator);
-
-		// store input to address
-		cgenv.code.put(cgenv.locInc(), new IInstructions.Store());
 	}
 }

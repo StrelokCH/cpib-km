@@ -136,6 +136,7 @@ public class Program {
 
 		// Prog Params
 		{
+			cgenv.code.put(cgenv.locInc(), new IInstructions.AllocBlock(progParamList.size()));
 			for (int i = 0; i < progParamList.size(); i++) {
 				// safe position of progParams
 				cgenv.globalStoreLocation.put(progParamList.get(i).getIdentifierName(), i);
@@ -143,6 +144,8 @@ public class Program {
 			for (FullIdentifier progParam : progParamList) {
 				// input progParams
 				if (!(progParam.getFlowmode() instanceof FlowmodeOut)) {
+					int location = cgenv.globalStoreLocation.get(progParam.getIdentifierName());
+					cgenv.code.put(cgenv.locInc(), new IInstructions.LoadImInt(location));
 					InputCmd.createCode(cgenv, progParam.getType(), progParam.getIdentifierName());
 				}
 			}
