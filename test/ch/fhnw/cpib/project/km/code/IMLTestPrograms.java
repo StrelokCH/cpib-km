@@ -230,6 +230,26 @@ public class IMLTestPrograms {
 		  +"  debugout toInt32Cut(biggestInt); // prints int32.maxValue which is 2,147,483,647, no information loss\r\n"
 		  +"  debugout toInt32Cut(smallestInt) // prints int32.minValue which is -2,147,483,648,  no information loss\r\n"
 		  +"endprogram\r\n";
+		
+		public static String cutUnsigned = "program testToInt32CutUnsigned()\r\n"
+			+"global\r\n"
+			+" var posInt:int64;\r\n"
+			+" var negInt:int64;\r\n"
+			+" var biggestInt:int64;\r\n"
+			+" var smallestInt:int64\r\n"
+			+"do\r\n"
+			+" biggestInt init := 2147483647; // int32.maxValue\r\n"
+			+" smallestInt init := -2147483648; // int32.minValue\r\n"
+			+" posInt init := 2147483648;\r\n"
+			+" negInt init := -2147483649;\r\n"
+			+" debugout toInt32CutUnsigned(posInt); //prints 0, information loss\r\n"
+			+" debugout toInt32CutUnsigned(negInt); //prints 1, information and sign loss\r\n"
+			+" debugout toInt32CutUnsigned(biggestInt); //prints 2,147,483,647, no information loss\r\n"
+			+" debugout toInt32CutUnsigned(smallestInt) //prints 0, sign loss and information loss\r\n"
+			+"endprogram\r\n";
+		
+		
+
 
 
 	public static List<String> getValidPrograms() {
@@ -248,6 +268,7 @@ public class IMLTestPrograms {
 		ret.add(ToInt32Clamp);
 		ret.add(clamp);
 		ret.add(cut);
+		ret.add(cutUnsigned);
 		return ret;
 	}
 }
