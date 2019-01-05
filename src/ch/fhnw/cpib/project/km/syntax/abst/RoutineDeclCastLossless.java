@@ -26,7 +26,7 @@ import ch.fhnw.cpib.project.km.vm.ICodeArray.CodeTooSmallError;
 public class RoutineDeclCastLossless extends RoutineDecl {
 
 	static Identifier createIdentifier() {
-		return new Identifier("toInt32CutUnsigned");
+		return new Identifier("toInt32Lossless");
 	}
 
 	static List<FullIdentifier> createParamList() {

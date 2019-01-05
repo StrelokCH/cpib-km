@@ -20,7 +20,8 @@ public class Main {
 
 	// settings
 	private static int storeSize = 1024;
-	private static boolean outputCodeArray = true;
+	private static boolean outputParse = false;
+	private static boolean outputCodeArray = false;
 
 	/**
 	 * Runs a program which can be selected.
@@ -32,13 +33,14 @@ public class Main {
 		// select program
 		String program = ChooseProgram();
 		if (program.isEmpty()) {
+			System.out.println("Program exited.");
 			return;
 		}
 
 		// compile & run it
 		try {
 			ITokenList tokens = Scanner.scan(program);
-			IProgram concreteProgram = new Parser(tokens).parse();
+			IProgram concreteProgram = new Parser(tokens).parse(outputParse);
 			Program abstProgram = concreteProgram.toAbsSyn();
 			StaticAnalyser analyser = new StaticAnalyser(abstProgram);
 			analyser.check();
@@ -51,9 +53,6 @@ public class Main {
 
 			codeArray.resize();
 			new VirtualMachine(codeArray, storeSize);
-
-			Thread.sleep(10);
-			System.out.println();
 		} catch (Exception e) {
 			// Should not happen
 			e.printStackTrace();
@@ -85,9 +84,11 @@ public class Main {
 		} while (!programs.containsKey(selection));
 
 		String code = programs.get(selection);
-		System.out.println("You selected " + selection + ".");
-		System.out.println("The code is as follows:");
-		System.out.println(code);
+		if (selection != 0) {
+			System.out.println("You selected " + selection + ".");
+			System.out.println("The code is as follows:");
+			System.out.println(code);
+		}
 		return code;
 	}
 
@@ -128,10 +129,9 @@ public class Main {
 		ret.put(i++, IMLTestPrograms.EuclidExtendedNat);
 		ret.put(i++, IMLTestPrograms.Scopes);
 		ret.put(i++, IMLTestPrograms.Overloading);
-		ret.put(i++, IMLTestPrograms.ToInt32Clamp);
-		ret.put(i++, IMLTestPrograms.clamp);
-		ret.put(i++, IMLTestPrograms.cut);
-		ret.put(i++, IMLTestPrograms.cutUnsigned);
+		ret.put(i++, IMLTestPrograms.Clamp);
+		ret.put(i++, IMLTestPrograms.Cut);
+		ret.put(i++, IMLTestPrograms.Lossless);
 		ret.put(i++, IMLTestPrograms.operationOnInt64);
 		ret.put(i++, IMLTestPrograms.faculty);
 		ret.put(0, ""); // exit
@@ -159,10 +159,9 @@ public class Main {
 		ret.put(i++, "EuclidExtendedNat");
 		ret.put(i++, "Scopes");
 		ret.put(i++, "Overloading");
-		ret.put(i++, "ToInt32Clamp");
 		ret.put(i++, "Clamp");
 		ret.put(i++, "Cut");
-		ret.put(i++, "CutUnsigned");
+		ret.put(i++, "Lossless");
 		ret.put(i++, "OperationOnInt64");
 		ret.put(i++, "Faculty");
 		ret.put(0, "Exit"); // exit
