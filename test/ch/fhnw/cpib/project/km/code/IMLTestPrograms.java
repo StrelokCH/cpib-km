@@ -24,7 +24,7 @@ public class IMLTestPrograms {
 			+ "              out ref var   q:int32, out ref var   r:int32)\r\n" + "  do\r\n" + "    q init := 0;\r\n"
 			+ "    r init := m;\r\n" + "    while r >= n do\r\n" + "      q := q + 1 ;\r\n" + "      r := r - n\r\n"
 			+ "    endwhile\r\n" + "  endproc\r\n" + "do\r\n" + "  call divide(m, n, q init, r init)\r\n"
-			+ "endprogram";
+			+ "endprogram\r\n";
 
 	// from IML_ExamplePrograms/
 	public static String Assoc = "program Assoc()\r\n" + "global x:int32\r\n" + "do\r\n" + "  debugin x init ;\r\n"
