@@ -17,6 +17,7 @@ import ch.fhnw.cpib.project.km.token.keywords.MechmodeReference;
 import ch.fhnw.cpib.project.km.token.keywords.Type;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
 import ch.fhnw.cpib.project.km.vm.ICodeArray.CodeTooSmallError;
+import ch.fhnw.cpib.project.km.vm.IInstructions;
 
 public class FunctionCallExpr implements IExpression {
 
@@ -95,6 +96,23 @@ public class FunctionCallExpr implements IExpression {
 
 	@Override
 	public void createCode(CodeGenerationEnvironment cgenv) throws CodeTooSmallError, CodeGenerationException {
-		// Todo
+		// for return value
+		cgenv.code.put(cgenv.locInc(), new IInstructions.AllocBlock(1));
+		
+		RoutineDecl routineDecl = null;
+		try {
+			routineDecl = cgenv.env.rootContext.symbolTable.findMatch(this);
+		} catch (RoutineMatchException e) {
+			throw new CodeGenerationException("RoutineMatchError in FunctionCallExpr.createCode.");
+		}
+
+		// save expressions to stack (in order)
+		for (int parameterIndex : routineDecl.getParamOrder()) {
+			expressions.get(parameterIndex).createCode(cgenv);
+		}
+		
+		// call to function
+		int routineLocation = cgenv.getRoutineLocation(routineDecl);
+		cgenv.code.put(cgenv.locInc(), new IInstructions.Call(routineLocation));
 	}
 }

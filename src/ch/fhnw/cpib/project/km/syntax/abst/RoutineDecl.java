@@ -1,5 +1,6 @@
 package ch.fhnw.cpib.project.km.syntax.abst;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ch.fhnw.cpib.project.km.analysis.Context;
@@ -64,6 +65,29 @@ public class RoutineDecl implements IDecl {
 
 	public List<FullIdentifier> getParamList() {
 		return paramList;
+	}
+
+	/**
+	 * Returns a List of indices of the parameters in the order the caller must put
+	 * them onto the stack.
+	 * 
+	 * @return
+	 */
+	public List<Integer> getParamOrder() {
+		List<Integer> ret = new ArrayList<Integer>();
+		// L-Values first
+		for (int i = 0; i < paramList.size(); i++) {
+			if (paramList.get(i).needsLValue()) {
+				ret.add(i);
+			}
+		}
+		// R-Values
+		for (int i = 0; i < paramList.size(); i++) {
+			if (!paramList.get(i).needsLValue()) {
+				ret.add(i);
+			}
+		}
+		return ret;
 	}
 
 	public List<FullIdentifier> getGlobImps() {
@@ -173,8 +197,7 @@ public class RoutineDecl implements IDecl {
 	@Override
 	public void checkFlow(Environment env) throws FlowCheckingException {
 		for (FullIdentifier declaration : paramList) {
-			if (!isProcedure()
-					&& !(declaration.getFlowmode() instanceof FlowmodeIn)) {
+			if (!isProcedure() && !(declaration.getFlowmode() instanceof FlowmodeIn)) {
 				// flowMode in functions must be InFlow
 				throw new FlowCheckingException("Wrong flowmode of parameter " + declaration.toString("")
 						+ " in function " + toString("") + " (must be FlowmodeIn).");
@@ -186,8 +209,7 @@ public class RoutineDecl implements IDecl {
 				throw new FlowCheckingException("Wrong changemode of parameter " + declaration.toString("")
 						+ " in routine " + toString("") + " (must be Const).");
 			}
-			if (declaration.getFlowmode() instanceof FlowmodeInOut
-					&& !(declaration.getChangemode() instanceof Var)) {
+			if (declaration.getFlowmode() instanceof FlowmodeInOut && !(declaration.getChangemode() instanceof Var)) {
 				// changeMode in routines for InoutFlow must be Var
 				throw new FlowCheckingException("Wrong flowmode of parameter " + declaration.toString("")
 						+ " in procedure " + toString("") + " (must be Var).");

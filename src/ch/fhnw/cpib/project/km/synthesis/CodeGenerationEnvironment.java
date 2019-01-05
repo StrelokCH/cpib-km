@@ -11,8 +11,7 @@ public class CodeGenerationEnvironment {
 
 	// various locations for code elements
 	public final Map<String, Integer> globalStoreLocation = new HashMap<>();
-	public final Map<RoutineDecl, Integer> procedureLocation = new HashMap<>();
-	public final Map<RoutineDecl, Integer> functionLocation = new HashMap<>();
+	private final Map<RoutineDecl, Integer> routineLocation = new HashMap<>();
 
 	public final Environment env;
 	public final CodeArray code;
@@ -26,6 +25,7 @@ public class CodeGenerationEnvironment {
 
 	/**
 	 * returns the current position
+	 * 
 	 * @return
 	 */
 	public int loc() {
@@ -34,6 +34,7 @@ public class CodeGenerationEnvironment {
 
 	/**
 	 * returns the current position and increases loc afterwards
+	 * 
 	 * @return
 	 */
 	public int locInc() {
@@ -42,6 +43,7 @@ public class CodeGenerationEnvironment {
 
 	/**
 	 * adds count to loc and returns the new loc
+	 * 
 	 * @param count
 	 * @return
 	 */
@@ -51,10 +53,13 @@ public class CodeGenerationEnvironment {
 	}
 
 	public void addRoutine(RoutineDecl routine, int location) {
-		if (routine.isProcedure()) {
-			procedureLocation.put(routine,location);
-		} else {
-			functionLocation.put(routine,location);
+		routineLocation.put(routine, location);
+	}
+
+	public int getRoutineLocation(RoutineDecl routine) {
+		if (routineLocation.containsKey(routine)) {
+			return routineLocation.get(routine);
 		}
+		return -1; // no location yet
 	}
 }
