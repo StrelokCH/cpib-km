@@ -191,6 +191,85 @@ public class IMLTestPrograms {
 			"  debugout toInt32Clamp(smallInt) // prints int32.minValue which is -2,147,483,648\r\n" + 
 			"endprogram\r\n" + 
 			"";
+	
+	//Beispiel 2 Bericht: int64 to int32 clamp
+		public static String clamp = "program testToInt32Clamp()\r\n"
+		  +"global\r\n"
+		  +" var normalInt:int64;\r\n"
+		  +" var biggestInt:int64;\r\n"
+		  +" var smallestInt:int64;\r\n"
+		  +" var bigInt:int64;\r\n"
+		  +" var smallInt:int64\r\n"
+		  +"do\r\n"
+		  +"  normalInt init := 5;\r\n"
+		  +"  biggestInt init := 2147483647; // int32.maxValue\r\n"
+		  +"  smallestInt init := -2147483648; // int32.minValue\r\n"
+		  +"  bigInt init := 10000000000; // value bigger than int32.maxValue\r\n"
+		  +"  smallInt init := -10000000000; // value smaller than int32.minValue\r\n"
+		  +"  debugout toInt32Clamp(normalInt); // prints 5\r\n"
+		  +"  debugout toInt32Clamp(biggestInt); // prints int32.maxValue which is 2,147,483,647\r\n"
+		  +"  debugout toInt32Clamp(smallestInt); // prints int32.minValue which is -2,147,483,648\r\n"
+		  +"  debugout toInt32Clamp(bigInt); // prints int32.maxValue which is 2,147,483,647\r\n"
+		  +"  debugout toInt32Clamp(smallInt) // prints int32.minValue which is -2,147,483,648\r\n"
+		  +"endprogram\r\n";	
+		
+		
+		public static String cut = "program testToInt32Cut()\r\n"
+		  +"global\r\n"
+		  +"  var posInt:int64;\r\n"
+		  +"  var negInt:int64;\r\n"
+		  +"  var biggestInt:int64;\r\n"
+		  +"  var smallestInt:int64\r\n"
+		  +"do\r\n"
+		  +" biggestInt init := 2147483647; // int32.maxValue\r\n"
+		  +"  smallestInt init := -2147483648; // int32.minValue\r\n"
+		  +"  posInt init := 2147483648; // on greater than int32.maxValue\r\n"
+		  +"  negInt init := -2147483649; // on smaller than int32.minValue\r\n"
+		  +"  debugout toInt32Cut(posInt); // prints 0, information loss\r\n"
+		  +"  debugout toInt32Cut(negInt); // prints -0, information loss\r\n"
+		  +"  debugout toInt32Cut(biggestInt); // prints int32.maxValue which is 2,147,483,647, no information loss\r\n"
+		  +"  debugout toInt32Cut(smallestInt) // prints int32.minValue which is -2,147,483,648,  no information loss\r\n"
+		  +"endprogram\r\n";
+		
+		public static String cutUnsigned = "program testToInt32CutUnsigned()\r\n"
+			+"global\r\n"
+			+" var posInt:int64;\r\n"
+			+" var negInt:int64;\r\n"
+			+" var biggestInt:int64;\r\n"
+			+" var smallestInt:int64\r\n"
+			+"do\r\n"
+			+" biggestInt init := 2147483647; // int32.maxValue\r\n"
+			+" smallestInt init := -2147483648; // int32.minValue\r\n"
+			+" posInt init := 2147483648;\r\n"
+			+" negInt init := -2147483649;\r\n"
+			+" debugout toInt32CutUnsigned(posInt); //prints 0, information loss\r\n"
+			+" debugout toInt32CutUnsigned(negInt); //prints 1, information and sign loss\r\n"
+			+" debugout toInt32CutUnsigned(biggestInt); //prints 2,147,483,647, no information loss\r\n"
+			+" debugout toInt32CutUnsigned(smallestInt) //prints 0, sign loss and information loss\r\n"
+			+"endprogram\r\n";
+		
+		
+		
+		public static String operationOnInt64 = "program operationOnInt64()\r\n"
+			+"global\r\n"
+			+" var a:int64;\r\n"
+			+" var b:int64\r\n"
+			+"do\r\n"
+			+" a :=10000000000;\r\n"
+			+" b := 500000000;\r\n"
+			+" debugout a + b;\r\n"
+			+" debugout a - b;\r\n"
+			+" debugout a * b;\r\n"
+			+" debugout a divE b;\r\n"
+			+" debugout a modE b;\r\n"
+			+" debugout a = b;\r\n"
+			+" debugout a < b;\r\n"
+			+" debugout a > b;\r\n"
+			+" debugout a /= b;\r\n"
+			+" debugout a >= b;\r\n"
+			+" debugout a <= b\r\n"
+			+"endprogram\r\n";
+
 
 	public static List<String> getValidPrograms() {
 		List<String> ret = new ArrayList<String>();
@@ -206,6 +285,10 @@ public class IMLTestPrograms {
 		ret.add(Scopes);
 		ret.add(Overloading);
 		ret.add(ToInt32Clamp);
+		ret.add(clamp);
+		ret.add(cut);
+		ret.add(cutUnsigned);
+		ret.add(operationOnInt64);
 		return ret;
 	}
 }
