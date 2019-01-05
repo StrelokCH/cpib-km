@@ -87,11 +87,11 @@ public class InputCmd implements ICommand {
 
 	@Override
 	public void createCode(CodeGenerationEnvironment cgenv) throws CodeTooSmallError, CodeGenerationException {
-		// query input to stack
-		createCode(cgenv, expression.getTypeSafe(cgenv.env), expression.toString(""));
-
 		// load target address to stack
 		expression.createCodeLoadAddr(cgenv);
+
+		// query input to stack
+		createCode(cgenv, expression.getTypeSafe(cgenv.env), expression.toString(""));
 
 		// store input to address
 		cgenv.code.put(cgenv.locInc(), new IInstructions.Store());
