@@ -18,7 +18,7 @@ class ParserTest extends AbstractTest {
 	protected Object test(String input) throws Exception {
 		try {
 			ITokenList tokens = Scanner.scan(input);
-			return new Parser(tokens).parse();
+			return new Parser(tokens).parse(true);
 		} catch (LexicalErrorException e) {
 			fail(e);
 		}
@@ -33,7 +33,7 @@ class ParserTest extends AbstractTest {
 		ITokenList tokens;
 		try {
 			tokens = Scanner.scan(input);
-			Executable exe = () -> new Parser(tokens).parse();
+			Executable exe = () -> new Parser(tokens).parse(true);
 			assertThrows(GrammarException.class, exe);
 		} catch (LexicalErrorException e) {
 			fail(e);
