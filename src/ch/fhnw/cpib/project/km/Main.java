@@ -19,7 +19,7 @@ import ch.fhnw.cpib.project.km.vm.InputUtility;
 public class Main {
 
 	// settings
-	private static int storeSize = 1024;
+	private static int storeSize = 2048;
 	private static boolean outputCodeArray = true;
 
 	/**
@@ -29,36 +29,34 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 
-		while (true) {
-			// select program
-			String program = ChooseProgram();
-			if (program.isEmpty()) {
-				break;
+		// select program
+		String program = ChooseProgram();
+		if (program.isEmpty()) {
+			return;
+		}
+
+		// compile & run it
+		try {
+			ITokenList tokens = Scanner.scan(program);
+			IProgram concreteProgram = new Parser(tokens).parse();
+			Program abstProgram = concreteProgram.toAbsSyn();
+			StaticAnalyser analyser = new StaticAnalyser(abstProgram);
+			analyser.check();
+			ICodeArray codeArray = new CodeGenerator(analyser).generate();
+
+			System.out.println("Build successful.");
+			if (outputCodeArray) {
+				System.out.println(codeArray.toString());
 			}
 
-			// compile & run it
-			try {
-				ITokenList tokens = Scanner.scan(program);
-				IProgram concreteProgram = new Parser(tokens).parse();
-				Program abstProgram = concreteProgram.toAbsSyn();
-				StaticAnalyser analyser = new StaticAnalyser(abstProgram);
-				analyser.check();
-				ICodeArray codeArray = new CodeGenerator(analyser).generate();
+			codeArray.resize();
+			new VirtualMachine(codeArray, storeSize);
 
-				System.out.println("Build successful.");
-				if (outputCodeArray) {
-					System.out.println(codeArray.toString());
-				}
-
-				codeArray.resize();
-				new VirtualMachine(codeArray, storeSize);
-
-				Thread.sleep(10);
-				System.out.println();
-			} catch (Exception e) {
-				// Should not happen
-				e.printStackTrace();
-			}
+			Thread.sleep(10);
+			System.out.println();
+		} catch (Exception e) {
+			// Should not happen
+			e.printStackTrace();
 		}
 
 		System.out.println("Program ended.");
