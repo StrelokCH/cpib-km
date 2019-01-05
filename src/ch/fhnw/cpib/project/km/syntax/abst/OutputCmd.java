@@ -68,7 +68,10 @@ public class OutputCmd implements ICommand {
 
 		// output
 		Type type = expression.getTypeSafe(cgenv.env);
-		String indicator = expression.toString("");
+		String indicator = expression.getClass().getSimpleName();
+		if (expression instanceof StoreExpr) {
+			indicator = ((StoreExpr) expression).getIdentifier().getIdentifierName();
+		}
 		createCode(cgenv, type, indicator);
 	}
 

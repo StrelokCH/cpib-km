@@ -102,7 +102,7 @@ public class InputCmd implements ICommand {
 		expression.createCodeLoadAddr(cgenv);
 
 		// query input to stack
-		String indicator = expression.toString("");
+		String indicator = expression.getClass().getSimpleName();
 		if (expression instanceof StoreExpr) {
 			indicator = ((StoreExpr) expression).getIdentifier().getIdentifierName();
 		}
