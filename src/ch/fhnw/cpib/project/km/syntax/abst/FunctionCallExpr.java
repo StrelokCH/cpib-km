@@ -13,6 +13,7 @@ import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
 import ch.fhnw.cpib.project.km.synthesis.CodeGenerationEnvironment;
 import ch.fhnw.cpib.project.km.token.keywords.FlowmodeInOut;
 import ch.fhnw.cpib.project.km.token.keywords.FlowmodeOut;
+import ch.fhnw.cpib.project.km.token.keywords.MechmodeCopy;
 import ch.fhnw.cpib.project.km.token.keywords.MechmodeReference;
 import ch.fhnw.cpib.project.km.token.keywords.Type;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
@@ -98,7 +99,7 @@ public class FunctionCallExpr implements IExpression {
 	public void createCode(CodeGenerationEnvironment cgenv) throws CodeTooSmallError, CodeGenerationException {
 		// for return value
 		cgenv.code.put(cgenv.locInc(), new IInstructions.AllocBlock(1));
-		
+
 		RoutineDecl routineDecl = null;
 		try {
 			routineDecl = cgenv.env.rootContext.symbolTable.findMatch(this);
@@ -108,9 +109,19 @@ public class FunctionCallExpr implements IExpression {
 
 		// save expressions to stack (in order)
 		for (int parameterIndex : routineDecl.getParamOrder()) {
-			expressions.get(parameterIndex).createCode(cgenv);
+			FullIdentifier decl = routineDecl.getParamList().get(parameterIndex);
+			if (decl.getMechmode() instanceof MechmodeCopy) {
+				// in copy -> R-Value
+				expressions.get(parameterIndex).createCode(cgenv);
+			} else if (decl.getMechmode() instanceof MechmodeReference) {
+				// in ref -> Address
+				expressions.get(parameterIndex).createCodeLoadAddr(cgenv);
+			} else {
+				throw new CodeGenerationException(
+						"Unknown Mechmode of argument " + decl.toString("") + "in FunctionCallExpr.createCode.");
+			}
 		}
-		
+
 		// call to function
 		int routineLocation = cgenv.getRoutineLocation(routineDecl);
 		cgenv.code.put(cgenv.locInc(), new IInstructions.Call(routineLocation));
