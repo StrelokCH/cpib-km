@@ -62,4 +62,8 @@ public class CodeGenerationEnvironment {
 		}
 		return -1; // no location yet
 	}
+
+	public void locSet(int loc) {
+		this.loc = loc;
+	}
 }
