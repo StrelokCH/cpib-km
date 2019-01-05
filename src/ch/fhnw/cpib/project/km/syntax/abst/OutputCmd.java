@@ -19,7 +19,7 @@ import ch.fhnw.cpib.project.km.vm.IInstructions;
 public class OutputCmd implements ICommand {
 
 	private IExpression expression;
-		
+
 	public OutputCmd(IExpression expression) {
 		super();
 		this.expression = expression;
@@ -27,8 +27,7 @@ public class OutputCmd implements ICommand {
 
 	@Override
 	public String toString(String indent) {
-		return indent + "(" + this.getClass().getSimpleName() + ")\n"
-				+ expression.toString(indent + "    \n");
+		return indent + "(" + this.getClass().getSimpleName() + ")\n" + expression.toString(indent + "    \n");
 	}
 
 	@Override
@@ -67,16 +66,30 @@ public class OutputCmd implements ICommand {
 		// load expression
 		expression.createCode(cgenv);
 
-		// output top of stack
+		// output
 		Type type = expression.getTypeSafe(cgenv.env);
-		IInstructions.IInstr instruction = null;
 		String indicator = expression.toString("");
+		createCode(cgenv, type, indicator);
+	}
+
+	/**
+	 * Output top of stack with specified type.
+	 * 
+	 * @param cgenv
+	 * @param type
+	 * @param identifierName
+	 * @throws CodeGenerationException
+	 * @throws CodeTooSmallError
+	 */
+	public static void createCode(CodeGenerationEnvironment cgenv, Type type, String indicator)
+			throws CodeGenerationException, CodeTooSmallError {
+		IInstructions.IInstr instruction = null;
 		if (type instanceof Int32) {
-			instruction= new IInstructions.OutputInt(indicator);
+			instruction = new IInstructions.OutputInt(indicator);
 		} else if (type instanceof Int64) {
-			instruction= new IInstructions.OutputInt64(indicator);
+			instruction = new IInstructions.OutputInt64(indicator);
 		} else if (type instanceof Bool) {
-			instruction= new IInstructions.OutputBool(indicator);
+			instruction = new IInstructions.OutputBool(indicator);
 		} else {
 			throw new CodeGenerationException("invalid type in OutputCmd.createCode. Type is " + type.toString() + ".");
 		}

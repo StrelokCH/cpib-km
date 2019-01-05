@@ -13,6 +13,8 @@ import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
 import ch.fhnw.cpib.project.km.synthesis.CodeGenerationEnvironment;
 import ch.fhnw.cpib.project.km.exceptions.AliasingCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.CodeGenerationException;
+import ch.fhnw.cpib.project.km.token.keywords.FlowmodeIn;
+import ch.fhnw.cpib.project.km.token.keywords.FlowmodeOut;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
 import ch.fhnw.cpib.project.km.vm.CodeArray;
 import ch.fhnw.cpib.project.km.vm.IInstructions;
@@ -140,7 +142,9 @@ public class Program {
 			}
 			for (FullIdentifier progParam : progParamList) {
 				// input progParams
-				InputCmd.createCode(cgenv, progParam.getType(), progParam.getIdentifierName());
+				if (!(progParam.getFlowmode() instanceof FlowmodeOut)) {
+					InputCmd.createCode(cgenv, progParam.getType(), progParam.getIdentifierName());
+				}
 			}
 		}
 
@@ -160,6 +164,19 @@ public class Program {
 		// commands
 		for (ICommand command : cpsCmd) {
 			command.createCode(cgenv);
+		}
+
+		// Output prog Params
+		{
+			for (FullIdentifier progParam : progParamList) {
+				if (!(progParam.getFlowmode() instanceof FlowmodeIn)) {
+					// load prog param to stack
+					cgenv.code.put(cgenv.locInc(),
+							new IInstructions.LoadImInt(cgenv.globalStoreLocation.get(progParam.getIdentifierName())));
+					// output
+					OutputCmd.createCode(cgenv, progParam.getType(), progParam.getIdentifierName());
+				}
+			}
 		}
 
 		// routines
