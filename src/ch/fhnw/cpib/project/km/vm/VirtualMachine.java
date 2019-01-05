@@ -562,6 +562,7 @@ public class VirtualMachine implements IVirtualMachine {
 
 		public void execute() {
 			store[sp - 1] = Data.castInt64ToInt32Clamp(store[sp - 1]);
+			pc = pc + 1;
 		}
 	}
 
@@ -571,6 +572,7 @@ public class VirtualMachine implements IVirtualMachine {
 
 		public void execute() {
 			store[sp - 1] = Data.castInt64ToInt32Cut(store[sp - 1]);
+			pc = pc + 1;
 		}
 	}
 
@@ -580,6 +582,7 @@ public class VirtualMachine implements IVirtualMachine {
 
 		public void execute() throws ExecutionError {
 			store[sp - 1] = Data.castInt64ToInt32Lossless(store[sp - 1]);
+			pc = pc + 1;
 		}
 	}
 }
