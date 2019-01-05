@@ -608,4 +608,30 @@ public interface IInstructions {
 			return vm.new CastInt64ToInt32ClampExec();
 		}
 	}
+
+	class CastInt64ToInt32Cut implements IInstr {
+		public CastInt64ToInt32Cut() {
+		}
+
+		public String toString() {
+			return "CastInt64ToInt32Cut";
+		}
+
+		public IExecInstr toExecInstr(VirtualMachine vm) {
+			return vm.new CastInt64ToInt32CutExec();
+		}
+	}
+
+	class CastInt64ToInt32Lossless implements IInstr {
+		public CastInt64ToInt32Lossless() {
+		}
+
+		public String toString() {
+			return "CastInt64ToInt32Lossless";
+		}
+
+		public IExecInstr toExecInstr(VirtualMachine vm) {
+			return vm.new CastInt64ToInt32LosslessExec();
+		}
+	}
 }

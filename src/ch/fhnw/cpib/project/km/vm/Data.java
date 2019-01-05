@@ -3,6 +3,8 @@
 
 package ch.fhnw.cpib.project.km.vm;
 
+import ch.fhnw.cpib.project.km.vm.IVirtualMachine.ExecutionError;
+
 public class Data {
 	static interface IBaseData {
 		IBaseData copy();
@@ -232,6 +234,22 @@ public class Data {
 		long value = intGet(iBaseData);
 		value = Math.min(value, Integer.MAX_VALUE);
 		value = Math.max(value, Integer.MIN_VALUE);
+		return intNew((int) value);
+	}
+
+	public static IntData castInt64ToInt32Cut(IBaseData iBaseData) {
+		long value = intGet(iBaseData);
+		value &= 0xFFFFFFFF;
+		return intNew((int) value);
+	}
+
+	public static IntData castInt64ToInt32Lossless(IBaseData iBaseData) throws ExecutionError {
+		long value = intGet(iBaseData);
+		int newValue = (int)(value & 0xFFFFFFFF);
+		if (value != newValue) {
+			// error as lossless was expected
+			throw new VirtualMachine.ExecutionError("Lossless Integer cast that caused loss.");
+		}
 		return intNew((int) value);
 	}
 }

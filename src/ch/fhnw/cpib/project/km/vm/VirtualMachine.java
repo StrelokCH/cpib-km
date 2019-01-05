@@ -563,4 +563,22 @@ public class VirtualMachine implements IVirtualMachine {
 			store[sp - 1] = Data.castInt64ToInt32Clamp(store[sp - 1]);
 		}
 	}
+
+	public class CastInt64ToInt32CutExec extends CastInt64ToInt32Clamp implements IExecInstr {
+		public CastInt64ToInt32CutExec() {
+		}
+
+		public void execute() {
+			store[sp - 1] = Data.castInt64ToInt32Cut(store[sp - 1]);
+		}
+	}
+
+	public class CastInt64ToInt32LosslessExec extends CastInt64ToInt32Clamp implements IExecInstr {
+		public CastInt64ToInt32LosslessExec() {
+		}
+
+		public void execute() throws ExecutionError {
+			store[sp - 1] = Data.castInt64ToInt32Lossless(store[sp - 1]);
+		}
+	}
 }

@@ -61,7 +61,7 @@ public class Program {
 			// add predefined cast functions
 			new RoutineDeclCastClamp().appendSymbol(symbolTable, false);
 			new RoutineDeclCastCut().appendSymbol(symbolTable, false);
-			new RoutineDeclCastCutUnsigned().appendSymbol(symbolTable, false);
+			new RoutineDeclCastLossless().appendSymbol(symbolTable, false);
 		}
 		for (IDecl decl : cpsDecl) {
 			decl.appendSymbol(symbolTable, false);
