@@ -72,6 +72,7 @@ public class LiteralExpr implements IExpression {
 		} else {
 			throw new CodeGenerationException("Missing code for literal " + literal + " in LiteralExpr.createCode");
 		}
+		cgenv.code.put(cgenv.locInc(), instruction);
 	}
 
 }
