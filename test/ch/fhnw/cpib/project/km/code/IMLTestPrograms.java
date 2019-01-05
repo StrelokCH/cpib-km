@@ -175,7 +175,7 @@ public class IMLTestPrograms {
 			" // call printSum(b, a, a) // compile time error, no matching overload found\r\n" + 
 			"endprogram\r\n" + 
 			"";
-	
+
 	// own
 	public static String ToInt32Clamp = "program testToInt32Clamp()\r\n" + 
 			"global\r\n" + 
@@ -191,47 +191,47 @@ public class IMLTestPrograms {
 			"  debugout toInt32Clamp(smallInt) // prints int32.minValue which is -2,147,483,648\r\n" + 
 			"endprogram\r\n" + 
 			"";
-	
+
 	//Beispiel 2 Bericht: int64 to int32 clamp
-		public static String clamp = "program testToInt32Clamp()\r\n"
-		  +"global\r\n"
-		  +" var normalInt:int64;\r\n"
-		  +" var biggestInt:int64;\r\n"
-		  +" var smallestInt:int64;\r\n"
-		  +" var bigInt:int64;\r\n"
-		  +" var smallInt:int64\r\n"
-		  +"do\r\n"
-		  +"  normalInt init := 5;\r\n"
-		  +"  biggestInt init := 2147483647; // int32.maxValue\r\n"
-		  +"  smallestInt init := -2147483648; // int32.minValue\r\n"
-		  +"  bigInt init := 10000000000; // value bigger than int32.maxValue\r\n"
-		  +"  smallInt init := -10000000000; // value smaller than int32.minValue\r\n"
-		  +"  debugout toInt32Clamp(normalInt); // prints 5\r\n"
-		  +"  debugout toInt32Clamp(biggestInt); // prints int32.maxValue which is 2,147,483,647\r\n"
-		  +"  debugout toInt32Clamp(smallestInt); // prints int32.minValue which is -2,147,483,648\r\n"
-		  +"  debugout toInt32Clamp(bigInt); // prints int32.maxValue which is 2,147,483,647\r\n"
-		  +"  debugout toInt32Clamp(smallInt) // prints int32.minValue which is -2,147,483,648\r\n"
-		  +"endprogram\r\n";	
-		
-		
-		public static String cut = "program testToInt32Cut()\r\n"
-		  +"global\r\n"
-		  +"  var posInt:int64;\r\n"
-		  +"  var negInt:int64;\r\n"
-		  +"  var biggestInt:int64;\r\n"
-		  +"  var smallestInt:int64\r\n"
-		  +"do\r\n"
-		  +" biggestInt init := 2147483647; // int32.maxValue\r\n"
-		  +"  smallestInt init := -2147483648; // int32.minValue\r\n"
-		  +"  posInt init := 2147483648; // on greater than int32.maxValue\r\n"
-		  +"  negInt init := -2147483649; // on smaller than int32.minValue\r\n"
-		  +"  debugout toInt32Cut(posInt); // prints 0, information loss\r\n"
-		  +"  debugout toInt32Cut(negInt); // prints -0, information loss\r\n"
-		  +"  debugout toInt32Cut(biggestInt); // prints int32.maxValue which is 2,147,483,647, no information loss\r\n"
-		  +"  debugout toInt32Cut(smallestInt) // prints int32.minValue which is -2,147,483,648,  no information loss\r\n"
-		  +"endprogram\r\n";
-		
-		public static String cutUnsigned = "program testToInt32CutUnsigned()\r\n"
+	public static String clamp = "program testToInt32Clamp()\r\n"
+			+"global\r\n"
+			+" var normalInt:int64;\r\n"
+			+" var biggestInt:int64;\r\n"
+			+" var smallestInt:int64;\r\n"
+			+" var bigInt:int64;\r\n"
+			+" var smallInt:int64\r\n"
+			+"do\r\n"
+			+"  normalInt init := 5;\r\n"
+			+"  biggestInt init := 2147483647; // int32.maxValue\r\n"
+			+"  smallestInt init := -2147483648; // int32.minValue\r\n"
+			+"  bigInt init := 10000000000; // value bigger than int32.maxValue\r\n"
+			+"  smallInt init := -10000000000; // value smaller than int32.minValue\r\n"
+			+"  debugout toInt32Clamp(normalInt); // prints 5\r\n"
+			+"  debugout toInt32Clamp(biggestInt); // prints int32.maxValue which is 2,147,483,647\r\n"
+			+"  debugout toInt32Clamp(smallestInt); // prints int32.minValue which is -2,147,483,648\r\n"
+			+"  debugout toInt32Clamp(bigInt); // prints int32.maxValue which is 2,147,483,647\r\n"
+			+"  debugout toInt32Clamp(smallInt) // prints int32.minValue which is -2,147,483,648\r\n"
+			+"endprogram\r\n";	
+
+
+	public static String cut = "program testToInt32Cut()\r\n"
+			+"global\r\n"
+			+"  var posInt:int64;\r\n"
+			+"  var negInt:int64;\r\n"
+			+"  var biggestInt:int64;\r\n"
+			+"  var smallestInt:int64\r\n"
+			+"do\r\n"
+			+" biggestInt init := 2147483647; // int32.maxValue\r\n"
+			+"  smallestInt init := -2147483648; // int32.minValue\r\n"
+			+"  posInt init := 2147483648; // on greater than int32.maxValue\r\n"
+			+"  negInt init := -2147483649; // on smaller than int32.minValue\r\n"
+			+"  debugout toInt32Cut(posInt); // prints 0, information loss\r\n"
+			+"  debugout toInt32Cut(negInt); // prints -0, information loss\r\n"
+			+"  debugout toInt32Cut(biggestInt); // prints int32.maxValue which is 2,147,483,647, no information loss\r\n"
+			+"  debugout toInt32Cut(smallestInt) // prints int32.minValue which is -2,147,483,648,  no information loss\r\n"
+			+"endprogram\r\n";
+
+	public static String cutUnsigned = "program testToInt32CutUnsigned()\r\n"
 			+"global\r\n"
 			+" var posInt:int64;\r\n"
 			+" var negInt:int64;\r\n"
@@ -247,10 +247,10 @@ public class IMLTestPrograms {
 			+" debugout toInt32CutUnsigned(biggestInt); //prints 2,147,483,647, no information loss\r\n"
 			+" debugout toInt32CutUnsigned(smallestInt) //prints 0, sign loss and information loss\r\n"
 			+"endprogram\r\n";
-		
-		
-		
-		public static String operationOnInt64 = "program operationOnInt64()\r\n"
+
+
+
+	public static String operationOnInt64 = "program operationOnInt64()\r\n"
 			+"global\r\n"
 			+" var a:int64;\r\n"
 			+" var b:int64\r\n"
@@ -268,6 +268,33 @@ public class IMLTestPrograms {
 			+" debugout a /= b;\r\n"
 			+" debugout a >= b;\r\n"
 			+" debugout a <= b\r\n"
+			+"endprogram\r\n";
+
+
+	public static String faculty = "program faculty(in n:int32)\r\n"
+			+"global\r\n"
+			+"fun facultyLoop(in copy const n:int32) returns var r:int32\r\n"
+			+"local\r\n"
+			+" var i:int32\r\n"
+			+"do\r\n"
+			+" i init := n-1;\r\n"
+			+" r init := n;\r\n"
+			+" while i>1 do\r\n"
+			+"   r := r * i;\r\n"
+			+"   i := i - 1\r\n"
+			+" endwhile\r\n"
+			+"endfun\r\n;"
+			+" fun facultyRecursiv(in copy const n:int32) returns const r:int32\r\n"
+			+" do\r\n"
+			+"  if n>1 then\r\n"
+			+"   r init := n * facultyRecursiv(n-1)\r\n"
+			+"  else\r\n"
+			+"   r init := 1\r\n"
+			+"  endif\r\n"
+			+" endfun\r\n"
+			+"do\r\n"
+			+" debugout facultyLoop(n);\r\n"
+			+" debugout facultyRecursiv(n)\r\n"
 			+"endprogram\r\n";
 
 
@@ -289,6 +316,7 @@ public class IMLTestPrograms {
 		ret.add(cut);
 		ret.add(cutUnsigned);
 		ret.add(operationOnInt64);
+		ret.add(faculty);
 		return ret;
 	}
 }
