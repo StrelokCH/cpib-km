@@ -181,6 +181,9 @@ public class Program {
 				}
 			}
 		}
+		
+		// end
+		cgenv.code.put(cgenv.locInc(), new IInstructions.Stop());
 
 		// routines
 		{
