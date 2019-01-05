@@ -7,6 +7,7 @@ import ch.fhnw.cpib.project.km.analysis.Context;
 import ch.fhnw.cpib.project.km.analysis.Environment;
 import ch.fhnw.cpib.project.km.analysis.SymbolTable;
 import ch.fhnw.cpib.project.km.exceptions.ConstCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.FlowCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
 import ch.fhnw.cpib.project.km.synthesis.CodeGenerationEnvironment;
@@ -118,6 +119,14 @@ public class Program {
 
 		for (ICommand command : cpsCmd) {
 			command.checkAliasing(env);
+		}
+	}
+
+	public void checkFlow(Environment env) throws FlowCheckingException {
+		// Todo
+		// is only implemented for IDecl yet
+		for (IDecl decl : cpsDecl) {
+			decl.checkFlow(env);
 		}
 	}
 

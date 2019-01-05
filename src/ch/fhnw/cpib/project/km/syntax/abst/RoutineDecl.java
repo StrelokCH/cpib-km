@@ -1,6 +1,5 @@
 package ch.fhnw.cpib.project.km.syntax.abst;
 
-import java.sql.Blob;
 import java.util.List;
 
 import ch.fhnw.cpib.project.km.analysis.Context;
@@ -9,11 +8,16 @@ import ch.fhnw.cpib.project.km.analysis.SymbolTable;
 import ch.fhnw.cpib.project.km.exceptions.AliasingCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.CodeGenerationException;
 import ch.fhnw.cpib.project.km.exceptions.ConstCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.FlowCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
 import ch.fhnw.cpib.project.km.synthesis.CodeGenerationEnvironment;
+import ch.fhnw.cpib.project.km.token.keywords.Const;
+import ch.fhnw.cpib.project.km.token.keywords.FlowmodeIn;
+import ch.fhnw.cpib.project.km.token.keywords.FlowmodeInOut;
 import ch.fhnw.cpib.project.km.token.keywords.MechmodeReference;
 import ch.fhnw.cpib.project.km.token.keywords.Type;
+import ch.fhnw.cpib.project.km.token.keywords.Var;
 import ch.fhnw.cpib.project.km.token.various.Identifier;
 import ch.fhnw.cpib.project.km.vm.ICodeArray.CodeTooSmallError;
 
@@ -103,7 +107,7 @@ public class RoutineDecl implements IDecl {
 	@Override
 	public void addToEnvironment(Environment env, Context context) throws ScopeCheckingException {
 		env.contextMapping.put(this, context);
-		
+
 		// create new context for this routine
 		Context newContext = context.clone();
 		SymbolTable symbolTable = newContext.symbolTable;
@@ -166,11 +170,29 @@ public class RoutineDecl implements IDecl {
 		}
 	}
 
-	public void checkFlow(Environment env) {
-		// Todo
-		// flowMode in functions must be InFlow
-		// changeMode in routines for InFlow RefMech must be Const
-		// changeMode in routines for InoutFlow must be Var
+	@Override
+	public void checkFlow(Environment env) throws FlowCheckingException {
+		for (FullIdentifier declaration : paramList) {
+			if (!isProcedure()
+					&& !(declaration.getFlowmode() instanceof FlowmodeIn)) {
+				// flowMode in functions must be InFlow
+				throw new FlowCheckingException("Wrong flowmode of parameter " + declaration.toString("")
+						+ " in function " + toString("") + " (must be FlowmodeIn).");
+			}
+			if (declaration.getFlowmode() instanceof FlowmodeIn
+					&& declaration.getMechmode() instanceof MechmodeReference
+					&& !(declaration.getChangemode() instanceof Const)) {
+				// changeMode in routines for InFlow RefMech must be Const
+				throw new FlowCheckingException("Wrong changemode of parameter " + declaration.toString("")
+						+ " in routine " + toString("") + " (must be Const).");
+			}
+			if (declaration.getFlowmode() instanceof FlowmodeInOut
+					&& !(declaration.getChangemode() instanceof Var)) {
+				// changeMode in routines for InoutFlow must be Var
+				throw new FlowCheckingException("Wrong flowmode of parameter " + declaration.toString("")
+						+ " in procedure " + toString("") + " (must be Var).");
+			}
+		}
 	}
 
 	@Override

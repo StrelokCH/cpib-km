@@ -6,6 +6,7 @@ import ch.fhnw.cpib.project.km.analysis.SymbolTable;
 import ch.fhnw.cpib.project.km.exceptions.AliasingCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.CodeGenerationException;
 import ch.fhnw.cpib.project.km.exceptions.ConstCheckingException;
+import ch.fhnw.cpib.project.km.exceptions.FlowCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
 import ch.fhnw.cpib.project.km.synthesis.CodeGenerationEnvironment;
@@ -51,6 +52,11 @@ public class StoDecl implements IDecl {
 
 	@Override
 	public void checkConst(Environment env) throws ConstCheckingException {
+		// not needed
+	}
+
+	@Override
+	public void checkFlow(Environment env) throws FlowCheckingException {
 		// not needed
 	}
 
