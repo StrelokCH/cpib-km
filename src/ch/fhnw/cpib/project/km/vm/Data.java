@@ -222,7 +222,16 @@ public class Data {
 		return boolNew(int64Get(a) <= int64Get(b));
 	}
 
+	// casts
+
 	public static Int64Data promoteInt32ToInt64(IBaseData iBaseData) {
 		return int64New(intGet(iBaseData));
+	}
+
+	public static IntData castInt64ToInt32Clamp(IBaseData iBaseData) {
+		long value = intGet(iBaseData);
+		value = Math.min(value, Integer.MAX_VALUE);
+		value = Math.max(value, Integer.MIN_VALUE);
+		return intNew((int) value);
 	}
 }

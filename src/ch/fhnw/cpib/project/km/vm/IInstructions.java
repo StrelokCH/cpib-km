@@ -580,7 +580,7 @@ public interface IInstructions {
 			return vm.new OutputInt64Exec(indicator);
 		}
 	}
-	
+
 	// cast instructions
 
 	class PromoteInt32ToInt64 implements IInstr {
@@ -593,6 +593,19 @@ public interface IInstructions {
 
 		public IExecInstr toExecInstr(VirtualMachine vm) {
 			return vm.new PromoteInt32ToInt64Exec();
+		}
+	}
+
+	class CastInt64ToInt32Clamp implements IInstr {
+		public CastInt64ToInt32Clamp() {
+		}
+
+		public String toString() {
+			return "CastInt64ToInt32Clamp";
+		}
+
+		public IExecInstr toExecInstr(VirtualMachine vm) {
+			return vm.new CastInt64ToInt32ClampExec();
 		}
 	}
 }

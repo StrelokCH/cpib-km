@@ -554,4 +554,13 @@ public class VirtualMachine implements IVirtualMachine {
 			store[sp - 1] = Data.promoteInt32ToInt64(store[sp - 1]);
 		}
 	}
+
+	public class CastInt64ToInt32ClampExec extends CastInt64ToInt32Clamp implements IExecInstr {
+		public CastInt64ToInt32ClampExec() {
+		}
+
+		public void execute() {
+			store[sp - 1] = Data.castInt64ToInt32Clamp(store[sp - 1]);
+		}
+	}
 }
