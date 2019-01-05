@@ -193,7 +193,9 @@ public class ProcCallCmd implements ICommand {
 			} else if (decl.getFlowmode() instanceof FlowmodeInOut) {
 				if (decl.getMechmode() instanceof MechmodeCopy) {
 					// inout copy -> R-Value
-					parameters.get(parameterIndex).createCode(cgenv);
+					parameters.get(parameterIndex).createCodeLoadAddr(cgenv);
+					cgenv.code.put(cgenv.locInc(), new IInstructions.Dup());
+					cgenv.code.put(cgenv.locInc(), new IInstructions.Deref());
 				} else if (decl.getMechmode() instanceof MechmodeReference) {
 					// inout ref -> Address
 					parameters.get(parameterIndex).createCodeLoadAddr(cgenv);
@@ -203,8 +205,9 @@ public class ProcCallCmd implements ICommand {
 				}
 			} else if (decl.getFlowmode() instanceof FlowmodeOut) {
 				if (decl.getMechmode() instanceof MechmodeCopy) {
-					// out copy -> R-Value
-					parameters.get(parameterIndex).createCode(cgenv);
+					// out copy -> Address and free block
+					parameters.get(parameterIndex).createCodeLoadAddr(cgenv);
+					cgenv.code.put(cgenv.locInc(), new IInstructions.AllocBlock(1));
 				} else if (decl.getMechmode() instanceof MechmodeReference) {
 					// out ref -> Address
 					parameters.get(parameterIndex).createCodeLoadAddr(cgenv);
@@ -221,5 +224,10 @@ public class ProcCallCmd implements ICommand {
 		// call to function
 		int routineLocation = cgenv.getRoutineLocation(routineDecl);
 		cgenv.code.put(cgenv.locInc(), new IInstructions.Call(routineLocation));
+
+		// store changed parameters
+		for (int i = 0; i < routineDecl.getStoreNumber(); i++) {
+			cgenv.code.put(cgenv.locInc(), new IInstructions.Store());
+		}
 	}
 }

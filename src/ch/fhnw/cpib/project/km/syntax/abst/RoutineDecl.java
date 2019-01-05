@@ -14,8 +14,11 @@ import ch.fhnw.cpib.project.km.exceptions.ScopeCheckingException;
 import ch.fhnw.cpib.project.km.exceptions.TypeCheckingException;
 import ch.fhnw.cpib.project.km.synthesis.CodeGenerationEnvironment;
 import ch.fhnw.cpib.project.km.token.keywords.Const;
+import ch.fhnw.cpib.project.km.token.keywords.Flowmode;
 import ch.fhnw.cpib.project.km.token.keywords.FlowmodeIn;
 import ch.fhnw.cpib.project.km.token.keywords.FlowmodeInOut;
+import ch.fhnw.cpib.project.km.token.keywords.FlowmodeOut;
+import ch.fhnw.cpib.project.km.token.keywords.MechmodeCopy;
 import ch.fhnw.cpib.project.km.token.keywords.MechmodeReference;
 import ch.fhnw.cpib.project.km.token.keywords.Type;
 import ch.fhnw.cpib.project.km.token.keywords.Var;
@@ -88,6 +91,23 @@ public class RoutineDecl implements IDecl {
 			}
 		}
 		return ret;
+	}
+
+	/**
+	 * Returns the number of stores that must follow a procedure call. This should
+	 * return 0 if this is a function.
+	 * 
+	 * @return
+	 */
+	public int getStoreNumber() {
+		int count = 0;
+		for (FullIdentifier declaration : paramList) {
+			if ((declaration.getFlowmode() instanceof FlowmodeInOut || declaration.getFlowmode() instanceof FlowmodeOut)
+					&& declaration.getMechmode() instanceof MechmodeCopy) {
+				count++;
+			}
+		}
+		return count;
 	}
 
 	public List<FullIdentifier> getGlobImps() {
