@@ -176,12 +176,13 @@ public class Program {
 					// load prog param to stack
 					cgenv.code.put(cgenv.locInc(),
 							new IInstructions.LoadImInt(cgenv.globalStoreLocation.get(progParam.getIdentifierName())));
+					cgenv.code.put(cgenv.locInc(), new IInstructions.Deref());
 					// output
 					OutputCmd.createCode(cgenv, progParam.getType(), progParam.getIdentifierName());
 				}
 			}
 		}
-		
+
 		// end
 		cgenv.code.put(cgenv.locInc(), new IInstructions.Stop());
 
