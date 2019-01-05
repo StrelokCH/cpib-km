@@ -57,7 +57,7 @@ public class Program {
 		SymbolTable symbolTable = new SymbolTable(env);
 		for (FullIdentifier progParam : progParamList) {
 			// Program Parameters are handled as local variables
-			symbolTable.addVariable(progParam, true);
+			symbolTable.addVariable(progParam, false);
 		}
 		{
 			// add predefined cast functions
