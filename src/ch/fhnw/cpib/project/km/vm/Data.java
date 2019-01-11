@@ -248,6 +248,6 @@ public class Data {
 			// error as lossless was expected
 			throw new VirtualMachine.ExecutionError("Lossless Integer cast that caused loss.");
 		}
-		return intNew((int) value);
+		return intNew(newValue);
 	}
 }
