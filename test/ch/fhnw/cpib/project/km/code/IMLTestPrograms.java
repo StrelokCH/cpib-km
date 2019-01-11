@@ -301,7 +301,19 @@ public class IMLTestPrograms {
 			+ "  debugout toInt32Lossless(smallInt)  // throws ExecutionError \r\n" + "endprogram\r\n" + "");
 
 	public static IMLProgram OperationOnInt64 = new IMLProgram("OperationOnInt64","program operationOnInt64()\r\n" + "global\r\n" + " var a:int64;\r\n"
-			+ " var b:int64\r\n" + "do\r\n" + " a :=10;\r\n" + " b := 20;\r\n" + " debugout a + b;\r\n"
+			+ " var b:int64\r\n" + "do\r\n" + " a := 10;\r\n" + " b := 20;\r\n" + " debugout a + b;\r\n"
+			+ " debugout a - b;\r\n" + " debugout a * b;\r\n" + " debugout a divE b;\r\n" + " debugout a modE b;\r\n"
+			+ " debugout a = b;\r\n" + " debugout a < b;\r\n" + " debugout a > b;\r\n" + " debugout a /= b;\r\n"
+			+ " debugout a >= b;\r\n" + " debugout a <= b\r\n" + "endprogram\r\n");
+	
+	public static IMLProgram OperationOnInt64_1 = new IMLProgram("OperationOnInt64 int32 int64","program operationOnInt64()\r\n" + "global\r\n" + " var a:int32;\r\n"
+			+ " var b:int64\r\n" + "do\r\n" + " a := 10;\r\n" + " b := 20;\r\n" + " debugout a + b;\r\n"
+			+ " debugout a - b;\r\n" + " debugout a * b;\r\n" + " debugout a divE b;\r\n" + " debugout a modE b;\r\n"
+			+ " debugout a = b;\r\n" + " debugout a < b;\r\n" + " debugout a > b;\r\n" + " debugout a /= b;\r\n"
+			+ " debugout a >= b;\r\n" + " debugout a <= b\r\n" + "endprogram\r\n");
+	
+	public static IMLProgram OperationOnInt64_2 = new IMLProgram("OperationOnInt64 int64 int32","program operationOnInt64()\r\n" + "global\r\n" + " var a:int64;\r\n"
+			+ " var b:int32\r\n" + "do\r\n" + " a := 10;\r\n" + " b := 20;\r\n" + " debugout a + b;\r\n"
 			+ " debugout a - b;\r\n" + " debugout a * b;\r\n" + " debugout a divE b;\r\n" + " debugout a modE b;\r\n"
 			+ " debugout a = b;\r\n" + " debugout a < b;\r\n" + " debugout a > b;\r\n" + " debugout a /= b;\r\n"
 			+ " debugout a >= b;\r\n" + " debugout a <= b\r\n" + "endprogram\r\n");
@@ -336,6 +348,8 @@ public class IMLTestPrograms {
 		ret.add(Cut);
 		ret.add(Lossless);
 		ret.add(OperationOnInt64);
+		ret.add(OperationOnInt64_1);
+		ret.add(OperationOnInt64_2);
 		ret.add(Faculty);
 		return ret;
 	}
