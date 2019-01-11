@@ -120,7 +120,7 @@ public class Main {
 		HashMap<Integer, String> ret = new HashMap<>();
 		int i = 1;
 		for (IMLProgram program : IMLTestPrograms.getValidPrograms()) {
-			ret.put(i++, program.title);
+			ret.put(i++, program.code);
 		}
 		ret.put(0, ""); // exit
 		return ret;
