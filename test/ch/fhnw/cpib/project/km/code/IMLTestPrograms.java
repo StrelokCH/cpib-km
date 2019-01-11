@@ -197,7 +197,7 @@ public class IMLTestPrograms {
 			"   r init := 0\r\n" + 
 			" endfun ;\r\n" + 
 			"\r\n" + 
-			" fun returnNull(in copy const n:int64) returns const r:int32\r\n" + 
+			" fun returnNull(in copy const n:int64) returns const r:int64\r\n" + 
 			" do\r\n" + 
 			"   r init := 0\r\n" + 
 			" endfun\r\n" + 
