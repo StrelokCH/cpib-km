@@ -53,7 +53,7 @@ public class InputUtility {
 		try {
 			return Long.parseLong(s);
 		} catch (NumberFormatException e) {
-			throw new ExecutionError("Not an long.");
+			throw new ExecutionError("Not a long.");
 		}
 	}
 }
