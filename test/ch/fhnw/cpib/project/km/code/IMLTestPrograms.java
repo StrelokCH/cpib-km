@@ -176,15 +176,16 @@ public class IMLTestPrograms {
 			+ " //call printSum(a, a); // compile time error, multiple possible matches\r\n"
 			+ " call printSum(a, b) // calls  printSum(int32,int64)\r\n" + "endprogram\r\n" + "");
 
-	public static IMLProgram Overloading3 = new IMLProgram("Overloading3","program testOverloading(in a:int32)\r\n" + 
+	public static IMLProgram Overloading3 = new IMLProgram("Overloading3","program testOverloading(inout a:int32)\r\n" + 
 			"global\r\n" + 
 			"\r\n" + 
 			" proc setNull(out copy m:int64)\r\n" + 
 			" do\r\n" + 
-			"   m init := m + 1\r\n" + 
+			"   m init := 0\r\n" + 
 			" endproc\r\n" + 
 			"do\r\n" + 
-			"   skip // call setNull(a) // compile time error, no match found\r\n" + 
+			"   //call setNull(a); // compile time error, no match found\r\n" + 
+			"   skip\r\n" +
 			"endprogram\r\n" + 
 			"");
 
