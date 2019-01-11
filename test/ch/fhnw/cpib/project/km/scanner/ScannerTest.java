@@ -74,7 +74,7 @@ class ScannerTest extends AbstractTest {
 
 	@Test
 	void testScan_Text() {
-		String input = IMLTestPrograms.DearGrandmother;
+		String input = IMLTestPrograms.DearGrandmother.code;
 		ITokenList expected = new TokenList();
 		expected.add(new Identifier("Liebe"));
 		expected.add(new Identifier("Grossmutter"));
@@ -97,7 +97,7 @@ class ScannerTest extends AbstractTest {
 
 	@Test
 	void testScan_IntDivProgram() {
-		String input = IMLTestPrograms.IntDiv64;
+		String input = IMLTestPrograms.IntDiv64.code;
 
 		ITokenList expected = new TokenList();
 

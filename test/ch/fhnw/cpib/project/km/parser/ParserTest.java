@@ -28,7 +28,7 @@ class ParserTest extends AbstractTest {
 	@Test
 	void testParse_Invalid() {
 
-		String input = IMLTestPrograms.DearGrandmother;
+		String input = IMLTestPrograms.DearGrandmother.code;
 
 		ITokenList tokens;
 		try {

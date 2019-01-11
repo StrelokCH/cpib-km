@@ -5,6 +5,7 @@ import java.util.Map;
 
 import ch.fhnw.cpib.project.km.analysis.StaticAnalyser;
 import ch.fhnw.cpib.project.km.code.IMLTestPrograms;
+import ch.fhnw.cpib.project.km.code.IMLTestPrograms.IMLProgram;
 import ch.fhnw.cpib.project.km.parser.Parser;
 import ch.fhnw.cpib.project.km.scanner.Scanner;
 import ch.fhnw.cpib.project.km.syntax.abst.Program;
@@ -118,23 +119,9 @@ public class Main {
 	private static Map<Integer, String> GetPrograms() {
 		HashMap<Integer, String> ret = new HashMap<>();
 		int i = 1;
-		ret.put(i++, IMLTestPrograms.IntDiv64);
-		ret.put(i++, IMLTestPrograms.IntDiv);
-		ret.put(i++, IMLTestPrograms.Assoc);
-		ret.put(i++, IMLTestPrograms.GlobalInits1);
-		ret.put(i++, IMLTestPrograms.GlobalInits2);
-		ret.put(i++, IMLTestPrograms.GlobalInits3);
-		ret.put(i++, IMLTestPrograms.Globals);
-		ret.put(i++, IMLTestPrograms.ParameterPassingInCopy);
-		ret.put(i++, IMLTestPrograms.ParameterPassingInRef);
-		ret.put(i++, IMLTestPrograms.EuclidExtendedNat);
-		ret.put(i++, IMLTestPrograms.Scopes);
-		ret.put(i++, IMLTestPrograms.Overloading);
-		ret.put(i++, IMLTestPrograms.Clamp);
-		ret.put(i++, IMLTestPrograms.Cut);
-		ret.put(i++, IMLTestPrograms.Lossless);
-		ret.put(i++, IMLTestPrograms.operationOnInt64);
-		ret.put(i++, IMLTestPrograms.faculty);
+		for (IMLProgram program : IMLTestPrograms.getValidPrograms()) {
+			ret.put(i++, program.title);
+		}
 		ret.put(0, ""); // exit
 		return ret;
 	}
@@ -147,24 +134,12 @@ public class Main {
 	private static Map<Integer, String> GetDescriptions() {
 
 		HashMap<Integer, String> ret = new HashMap<>();
+		
 		int i = 1;
-		ret.put(i++, "IntDiv64");
-		ret.put(i++, "IntDiv");
-		ret.put(i++, "Assoc");
-		ret.put(i++, "GlobalInits1");
-		ret.put(i++, "GlobalInits2");
-		ret.put(i++, "GlobalInits3");
-		ret.put(i++, "Globals");
-		ret.put(i++, "ParameterPassingInCopy");
-		ret.put(i++, "ParameterPassingInRef");
-		ret.put(i++, "EuclidExtendedNat");
-		ret.put(i++, "Scopes");
-		ret.put(i++, "Overloading");
-		ret.put(i++, "Clamp");
-		ret.put(i++, "Cut");
-		ret.put(i++, "Lossless");
-		ret.put(i++, "OperationOnInt64");
-		ret.put(i++, "Faculty");
+		for (IMLProgram program : IMLTestPrograms.getValidPrograms()) {
+			ret.put(i++, program.title);
+		}
+
 		ret.put(0, "Exit"); // exit
 		return ret;
 	}

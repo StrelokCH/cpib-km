@@ -10,8 +10,8 @@ public abstract class AbstractTest {
 
 	@Test
 	void testAll() throws Exception {
-		for (String program : IMLTestPrograms.getValidPrograms()) {
-			assertNotNull(test(program));
+		for (IMLTestPrograms.IMLProgram program : IMLTestPrograms.getValidPrograms()) {
+			assertNotNull(test(program.code));
 		}
 	}
 	
