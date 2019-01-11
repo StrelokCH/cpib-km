@@ -238,14 +238,12 @@ public class Data {
 	}
 
 	public static IntData castInt64ToInt32Cut(IBaseData iBaseData) {
-		long value = int64Get(iBaseData);
-		value &= 0xFFFFFFFF;
-		return intNew((int) value);
+		return intNew((int) int64Get(iBaseData));
 	}
 
 	public static IntData castInt64ToInt32Lossless(IBaseData iBaseData) throws ExecutionError {
 		long value = int64Get(iBaseData);
-		int newValue = (int)(value & 0xFFFFFFFF);
+		int newValue = (int)value;
 		if (value != newValue) {
 			// error as lossless was expected
 			throw new VirtualMachine.ExecutionError("Lossless Integer cast that caused loss.");
