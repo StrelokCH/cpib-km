@@ -87,6 +87,7 @@ public class Main {
 		if (selection != 0) {
 			System.out.println("You selected " + selection + ".");
 			System.out.println("The code is as follows:");
+			System.out.println();
 			System.out.println(code);
 		}
 		return code;
