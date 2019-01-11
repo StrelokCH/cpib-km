@@ -153,28 +153,72 @@ public class IMLTestPrograms {
 			+ "    debugout(f(g2))\r\n" + "endprogram\r\n");
 
 	// Bericht
-	public static IMLProgram Overloading = new IMLProgram("Overloading","program testOverloading(in a:int32, in b:int64)\r\n" + "global\r\n"
-			+ " proc printSum(in copy const m:int32, in copy const n:int32)\r\n" + " local\r\n" + "   var s:int32\r\n"
-			+ " do\r\n" + "   s init := m + n;\r\n" + "   debugout s\r\n" + " endproc ;\r\n" + "\r\n"
-			+ " proc printSum(in copy const m:int32, in copy const n:int64)\r\n" + " local\r\n" + "   var s:int64\r\n"
-			+ " do\r\n" + "   s init := m + n;\r\n" + "   debugout s\r\n" + " endproc ;\r\n" + "\r\n"
-			+ " proc printSum(in copy const m:int64, in copy const n:int64)\r\n" + " local\r\n" + "   var s:int64\r\n"
-			+ " do\r\n" + "   s init := m + n;\r\n" + "   debugout s\r\n" + " endproc ;\r\n" + "\r\n"
-			+ "proc printSum(in copy const m:int64, in copy const n:int32)\r\n" + " local\r\n" + "   var s:int64\r\n"
-			+ " do\r\n" + "   s init := m + n;\r\n" + "   debugout s\r\n" + " endproc\r\n" + "\r\n" + "do\r\n"
-			+ " call printSum(a, a); // calls  printSum(int32,int32)\r\n"
-			+ " call printSum(b, b); // calls  printSum(int64,int64)\r\n"
-			+ " call printSum(a, b); // calls  printSum(int32,int64)\r\n"
-			+ " call printSum(b, a) // calls  printSum(int64,int32)\r\n"
-			+ " //call printSum(b, a, a) // compile time error, no matching overload found\r\n" + "endprogram\r\n" + "");
+	public static IMLProgram Overloading = new IMLProgram("Overloading","program testOverloading(in a:int32, in b:int64)\r\n" + 
+			"global\r\n" + 
+			" proc printSum(in copy const m:int32, in copy const n:int32)\r\n" + 
+			" local\r\n" + 
+			"   var s:int32\r\n" + 
+			" do\r\n" + 
+			"   s init := m + n;\r\n" + 
+			"   debugout s\r\n" + 
+			" endproc ;\r\n" + 
+			"\r\n" + 
+			" proc printSum(in copy const m:int32, in copy const n:int64)\r\n" + 
+			" local\r\n" + 
+			"   var s:int64\r\n" + 
+			" do\r\n" + 
+			"   s init := m + n;\r\n" + 
+			"   debugout s\r\n" + 
+			" endproc ;\r\n" + 
+			"\r\n" + 
+			" proc printSum(in copy const m:int64, in copy const n:int64)\r\n" + 
+			" local\r\n" + 
+			"   var s:int64\r\n" + 
+			" do\r\n" + 
+			"   s init := m + n;\r\n" + 
+			"   debugout s\r\n" + 
+			" endproc ;\r\n" + 
+			"\r\n" + 
+			"proc printSum(in copy const m:int64, in copy const n:int32)\r\n" + 
+			" local\r\n" + 
+			"   var s:int64\r\n" + 
+			" do\r\n" + 
+			"   s init := m + n;\r\n" + 
+			"   debugout s\r\n" + 
+			" endproc\r\n" + 
+			"\r\n" + 
+			"do\r\n" + 
+			" call printSum(a, a); // calls  printSum(int32,int32)\r\n" + 
+			" call printSum(b, b); // calls  printSum(int64,int64)\r\n" + 
+			" call printSum(a, b); // calls  printSum(int32,int64)\r\n" + 
+			" call printSum(b, a) // calls  printSum(int64,int32)\r\n" + 
+			" //call printSum(b, a, a) // compile time error, no matching overload found\r\n" + 
+			"endprogram\r\n" + 
+			"");
 
-	public static IMLProgram Overloading2 = new IMLProgram("Overloading2","program testOverloading(in a:int32, in b:int64)\r\n" + "global\r\n" + "\r\n"
-			+ " proc printSum(in copy const m:int32, in copy const n:int64)\r\n" + " local\r\n" + "   var s:int64\r\n"
-			+ " do\r\n" + "   s init := m + n;\r\n" + "   debugout s\r\n" + " endproc ;\r\n" + "\r\n"
-			+ " proc printSum(in copy const m:int64, in copy const n:int64)\r\n" + " local\r\n" + "   var s:int64\r\n"
-			+ " do\r\n" + "   s init := m * n;\r\n" + "   debugout s\r\n" + " endproc\r\n" + "do\r\n"
-			+ " //call printSum(a, a); // compile time error, multiple possible matches\r\n"
-			+ " call printSum(a, b) // calls  printSum(int32,int64)\r\n" + "endprogram\r\n" + "");
+	public static IMLProgram Overloading2 = new IMLProgram("Overloading2","program testOverloading(in a:int32, in b:int64)\r\n" + 
+			"global\r\n" + 
+			"\r\n" + 
+			" proc printSum(in copy const m:int32, in copy const n:int64)\r\n" + 
+			" local\r\n" + 
+			"   var s:int64\r\n" + 
+			" do\r\n" + 
+			"   s init := m + n;\r\n" + 
+			"   debugout s\r\n" + 
+			" endproc ;\r\n" + 
+			"\r\n" + 
+			" proc printSum(in copy const m:int64, in copy const n:int64)\r\n" + 
+			" local\r\n" + 
+			"   var s:int64\r\n" + 
+			" do\r\n" + 
+			"   s init := m + n;\r\n" + 
+			"   debugout s\r\n" + 
+			" endproc\r\n" + 
+			"do\r\n" + 
+			" //call printSum(a, a); // compile time error, multiple possible matches\r\n" + 
+			" call printSum(a, b) // calls  printSum(int32,int64)\r\n" + 
+			"endprogram\r\n" + 
+			"");
 
 	public static IMLProgram Overloading3 = new IMLProgram("Overloading3","program testOverloading(inout a:int32)\r\n" + 
 			"global\r\n" + 
@@ -190,7 +234,7 @@ public class IMLTestPrograms {
 			"");
 
 
-	public static IMLProgram Overloading4 = new IMLProgram("Overloading4","program testOverloading(in a:int32, in b:int64)\r\n" + 
+	public static IMLProgram Overloading4 = new IMLProgram("Overloading4","program testOverloading()\r\n" + 
 			"global\r\n" + 
 			" fun returnNull(in copy const n:int32) returns const r:int32\r\n" + 
 			" do\r\n" + 
@@ -200,9 +244,12 @@ public class IMLTestPrograms {
 			" fun returnNull(in copy const n:int64) returns const r:int64\r\n" + 
 			" do\r\n" + 
 			"   r init := 0\r\n" + 
-			" endfun\r\n" + 
-			"\r\n" + 
+			" endfun;\r\n" + 
+			" const a:int32;\r\n" + 
+			" const b:int64\r\n" + 
 			" do\r\n" + 
+			"   a init := 5;\r\n" + 
+			"   b init := 7;\r\n" + 
 			"   debugout returnNull(a) ; // calls setNull(int32)\r\n" + 
 			"   debugout returnNull(b) // calls setNull(int64)\r\n" + 
 			"endprogram\r\n" + 
