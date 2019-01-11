@@ -141,7 +141,7 @@ public class IMLTestPrograms {
 			+ "    g1 init := 1;\r\n" + "    debugin(g2 init);\r\n" + "    g3 init := 3;\r\n" + "    f init := 0;\r\n"
 			+ "    debugout(f(g2))\r\n" + "endprogram\r\n";
 
-	// own
+	// Bericht
 	public static String Overloading = "program testOverloading(in a:int32, in b:int64)\r\n" + "global\r\n"
 			+ " proc printSum(in copy const m:int32, in copy const n:int32)\r\n" + " local\r\n" + "   var s:int32\r\n"
 			+ " do\r\n" + "   s init := m + n;\r\n" + "   debugout s\r\n" + " endproc ;\r\n" + "\r\n"
@@ -155,10 +155,49 @@ public class IMLTestPrograms {
 			+ " call printSum(b, b); // calls  printSum(int64,int64)\r\n"
 			+ " call printSum(a, b); // calls  printSum(int32,int64)\r\n"
 			+ " call printSum(b, a) // calls  printSum(int64,int32)\r\n"
-			+ " // call printSum(b, a, a) // compile time error, no matching overload found\r\n" + "endprogram\r\n"
-			+ "";
+			+ " //call printSum(b, a, a) // compile time error, no matching overload found\r\n" + "endprogram\r\n" + "";
 
-	// Beispiel 2 Bericht: int64 to int32 clamp
+	public static String Overloading2 = "program testOverloading(in a:int32, in b:int64)\r\n" + "global\r\n" + "\r\n"
+			+ " proc printSum(in copy const m:int32, in copy const n:int64)\r\n" + " local\r\n" + "   var s:int64\r\n"
+			+ " do\r\n" + "   s init := m + n;\r\n" + "   debugout s\r\n" + " endproc ;\r\n" + "\r\n"
+			+ " proc printSum(in copy const m:int64, in copy const n:int64)\r\n" + " local\r\n" + "   var s:int64\r\n"
+			+ " do\r\n" + "   s init := m + n;\r\n" + "   debugout s\r\n" + " endproc\r\n" + "do\r\n"
+			+ " //call printSum(a, a); // compile time error, multiple possible matches\r\n"
+			+ " call printSum(a, b) // calls  printSum(int64,int64)\r\n"
+			+ " //call printSum(a, a) // compile time error, multiple possible matches\r\n" + "endprogram\r\n" + "";
+
+	public static String Overloading3 = "program testOverloading(in a:int32)\r\n" + 
+			"global\r\n" + 
+			"\r\n" + 
+			" proc setNull(out copy m:int64)\r\n" + 
+			" do\r\n" + 
+			"   m init := m + 1\r\n" + 
+			" endproc\r\n" + 
+			"do\r\n" + 
+			"   skip // call setNull(a) // compile time error, no match found\r\n" + 
+			"endprogram\r\n" + 
+			"";
+
+
+	public static String Overloading4 = "program testOverloading(in a:int32, in b:int64)\r\n" + 
+			"global\r\n" + 
+			" fun returnNull(in copy const n:int32) returns const r:int32\r\n" + 
+			" do\r\n" + 
+			"   r init := 0\r\n" + 
+			" endfun ;\r\n" + 
+			"\r\n" + 
+			" fun returnNull(in copy const n:int64) returns const r:int32\r\n" + 
+			" do\r\n" + 
+			"   r init := 0\r\n" + 
+			" endfun\r\n" + 
+			"\r\n" + 
+			" do\r\n" + 
+			"   debugout returnNull(a) ; // calls setNull(int32)\r\n" + 
+			"   debugout returnNull(b) // calls setNull(int64)\r\n" + 
+			"endprogram\r\n" + 
+			"";
+	
+	// Beispiel Bericht: int64 to int32 clamp
 	public static String Clamp = "program testToInt32Clamp()\r\n" + "global\r\n" + " var normalInt:int64;\r\n"
 			+ " var biggestInt:int64;\r\n" + " var smallestInt:int64;\r\n" + " var bigInt:int64;\r\n"
 			+ " var smallInt:int64\r\n" + "do\r\n" + "  normalInt init := 5;\r\n"
@@ -230,6 +269,9 @@ public class IMLTestPrograms {
 		ret.add(EuclidExtendedNat);
 		ret.add(Scopes);
 		ret.add(Overloading);
+		ret.add(Overloading2);
+		ret.add(Overloading3);
+		ret.add(Overloading4);
 		ret.add(Clamp);
 		ret.add(Cut);
 		ret.add(Lossless);
