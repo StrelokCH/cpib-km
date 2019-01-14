@@ -1,0 +1,103 @@
+// Out given Grammar from IML Slides with the following changes:
+// remove repetitions, options, grouping
+// remove left recursion
+// remove same leftmost symbol
+
+
+// Program
+program ::= PROGRAM IDENT progParamList optGlobalCpsDecl DO cpsCmd ENDPROGRAM
+optGlobalCpsDecl ::= GLOBAL cpsDecl
+optGlobalCpsDecl ::= e
+
+// Declarations
+decl ::= stoDecl
+decl ::= funDecl
+decl ::= procDecl
+stoDecl ::= CHANGEMODE typedIdent
+stoDecl ::= typedIdent
+funDecl ::= FUN IDENT paramList RETURNS stoDecl globalGlobImps optLocalCpsStoDecl DO cpsCmd ENDFUN
+globalGlobImps ::= GLOBAL globImps
+globalGlobImps ::= e
+optLocalCpsStoDecl ::= LOCAL cpsStoDecl
+optLocalCpsStoDecl ::= e
+procDecl ::= PROC IDENT paramList globalGlobImps optLocalCpsStoDecl DO cpsCmd ENDPROC
+globImps ::= globImp repCommaGlobImps
+repCommaGlobImps ::= COMMA globImp repCommaGlobImps
+repCommaGlobImps ::= e
+globImp ::= optFlowmode optChangemode IDENT
+optFlowmode ::= FLOWMODE
+optFlowmode ::= e
+optChangemode ::= CHANGEMODE
+optChangemode ::= e
+optMechmode ::= MECHMODE
+optMechmode ::= e
+cpsDecl ::= decl repSemicolonCpsDecl
+repSemicolonCpsDecl ::= SEMICOLON cpsDecl
+repSemicolonCpsDecl ::= e
+cpsStoDecl ::= stoDecl repSemicolonCpsStoDecl
+repSemicolonCpsStoDecl ::= SEMICOLON cpsStoDecl
+repSemicolonCpsStoDecl ::= e
+
+// Parameter Lists
+progParamList ::= LPAREN optCpsProgParam RPAREN
+optCpsProgParam ::= cpsProgParam
+optCpsProgParam ::= e
+cpsProgParam ::= progParam repCommaProgParam
+repCommaProgParam ::= COMMA cpsProgParam
+repCommaProgParam ::= e
+progParam ::= optFlowmode optChangemode typedIdent
+paramList ::= LPAREN optCpsParam RPAREN
+optCpsParam ::= cpsParam
+optCpsParam ::= e
+cpsParam ::= param repCommaParam
+repCommaParam ::= COMMA cpsParam
+repCommaParam ::= e
+param ::= optFlowmode optMechmode optChangemode typedIdent
+typedIdent ::= IDENT COLON ATOMTYPE
+
+// Commands
+cmd ::= SKIP
+cmd ::= expr BECOMES expr
+cmd ::= IF expr THEN cpsCmd ELSE cpsCmd ENDIF
+cmd ::= WHILE expr DO cpsCmd ENDWHILE
+cmd ::= CALL IDENT exprList optGlobInits
+optGlobInits ::= globInits
+optGlobInits ::= e
+cmd ::= DEBUGIN expr
+cmd ::= DEBUGOUT expr
+cpsCmd ::= cmd repSemicolonCmd
+repSemicolonCmd ::= SEMICOLON cpsCmd
+repSemicolonCmd ::= e
+globInits ::= INIT idents
+idents ::= IDENT repCommaIdent
+repCommaIdent ::= COMMA idents
+repCommaIdent ::= e
+
+// Expressions
+expr ::= term1 repBooloprExpr
+repBooloprExpr ::= BOOLOPR expr
+repBooloprExpr ::= e
+term1 ::= term2 optReloprTerm2
+optReloprTerm2 ::= RELOPR term2
+optReloprTerm2 ::= e
+term2 ::= term3 repAddoprTerm3
+repAddoprTerm3 ::= ADDOPR term2
+repAddoprTerm3 ::= e
+term3 ::= factor repMultoprFactor
+repMultoprFactor ::= MULTOPR term3
+repMultoprFactor ::= e
+factor ::= LITERAL
+factor ::= IDENT ident1
+factor ::= monadicOpr factor
+factor ::= LPAREN expr RPAREN
+ident1 ::= INIT
+ident1 ::= exprList
+ident1 ::= e
+monadicOpr ::= NOT
+monadicOpr ::= ADDOPR
+exprList ::= LPAREN optCpsExpr RPAREN
+optCpsExpr ::= cpsExpr
+optCpsExpr ::= e
+cpsExpr ::= expr repCommaExpr
+repCommaExpr ::= COMMA cpsExpr
+repCommaExpr ::= e

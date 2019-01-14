@@ -1,0 +1,19 @@
+package ch.fhnw.cpib.project.km.syntax.concrete;
+
+import ch.fhnw.cpib.project.km.token.keywords.*;
+import ch.fhnw.cpib.project.km.token.symbols.*;
+import ch.fhnw.cpib.project.km.token.various.*;
+
+public class OptFlowmode implements IOptFlowmode {
+	public OptFlowmode() {
+	}
+
+	public void print(String indent) {
+		System.out.println(indent + this.getClass().getSimpleName());
+	}
+
+	@Override
+	public Flowmode toAbsSyn() {
+		return null;
+	}
+}
